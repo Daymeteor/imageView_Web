@@ -3,7 +3,9 @@
  * 空状态时显示的大选择按钮
  */
 
-export default function FolderSelector({ onSelect, loading, error }) {
+export default function FolderSelector({ onSelect, loading, error, theme = 'forest' }) {
+  const isCyber = theme === 'cyber';
+
   return (
     <div className="folder-selector">
       <div className="selector-content">
@@ -12,51 +14,82 @@ export default function FolderSelector({ onSelect, loading, error }) {
 
         {/* 图标 */}
         <div className="selector-icon">
-          <svg
-            width="64"
-            height="64"
-            viewBox="0 0 64 64"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M8 16C8 13.7909 9.79086 12 12 12H24L28 18H52C54.2091 18 56 19.7909 56 22V48C56 50.2091 54.2091 52 52 52H12C9.79086 52 8 50.2091 8 48V16Z"
-              stroke="currentColor"
-              strokeWidth="1.5"
+          {isCyber ? (
+            <svg
+              width="64"
+              height="64"
+              viewBox="0 0 64 64"
               fill="none"
-            />
-            <path
-              d="M8 16C8 13.7909 9.79086 12 12 12H24L28 18H52C54.2091 18 56 19.7909 56 22V48"
-              stroke="currentColor"
-              strokeWidth="1.5"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              {/* 六边形数据节点 */}
+              <polygon
+                points="32,8 56,22 56,46 32,58 8,46 8,22"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                fill="none"
+              />
+              <polygon
+                points="32,8 56,22 56,46 32,58 8,46 8,22"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                fill="none"
+                strokeDasharray="120"
+                strokeDashoffset="120"
+                className="icon-draw"
+              />
+              <circle cx="32" cy="32" r="4" stroke="currentColor" strokeWidth="1" fill="none" />
+              <line x1="32" y1="28" x2="32" y2="8" stroke="currentColor" strokeWidth="0.5" opacity="0.4" />
+              <line x1="32" y1="36" x2="32" y2="58" stroke="currentColor" strokeWidth="0.5" opacity="0.4" />
+              <line x1="28" y1="32" x2="8" y2="22" stroke="currentColor" strokeWidth="0.3" opacity="0.25" />
+              <line x1="36" y1="32" x2="56" y2="22" stroke="currentColor" strokeWidth="0.3" opacity="0.25" />
+            </svg>
+          ) : (
+            <svg
+              width="64"
+              height="64"
+              viewBox="0 0 64 64"
               fill="none"
-              strokeDasharray="100"
-              strokeDashoffset="100"
-              className="icon-draw"
-            />
-            {/* 光束示意 */}
-            <line
-              x1="56" y1="18" x2="32" y2="42"
-              stroke="currentColor"
-              strokeWidth="0.5"
-              opacity="0.4"
-            />
-            <line
-              x1="50" y1="16" x2="30" y2="38"
-              stroke="currentColor"
-              strokeWidth="0.3"
-              opacity="0.25"
-            />
-          </svg>
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 16C8 13.7909 9.79086 12 12 12H24L28 18H52C54.2091 18 56 19.7909 56 22V48C56 50.2091 54.2091 52 52 52H12C9.79086 52 8 50.2091 8 48V16Z"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                fill="none"
+              />
+              <path
+                d="M8 16C8 13.7909 9.79086 12 12 12H24L28 18H52C54.2091 18 56 19.7909 56 22V48"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                fill="none"
+                strokeDasharray="100"
+                strokeDashoffset="100"
+                className="icon-draw"
+              />
+              <line
+                x1="56" y1="18" x2="32" y2="42"
+                stroke="currentColor"
+                strokeWidth="0.5"
+                opacity="0.4"
+              />
+              <line
+                x1="50" y1="16" x2="30" y2="38"
+                stroke="currentColor"
+                strokeWidth="0.3"
+                opacity="0.25"
+              />
+            </svg>
+          )}
         </div>
 
         {/* 文字 */}
-        <h1 className="selector-title">光影艺术展</h1>
+        <h1 className="selector-title">{isCyber ? '赛博博物馆' : '光影艺术展'}</h1>
         <p className="selector-subtitle">
-          Forest Light Exhibition
+          {isCyber ? 'Cyber Museum' : 'Forest Light Exhibition'}
         </p>
         <p className="selector-desc">
-          选择一个包含照片的文件夹，开启你的森林光影展览
+          {isCyber ? '选择一个包含照片的文件夹，开启数字考古之旅' : '选择一个包含照片的文件夹，开启你的森林光影展览'}
         </p>
 
         {/* 选择按钮 */}
@@ -126,7 +159,7 @@ export default function FolderSelector({ onSelect, loading, error }) {
           border-radius: 50%;
           background: radial-gradient(
             circle,
-            rgba(201, 169, 110, 0.08) 0%,
+            color-mix(in oklab, var(--color-accent) 8%, transparent) 0%,
             transparent 70%
           );
           pointer-events: none;
@@ -134,7 +167,7 @@ export default function FolderSelector({ onSelect, loading, error }) {
         }
 
         .selector-icon {
-          color: var(--color-gold);
+          color: var(--color-accent);
           margin-bottom: var(--space-xl);
           animation: glowPulse 4s ease-in-out infinite;
         }
@@ -153,7 +186,7 @@ export default function FolderSelector({ onSelect, loading, error }) {
           font-family: var(--font-display);
           font-size: 2.5rem;
           font-weight: 400;
-          color: var(--color-gold-light);
+          color: var(--color-accent-light);
           letter-spacing: 0.08em;
           margin-bottom: var(--space-sm);
         }
@@ -161,7 +194,7 @@ export default function FolderSelector({ onSelect, loading, error }) {
         .selector-subtitle {
           font-family: var(--font-display);
           font-size: 1rem;
-          color: var(--color-gold-dim);
+          color: var(--color-accent-dim);
           letter-spacing: 0.12em;
           text-transform: uppercase;
           margin-bottom: var(--space-xl);
@@ -182,10 +215,10 @@ export default function FolderSelector({ onSelect, loading, error }) {
           align-items: center;
           gap: var(--space-sm);
           padding: 14px 36px;
-          background: rgba(201, 169, 110, 0.1);
-          border: 1px solid rgba(201, 169, 110, 0.3);
+          background: color-mix(in oklab, var(--color-accent) 10%, transparent);
+          border: 1px solid color-mix(in oklab, var(--color-accent) 30%, transparent);
           border-radius: 2px;
-          color: var(--color-gold-light);
+          color: var(--color-accent-light);
           font-size: 0.95rem;
           letter-spacing: 0.06em;
           transition: all var(--transition-medium);
@@ -200,7 +233,7 @@ export default function FolderSelector({ onSelect, loading, error }) {
           background: linear-gradient(
             135deg,
             transparent 40%,
-            rgba(232, 213, 163, 0.08) 50%,
+            color-mix(in oklab, var(--color-accent-pale) 8%, transparent) 50%,
             transparent 60%
           );
           transform: translateX(-100%);
@@ -208,9 +241,9 @@ export default function FolderSelector({ onSelect, loading, error }) {
         }
 
         .selector-btn:hover:not(:disabled) {
-          background: rgba(201, 169, 110, 0.18);
-          border-color: rgba(201, 169, 110, 0.5);
-          box-shadow: 0 0 30px rgba(201, 169, 110, 0.12);
+          background: color-mix(in oklab, var(--color-accent) 18%, transparent);
+          border-color: color-mix(in oklab, var(--color-accent) 50%, transparent);
+          box-shadow: 0 0 30px color-mix(in oklab, var(--color-accent) 12%, transparent);
         }
 
         .selector-btn:hover::before {
@@ -226,7 +259,7 @@ export default function FolderSelector({ onSelect, loading, error }) {
           width: 16px;
           height: 16px;
           border: 2px solid transparent;
-          border-top-color: var(--color-gold);
+          border-top-color: var(--color-accent);
           border-radius: 50%;
           animation: spin 0.8s linear infinite;
         }

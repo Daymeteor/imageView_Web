@@ -135,3 +135,37 @@
 .stagger-8  { animation-delay: 0.48s; }
 .stagger-9  { animation-delay: 0.54s; }
 .stagger-10 { animation-delay: 0.60s; }
+
+/* ============================================
+   Hermes 赛博动画
+   ============================================ */
+
+/* --- Arc Border 渐变描边旋转 --- */
+@keyframes gradient-stroke {
+  0%   { --arc-angle: 160deg; }
+  50%  { --arc-angle: 340deg; }
+  100% { --arc-angle: 520deg; }
+}
+
+/* --- 慢速旋转（装饰元素） --- */
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+
+/* --- 闪烁光标 --- */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+/* --- 扫描线 --- */
+@keyframes scan-line {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+/* --- 琥珀脉冲发光 --- */
+@keyframes amber-pulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(255, 172, 2, 0.15); }
+  50%      { box-shadow: 0 0 24px rgba(255, 172, 2, 0.35); }
+}

@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 export default function ImageCard({ image, index, onClick }) {
   const cardRef = useRef(null);
@@ -7,25 +8,40 @@ export default function ImageCard({ image, index, onClick }) {
 
   useEffect(() => {
     const el = cardRef.current; if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setIsVisible(true); observer.unobserve(el); } },
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setIsVisible(true); obs.unobserve(el); } },
       { rootMargin: '200px' }
     );
-    observer.observe(el); return () => observer.disconnect();
+    obs.observe(el); return () => obs.disconnect();
   }, []);
 
   return (
-    <div ref={cardRef} className="thumb" style={{ animationDelay: `${index * 0.04}s` }} onClick={() => onClick(image)}>
+    <motion.div
+      ref={cardRef}
+      className="thumb"
+      initial={{ opacity: 0, y: 40, scale: 0.94 }}
+      animate={isVisible ? { opacity: 1, y: 0, scale: 1 } : {}}
+      transition={{ duration: 0.7, delay: index * 0.04, ease: [0.19, 1, 0.22, 1] }}
+      whileHover={{ y: -4, scale: 1.02, transition: { duration: 0.3 } }}
+      whileTap={{ scale: 0.97 }}
+      onClick={() => onClick(image)}
+    >
       <div className="thumb-inner">
-        {isVisible && <img src={image.url} alt="" className={`thumb-img${isLoaded ? ' loaded' : ''}`} onLoad={() => setIsLoaded(true)} loading="lazy" draggable="false" />}
+        {isVisible && (
+          <img
+            src={image.url} alt="" draggable="false"
+            className={`thumb-img${isLoaded ? ' loaded' : ''}`}
+            onLoad={() => setIsLoaded(true)} loading="lazy"
+          />
+        )}
       </div>
       <style>{`
-        .thumb { break-inside: avoid; margin-bottom: var(--space-md); cursor: pointer; animation: cardEnter .7s var(--ease-out-quint) both; transition: transform .35s var(--ease-out-quint), filter .35s ease; border-radius: var(--card-radius); overflow: hidden; }
-        .thumb:hover { transform: translateY(-3px); filter: brightness(1.1); box-shadow: var(--card-shadow-hover); }
-        .thumb-inner { position: relative; background: var(--color-bg-surface); }
-        .thumb-img { display: block; width: 100%; height: auto; opacity: 0; transition: opacity .4s ease; user-select: none; -webkit-user-drag: none; }
+        .thumb { cursor: pointer; border-radius: 6px; overflow: hidden; }
+        .thumb-inner { position: relative; background: var(--color-bg-surface); border-radius: 6px; border: var(--card-border, 1px solid var(--color-accent-card-border)); transition: border-color .3s, box-shadow .3s; }
+        .thumb:hover .thumb-inner { border-color: var(--color-accent-card-border-hover); box-shadow: var(--card-shadow-hover); }
+        .thumb-img { display: block; width: 100%; height: auto; opacity: 0; transition: opacity .5s; user-select: none; -webkit-user-drag: none; }
         .thumb-img.loaded { opacity: 1; }
       `}</style>
-    </div>
+    </motion.div>
   );
 }

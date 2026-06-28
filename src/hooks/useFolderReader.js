@@ -69,7 +69,7 @@ export default function useFolderReader() {
           urlsRef.current.push(url);
 
           return {
-            id: crypto.randomUUID(),
+            id: handle.name,
             name: handle.name,
             url,
             width: 0,   // 后续通过图片加载获取
@@ -93,6 +93,8 @@ export default function useFolderReader() {
         })
       );
 
+      // 按文件名排序（支持数字自然排序，如 "photo2" < "photo10"）
+      sizedImages.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }));
       setImages(sizedImages);
       setFolderName(dirHandle.name);
       setError(null);

@@ -1,135 +1,63 @@
-/**
- * NavigationBar — 顶部导航栏
- * 毛玻璃背景，显示文件夹名、图片数量、切换按钮
- */
+import { motion } from 'framer-motion';
 
-export default function NavigationBar({ folderName, imageCount, onSwitchFolder }) {
-  if (!folderName) return null;
-
+export default function NavigationBar({ folderName, imageCount, onSwitchFolder, onBack, themeName }) {
   return (
     <nav className="nav-bar">
       <div className="nav-inner">
-        {/* 左侧标识 */}
-        <div className="nav-brand">
-          <span className="brand-dot" />
-          <span className="brand-text">光影艺术展</span>
+        <div className="nav-left">
+          <motion.button className="nav-back" onClick={onBack} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><polyline points="15 18 9 12 15 6"/></svg>
+            <span>主题</span>
+          </motion.button>
+          <span className="nav-theme">{themeName || '光影艺术展'}</span>
         </div>
 
-        {/* 中间信息 */}
-        <div className="nav-info">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
-          </svg>
-          <span className="info-folder">{folderName}</span>
-          <span className="info-separator">·</span>
-          <span className="info-count">{imageCount} 张照片</span>
+        <div className="nav-right">
+          {folderName && (
+            <>
+              <span className="nav-folder">{folderName}</span>
+              <span className="nav-sep">·</span>
+              <span className="nav-count">{imageCount} 张</span>
+            </>
+          )}
+          {onSwitchFolder && (
+            <motion.button className="nav-switch" onClick={onSwitchFolder} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              切换
+            </motion.button>
+          )}
         </div>
-
-        {/* 右侧操作 */}
-        <button className="nav-btn" onClick={onSwitchFolder}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <polyline points="23 4 23 10 17 10" />
-            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
-          </svg>
-          切换文件夹
-        </button>
       </div>
 
       <style>{`
-        .nav-bar {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          z-index: 50;
-          animation: navSlideIn 0.6s ease both;
-        }
-
+        .nav-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 50; }
         .nav-inner {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: var(--space-md) var(--space-xl);
-          margin: var(--space-md) var(--space-lg);
-          background: rgba(13, 27, 14, 0.75);
-          backdrop-filter: blur(16px) saturate(1.4);
-          -webkit-backdrop-filter: blur(16px) saturate(1.4);
-          border: 1px solid rgba(201, 169, 110, 0.12);
-          border-radius: 40px;
-          max-width: 900px;
-          margin-left: auto;
-          margin-right: auto;
+          display: flex; align-items: center; justify-content: space-between;
+          padding: 10px 20px; margin: 12px 20px;
+          background: var(--glass-bg); backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+          -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+          border: 1px solid var(--glass-border); border-radius: 40px;
+          max-width: 960px; margin-left: auto; margin-right: auto;
+          box-shadow: var(--glass-shadow);
         }
-
-        .nav-brand {
-          display: flex;
-          align-items: center;
-          gap: var(--space-sm);
+        .nav-left, .nav-right { display: flex; align-items: center; gap: 12px; }
+        .nav-back {
+          display: flex; align-items: center; gap: 4px; padding: 5px 12px;
+          border-radius: 16px; border: 1px solid rgba(255,255,255,.08);
+          background: rgba(255,255,255,.03); color: var(--color-text-secondary);
+          font-size: .72rem; letter-spacing: .04em; cursor: pointer;
+          transition: all .2s;
         }
-
-        .brand-dot {
-          width: 7px;
-          height: 7px;
-          border-radius: 50%;
-          background: var(--color-gold);
-          animation: twinkle 3s ease-in-out infinite;
-        }
-
-        .brand-text {
-          font-family: var(--font-display);
-          font-size: 0.9rem;
-          color: var(--color-gold-light);
-          letter-spacing: 0.06em;
-        }
-
-        .nav-info {
-          display: flex;
-          align-items: center;
-          gap: var(--space-sm);
-          color: var(--color-text-secondary);
-          font-size: 0.82rem;
-        }
-
-        .info-folder {
-          color: var(--color-text-primary);
-          max-width: 200px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        }
-
-        .info-separator {
-          color: var(--color-text-muted);
-        }
-
-        .nav-btn {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          padding: 8px 18px;
-          border-radius: 20px;
-          border: 1px solid rgba(201, 169, 110, 0.2);
-          color: var(--color-gold);
-          font-size: 0.82rem;
-          transition: all var(--transition-medium);
-          background: transparent;
-        }
-
-        .nav-btn:hover {
-          background: rgba(201, 169, 110, 0.1);
-          border-color: rgba(201, 169, 110, 0.35);
-        }
-
-        @media (max-width: 640px) {
-          .nav-inner {
-            flex-direction: column;
-            gap: var(--space-sm);
-            border-radius: 20px;
-            padding: var(--space-md);
-          }
-          .nav-info {
-            display: none;
-          }
+        .nav-back:hover { border-color: rgba(255,255,255,.15); color: var(--color-text-primary); }
+        .nav-theme { font-family: var(--font-display); font-size: .85rem; color: var(--color-accent-pale); letter-spacing: .06em; }
+        .nav-folder { font-size: .76rem; color: var(--color-text-primary); max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .nav-sep { color: var(--color-text-muted); }
+        .nav-count { font-size: .72rem; color: var(--color-text-secondary); }
+        .nav-switch { display: flex; align-items: center; gap: 4px; padding: 6px 14px; border-radius: 16px; border: 1px solid var(--color-accent-card-border); background: transparent; color: var(--color-accent-dim); font-size: .72rem; cursor: pointer; transition: all .2s; }
+        .nav-switch:hover { border-color: var(--color-accent-card-border-hover); color: var(--color-accent); background: color-mix(in oklab, var(--color-accent) 6%, transparent); }
+        @media(max-width:640px){
+          .nav-inner { padding: 8px 14px; margin: 8px 10px; border-radius: 24px; }
+          .nav-folder, .nav-sep, .nav-count { display: none; }
         }
       `}</style>
     </nav>

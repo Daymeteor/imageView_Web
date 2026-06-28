@@ -3,6 +3,13 @@
    配色灵感：日本森林美学 × 当代暗调画廊
    ============================================ */
 
+/* --- Arc Border 动画属性注册 --- */
+@property --arc-angle {
+  syntax: '<angle>';
+  initial-value: 160deg;
+  inherits: true;
+}
+
 /* --- CSS 自定义属性 --- */
 :root {
   /* 基底色系 — 墨色森林 */
@@ -58,6 +65,12 @@
   --card-shadow-hover: 0 6px 32px rgba(0, 0, 0, 0.65),
                        0 0 50px rgba(191, 155, 94, 0.14);
 
+  /* 玻璃拟态 */
+  --glass-bg: rgba(14, 22, 15, 0.55);
+  --glass-border: rgba(191, 155, 94, 0.12);
+  --glass-blur: 14px;
+  --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+
   /* 过渡曲线 */
   --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
   --ease-out-quint: cubic-bezier(0.22, 0.1, 0.13, 1);
@@ -68,6 +81,19 @@
   /* 字体 */
   --font-display: 'Georgia', 'Times New Roman', 'Noto Serif SC', serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* --- 语义化 accent 别名（默认：森林金） --- */
+  --color-accent: var(--color-gold);
+  --color-accent-light: var(--color-gold-light);
+  --color-accent-pale: var(--color-gold-pale);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-subtle: var(--color-gold-subtle);
+  --color-accent-glass-border: rgba(191, 155, 94, 0.12);
+  --color-accent-glass-bg: rgba(14, 22, 15, 0.55);
+  --color-accent-card-border: rgba(191, 155, 94, 0.08);
+  --color-accent-card-border-hover: rgba(191, 155, 94, 0.3);
+  --color-accent-shadow: rgba(191, 155, 94, 0.06);
+  --color-accent-shadow-hover: rgba(191, 155, 94, 0.14);
 }
 
 /* --- 全局重置 --- */
@@ -129,8 +155,8 @@ body::before {
 
 /* --- 选中 --- */
 ::selection {
-  background: rgba(191, 155, 94, 0.25);
-  color: var(--color-gold-pale);
+  background: color-mix(in oklab, var(--color-accent) 25%, transparent);
+  color: var(--color-accent-pale);
 }
 
 /* --- 图片默认样式 --- */
@@ -158,4 +184,133 @@ button {
   border: none;
   background: none;
   color: inherit;
+}
+
+/* ============================================
+   赛博博物馆 — Hermes 暗色玻璃拟态主题
+   ============================================ */
+.theme-cyber {
+  /* --- 基底色系 — 深暗青蓝 --- */
+  --color-bg-deep: #041c1c;
+  --color-bg-primary: #061e1e;
+  --color-bg-surface: #0a2424;
+  --color-bg-elevated: #0f2a2a;
+
+  /* --- 琥珀色系 — 数字暖光 --- */
+  --color-gold: #ffac02;
+  --color-gold-light: #ffbd38;
+  --color-gold-pale: #ffd580;
+  --color-gold-dim: #b87a00;
+  --color-gold-subtle: #664400;
+
+  /* --- 苔色/水色系 — 减弱（赛博不需要） --- */
+  --color-moss: #4a6a3a;
+  --color-moss-light: #5a7a4a;
+  --color-moss-pale: #7a9a6a;
+  --color-leaf: #1a3a12;
+  --color-mist: #4a5a4a;
+  --color-mist-light: #6a7a6a;
+  --color-twilight: #2a3a2a;
+
+  /* --- 语义化 accent 覆盖（琥珀金） --- */
+  --color-accent: var(--color-gold);
+  --color-accent-light: var(--color-gold-light);
+  --color-accent-pale: var(--color-gold-pale);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-subtle: var(--color-gold-subtle);
+  --color-accent-glass-border: color-mix(in oklab, var(--color-gold) 15%, transparent);
+  --color-accent-glass-bg: rgba(4, 28, 28, 0.65);
+  --color-accent-card-border: color-mix(in oklab, var(--color-gold) 12%, transparent);
+  --color-accent-card-border-hover: color-mix(in oklab, var(--color-gold) 35%, transparent);
+  --color-accent-shadow: rgba(255, 172, 2, 0.08);
+  --color-accent-shadow-hover: rgba(255, 172, 2, 0.18);
+
+  /* --- 文字层级 --- */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: rgba(255, 255, 255, 0.6);
+  --color-text-muted: rgba(255, 255, 255, 0.35);
+
+  /* --- 玻璃拟态（Hermes 风格：大暗影 + 内浮雕高光） --- */
+  --glass-bg: var(--color-accent-glass-bg);
+  --glass-border: var(--color-accent-glass-border);
+  --glass-blur: 12px;
+  --glass-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.6),
+                  inset -1px -1px 0 0 rgba(0, 0, 0, 0.5),
+                  inset 1px 1px 0 0 rgba(255, 255, 255, 0.16);
+
+  /* --- Arc Border 参数 --- */
+  --arc-c0: var(--color-text-primary);
+  --arc-c1: var(--color-gold);
+  --arc-c2: var(--color-bg-deep);
+  --arc-angle: 160deg;
+  --arc-inset: -2px;
+  --arc-width: 1.25px;
+
+  /* --- 卡片 --- */
+  --card-radius: 6px;
+  --card-border: 1px solid var(--color-accent-card-border);
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.55),
+                 0 0 30px var(--color-accent-shadow);
+  --card-shadow-hover: 0 8px 40px rgba(0, 0, 0, 0.7),
+                       0 0 60px var(--color-accent-shadow-hover);
+
+  /* --- 字体 — 等宽衬线混合 --- */
+  --font-display: 'Courier Prime', 'Courier New', 'Georgia', monospace;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, monospace;
+}
+
+/* --- Arc Border 工具类（仅在赛博主题下生效） --- */
+.theme-cyber .arc-border {
+  position: relative;
+  isolation: isolate;
+}
+
+.theme-cyber .arc-border::before {
+  content: '';
+  position: absolute;
+  inset: var(--arc-inset, -2px);
+  border-radius: inherit;
+  padding: var(--arc-width, 1.25px);
+  background: linear-gradient(
+    var(--arc-angle, 160deg),
+    var(--arc-c0, #fff) 0%,
+    var(--arc-c1, #ffac02) 40%,
+    var(--arc-c2, #041c1c) 65%,
+    var(--arc-c0, #fff) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* 悬停时才显示 arc border */
+.theme-cyber .arc-border-hover::before {
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-out-expo);
+}
+
+.theme-cyber .arc-border-hover:hover::before {
+  opacity: 1;
+}
+
+/* 持续显示 + 动画 */
+.theme-cyber .arc-border-animated::before {
+  opacity: 1;
+  animation: gradient-stroke 2.23s linear infinite;
+}
+
+/* --- Body 赛博主题覆盖 --- */
+.body-cyber::before {
+  background:
+    radial-gradient(ellipse at 18% 15%, rgba(255, 172, 2, 0.05) 0%, transparent 55%),
+    radial-gradient(ellipse at 82% 55%, rgba(255, 172, 2, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 45% 85%, rgba(0, 229, 255, 0.02) 0%, transparent 50%);
+}
+
+.body-cyber::after {
+  opacity: 0.025;
 }
