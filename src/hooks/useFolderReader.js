@@ -69,7 +69,7 @@ export default function useFolderReader() {
           urlsRef.current.push(url);
 
           return {
-            id: handle.name,
+            id: crypto.randomUUID(),
             name: handle.name,
             url,
             width: 0,   // 后续通过图片加载获取

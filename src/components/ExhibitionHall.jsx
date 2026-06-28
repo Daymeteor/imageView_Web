@@ -8,40 +8,47 @@ export default function ExhibitionHall({ images, theme = 'forest' }) {
   const [activeId, setActiveId] = useState(null);
   const [modalIdx, setModalIdx] = useState(null);
   const [rotation, setRotation] = useState(0);
-  const [showFab, setShowFab] = useState(false);
-  const prevScrollRef = useRef(null);       // 上一个浏览位置
-  const historyStack = useRef([]);           // 位置历史栈
   const [hasPrevPos, setHasPrevPos] = useState(false);
+  const [preloadCount, setPreloadCount] = useState(0);
+  const scrollStack = useRef([]);        // 滚动位置历史
 
-  // 按横竖版分成两组，每组内保持文件名排序；combined = 横版在前，竖版在后
+  // 全量预加载：强制浏览器缓存所有图片，就绪后才开放交互
+  const preloaded = preloadCount >= images.length;
+  useEffect(() => {
+    setPreloadCount(0);
+    if (!images.length) return;
+    let cancelled = false;
+    images.forEach((img) => {
+      const preImg = new Image();
+      preImg.onload = preImg.onerror = () => {
+        if (!cancelled) setPreloadCount(c => c + 1);
+      };
+      preImg.src = img.url;
+    });
+    return () => { cancelled = true; };
+  }, [images]);
+
+  // 按横竖分组，每组保持文件名序；combined = 横在前竖在后（统一顺序）
   const { landscape, portrait, combined } = useMemo(() => {
     const l = [], p = [];
-    images.forEach((img, i) => {
+    images.forEach((img) => {
       const r = (img.width && img.height) ? img.width / img.height : 1;
-      (r >= 1 ? l : p).push({ ...img, idx: i });
+      (r >= 1 ? l : p).push(img);
     });
     return { landscape: l, portrait: p, combined: [...l, ...p] };
   }, [images]);
 
-  // 监听滚动：控制 FAB 可见性
-  useEffect(() => {
-    const onScroll = () => setShowFab(window.scrollY > 400);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  // 所有定位操作统一使用 combined 列表
+  // 点击缩略图 → 保存位置 → 跳转详情
   const toDetail = useCallback((img) => {
-    // 自动跳转前保存当前位置
     const y = window.scrollY;
-    prevScrollRef.current = y;
     if (y > 100) {
-      historyStack.current.push(y);
-      if (historyStack.current.length > 20) historyStack.current.shift();
+      scrollStack.current.push(y);
       setHasPrevPos(true);
     }
     setActiveId(img.id);
   }, []);
+
+  // 详情/模态框操作，全用 combined 顺序
   const openModal = useCallback((img) => setModalIdx(combined.findIndex(i => i.id === img.id)), [combined]);
   const closeModal = useCallback(() => setModalIdx(null), []);
   const go = useCallback((dir) => {
@@ -54,19 +61,19 @@ export default function ExhibitionHall({ images, theme = 'forest' }) {
     });
   }, [combined.length]);
 
-  // 返回上一个位置
+  // 回到上一个位置
   const backToPrev = useCallback(() => {
-    const pos = historyStack.current.pop();
-    if (pos != null) {
-      window.scrollTo({ top: pos, behavior: 'smooth' });
-    } else if (prevScrollRef.current != null && prevScrollRef.current > 100) {
-      window.scrollTo({ top: prevScrollRef.current, behavior: 'smooth' });
-      prevScrollRef.current = null;
-    }
-    setHasPrevPos(historyStack.current.length > 0);
+    const pos = scrollStack.current.pop();
+    if (pos != null) window.scrollTo({ top: pos, behavior: 'smooth' });
+    setHasPrevPos(scrollStack.current.length > 0);
   }, []);
 
   const scrollToTop = useCallback(() => {
+    const y = window.scrollY;
+    if (y > 100) {
+      scrollStack.current.push(y);
+      setHasPrevPos(true);
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
@@ -76,6 +83,19 @@ export default function ExhibitionHall({ images, theme = 'forest' }) {
   return (
     <div className="hall">
       <div className="hall-spacer" />
+
+      {/* 预加载遮罩 — 所有图片缓存完毕前阻止交互 */}
+      {!preloaded && (
+        <div className="preload-overlay">
+          <div className="preload-box">
+            <div className="preload-ring"><div className="preload-ring-fill" /></div>
+            <p className="preload-text">正在缓存图片…</p>
+            <p className="preload-count">{preloadCount} / {images.length}</p>
+          </div>
+        </div>
+      )}
+
+      {preloaded && (<>
       <motion.div
         className="hall-header"
         initial={{ opacity: 0, y: 30 }}
@@ -187,6 +207,33 @@ export default function ExhibitionHall({ images, theme = 'forest' }) {
         .hall-header h2 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 400; color: var(--color-accent-light); letter-spacing: .08em; }
         .hall-header p { font-size: .85rem; color: var(--color-text-muted); letter-spacing: .12em; text-transform: uppercase; margin-top: var(--space-sm); }
         .hall-divider { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, var(--color-accent), transparent); margin: 0 auto var(--space-lg); }
+        .hall-loading { font-size: .72rem; color: var(--color-accent); letter-spacing: .06em; margin-top: 8px; opacity: .7; }
+
+        /* 预加载遮罩 */
+        .preload-overlay {
+          position: fixed; inset: 0; z-index: 400;
+          display: flex; align-items: center; justify-content: center;
+          background: var(--color-bg-deep);
+        }
+        .preload-box { text-align: center; }
+        .preload-ring {
+          width: 48px; height: 48px; margin: 0 auto var(--space-lg);
+          border-radius: 50%;
+          background: conic-gradient(var(--color-accent) 0deg, transparent 0deg);
+          display: flex; align-items: center; justify-content: center;
+        }
+        .preload-ring-fill {
+          width: 40px; height: 40px; border-radius: 50%;
+          background: var(--color-bg-deep);
+        }
+        .preload-text {
+          font-family: var(--font-display); font-size: .9rem;
+          color: var(--color-accent-pale); letter-spacing: .06em;
+        }
+        .preload-count {
+          margin-top: 6px; font-size: .72rem;
+          color: var(--color-text-muted); letter-spacing: .04em;
+        }
 
         /* 缩略图网格 — 横版/竖版分开，各用 flex-wrap 行排 */
         .hall-grid { padding-bottom: var(--space-lg); }
@@ -238,11 +285,7 @@ export default function ExhibitionHall({ images, theme = 'forest' }) {
         .fab-group {
           position: fixed; right: 20px; bottom: 24px; z-index: 200;
           display: flex; flex-direction: column-reverse; gap: 10px;
-          opacity: 0; transform: translateY(20px);
-          pointer-events: none;
-          transition: opacity .35s, transform .35s var(--ease-out-expo);
         }
-        .fab-group.fab-visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
         .fab {
           width: 40px; height: 40px; border-radius: 50%;
@@ -265,7 +308,7 @@ export default function ExhibitionHall({ images, theme = 'forest' }) {
       `}</style>
 
       {/* 右下角浮动按钮 */}
-      <div className={`fab-group${showFab ? ' fab-visible' : ''}`}>
+      <div className="fab-group">
         {hasPrevPos && (
           <motion.button
             className="fab fab-prev"
@@ -292,6 +335,7 @@ export default function ExhibitionHall({ images, theme = 'forest' }) {
           </svg>
         </motion.button>
       </div>
+      </>)}
     </div>
   );
 }
