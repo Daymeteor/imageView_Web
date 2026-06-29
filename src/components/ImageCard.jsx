@@ -1,47 +1,50 @@
-import { useRef, useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useRef, useState, useCallback } from 'react';
+import { gsap } from 'gsap';
+import { useGSAP } from '@gsap/react';
 
 export default function ImageCard({ image, index, onClick }) {
   const cardRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  useEffect(() => {
-    const el = cardRef.current; if (!el) return;
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setIsVisible(true); obs.unobserve(el); } },
-      { rootMargin: '200px' }
-    );
-    obs.observe(el); return () => obs.disconnect();
+  const { contextSafe } = useGSAP({ scope: cardRef });
+
+  const onEnter = useCallback(() => {
+    gsap.to(cardRef.current, { y: -5, scale: 1.02, duration: 0.35, ease: 'power2.out', overwrite: 'auto' });
   }, []);
+  const onLeave = useCallback(() => {
+    gsap.to(cardRef.current, { y: 0, scale: 1, duration: 0.4, ease: 'power2.out', overwrite: 'auto' });
+  }, []);
+  const onDown = useCallback(() => {
+    gsap.to(cardRef.current, { scale: 0.97, duration: 0.1, ease: 'power2.in', overwrite: 'auto' });
+  }, []);
+  const onUp = contextSafe(() => {
+    gsap.to(cardRef.current, { scale: 1.02, duration: 0.2, ease: 'back.out(1.7)', overwrite: 'auto' });
+  });
 
   return (
-    <motion.div
+    <div
       ref={cardRef}
       className="thumb"
-      initial={{ opacity: 0, y: 40, scale: 0.94 }}
-      animate={isVisible ? { opacity: 1, y: 0, scale: 1 } : {}}
-      transition={{ duration: 0.7, delay: index * 0.04, ease: [0.19, 1, 0.22, 1] }}
-      whileHover={{ y: -4, scale: 1.02, transition: { duration: 0.3 } }}
-      whileTap={{ scale: 0.97 }}
+      onMouseEnter={onEnter}
+      onMouseLeave={onLeave}
+      onMouseDown={onDown}
+      onMouseUp={onUp}
       onClick={() => onClick(image)}
     >
       <div className="thumb-inner">
-        {isVisible && (
-          <img
-            src={image.url} alt="" draggable="false"
-            className={`thumb-img${isLoaded ? ' loaded' : ''}`}
-            onLoad={() => setIsLoaded(true)} loading="lazy"
-          />
-        )}
+        <img
+          src={image.url} alt="" draggable="false"
+          className={`thumb-img${isLoaded ? ' loaded' : ''}`}
+          onLoad={() => setIsLoaded(true)} loading="lazy"
+        />
       </div>
       <style>{`
-        .thumb { cursor: pointer; border-radius: 6px; overflow: hidden; }
+        .thumb { cursor: pointer; border-radius: 6px; overflow: hidden; will-change: transform; }
         .thumb-inner { position: relative; background: var(--color-bg-surface); border-radius: 6px; border: var(--card-border, 1px solid var(--color-accent-card-border)); transition: border-color .3s, box-shadow .3s; }
         .thumb:hover .thumb-inner { border-color: var(--color-accent-card-border-hover); box-shadow: var(--card-shadow-hover); }
         .thumb-img { display: block; width: 100%; height: auto; opacity: 0; transition: opacity .5s; user-select: none; -webkit-user-drag: none; }
         .thumb-img.loaded { opacity: 1; }
       `}</style>
-    </motion.div>
+    </div>
   );
 }

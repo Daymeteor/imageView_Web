@@ -1,19 +1,19 @@
-import { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useRef, useCallback } from 'react';
+import { gsap } from 'gsap';
+import { useGSAP } from '@gsap/react';
 import useExifData from '../hooks/useExifData';
 
 export default function PhotoDetail({ image, index, onImageClick, isActive }) {
   const sectionRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const imgRef = useRef(null);
   const exif = useExifData(image);
 
-  useEffect(() => {
-    const el = sectionRef.current; if (!el) return;
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setIsVisible(true); obs.unobserve(el); } },
-      { rootMargin: '150px', threshold: 0.05 }
-    );
-    obs.observe(el); return () => obs.disconnect();
+  useGSAP({ scope: sectionRef });
+  const onImgEnter = useCallback(() => {
+    gsap.to(imgRef.current, { scale: 1.015, duration: 0.35, ease: 'power2.out', overwrite: 'auto' });
+  }, []);
+  const onImgLeave = useCallback(() => {
+    gsap.to(imgRef.current, { scale: 1, duration: 0.4, ease: 'power2.out', overwrite: 'auto' });
   }, []);
 
   useEffect(() => {
@@ -32,20 +32,16 @@ export default function PhotoDetail({ image, index, onImageClick, isActive }) {
         <span className="pd-anchor-name">{name}</span>
       </div>
 
-      <motion.div
-        className="pd-layout"
-        initial={{ opacity: 0, y: 40 }}
-        animate={isVisible ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.7, ease: [0.19, 1, 0.22, 1] }}
-      >
-        <motion.div
+      <div className="pd-layout">
+        <div
+          ref={imgRef}
           className="pd-img"
-          whileHover={{ scale: 1.01 }}
-          transition={{ duration: 0.3 }}
+          onMouseEnter={onImgEnter}
+          onMouseLeave={onImgLeave}
           onClick={(e) => onImageClick(image, e)}
         >
-          {isVisible && <img src={image.url} alt={name} draggable="false" />}
-        </motion.div>
+          <img src={image.url} alt={name} draggable="false" />
+        </div>
 
         <div className="pd-info">
           <h3 className="pd-name">{name}</h3>
@@ -65,7 +61,7 @@ export default function PhotoDetail({ image, index, onImageClick, isActive }) {
             <p className="pd-none">无 EXIF 信息</p>
           )}
         </div>
-      </motion.div>
+      </div>
 
       <style>{`
         .pd { padding: var(--space-3xl) 0; }

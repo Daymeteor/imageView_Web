@@ -21,6 +21,16 @@ const themes = [
     accent: '#ffac02',
     glow: 'rgba(255, 172, 2, 0.15)',
   },
+  {
+    id: 'constellation',
+    title: '暗夜星座',
+    subtitle: 'Constellation',
+    desc: '星辰图谱 · 十二宫巡礼',
+    icon: '✦',
+    gradient: 'linear-gradient(135deg, #0d0d24, #060612)',
+    accent: '#8899cc',
+    glow: 'rgba(136, 153, 204, 0.12)',
+  },
 ];
 
 export default function LandingPage({ onEnter }) {

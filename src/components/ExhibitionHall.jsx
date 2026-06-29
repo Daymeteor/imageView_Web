@@ -1,16 +1,23 @@
 import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 import ImageCard from './ImageCard';
 import PhotoDetail from './PhotoDetail';
+import { ZODIAC } from '../data/zodiac';
 
-export default function ExhibitionHall({ images, theme = 'forest' }) {
+export default function ExhibitionHall({ images, theme = 'forest', zodiacIdx = 0, onZodiacChange, viewMode = 'star', onViewModeChange }) {
   const isCyber = theme === 'cyber';
+  const isConstellation = theme === 'constellation';
   const [activeId, setActiveId] = useState(null);
   const [modalIdx, setModalIdx] = useState(null);
   const [rotation, setRotation] = useState(0);
   const [hasPrevPos, setHasPrevPos] = useState(false);
   const [preloadCount, setPreloadCount] = useState(0);
-  const scrollStack = useRef([]);        // 滚动位置历史
+  const skyRef = useRef(null);
+  const scrollStack = useRef([]);       // 滚动位置历史
+  const zod = ZODIAC[zodiacIdx % 12];
 
   // 全量预加载：强制浏览器缓存所有图片，就绪后才开放交互
   const preloaded = preloadCount >= images.length;
@@ -77,11 +84,75 @@ export default function ExhibitionHall({ images, theme = 'forest' }) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
+  // GSAP 滚动入场动画 — 双主题差异化
+  const hallRef = useRef(null);
+  useGSAP(() => {
+    if (!preloaded) return;
+
+    const isAlt = isCyber || isConstellation;
+    const fst = isAlt
+      ? { dividerD: 0.5, titleD: 0.55, subD: 0.4, titleEase: 'power3.inOut', cardEase: 'power3.inOut', cardY: 60, cardScale: 0.88, stagger: 0.03 }
+      : { dividerD: 0.7, titleD: 0.7, subD: 0.5, titleEase: 'power3.out', cardEase: 'back.out(1.4)', cardY: 50, cardScale: 0.93, stagger: 0.06 };
+
+    // 标题序列
+    const tl = gsap.timeline({ defaults: { ease: fst.titleEase } });
+    tl.fromTo('.hall-divider', { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: fst.dividerD })
+      .fromTo('.hall-header h2', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: fst.titleD }, '-=0.3')
+      .fromTo('.hall-header p', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: fst.subD }, '-=0.2');
+
+    // 缩略图入场
+    ScrollTrigger.batch('.hall-grid .thumb', {
+      onEnter: (els) => gsap.fromTo(els,
+        { opacity: 0, y: fst.cardY, scale: fst.cardScale },
+        { opacity: 1, y: 0, scale: 1, duration: isCyber ? 0.6 : 0.9, stagger: fst.stagger, ease: fst.cardEase, overwrite: true }
+      ),
+      start: 'top 90%',
+      once: true,
+    });
+    // 详情区入场
+    ScrollTrigger.batch('.hall-detail .pd-layout', {
+      onEnter: (els) => gsap.fromTo(els,
+        { opacity: 0, y: isCyber ? 60 : 40 },
+        { opacity: 1, y: 0, duration: 0.7, ease: isCyber ? 'power2.inOut' : 'power2.out', overwrite: true }
+      ),
+      start: 'top 85%',
+      once: true,
+    });
+
+    // 页面标签交错入场
+    ScrollTrigger.batch('.hall-grid .gl', {
+      onEnter: (els) => gsap.fromTo(els,
+        { opacity: 0, x: -20 },
+        { opacity: 1, x: 0, duration: 0.5, ease: 'power2.out', overwrite: true }
+      ),
+      start: 'top 95%',
+      once: true,
+    });
+  }, { scope: hallRef, dependencies: [preloaded, isCyber, isConstellation] });
+
+  // 预加载完成后刷新 ScrollTrigger 位置
+  useEffect(() => { if (preloaded) ScrollTrigger.refresh(); }, [preloaded]);
+
+  // 星座星图展开/收起动画
+  useGSAP(() => {
+    if (!isConstellation || !skyRef.current) return;
+    if (viewMode === 'star') {
+      gsap.fromTo(skyRef.current,
+        { height: 0, opacity: 0 },
+        { height: 'auto', opacity: 1, duration: 0.8, ease: 'power3.out' }
+      );
+      gsap.fromTo('.sky-footer', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.3 });
+      gsap.fromTo('.sky-welcome-hint', { opacity: 0 }, { opacity: 1, duration: 1, ease: 'power2.out', delay: 0.8 });
+    } else {
+      gsap.to(skyRef.current, { height: 0, opacity: 0, paddingTop: 0, paddingBottom: 0, marginBottom: 0, duration: 0.4, ease: 'power2.in' });
+    }
+  }, { dependencies: [viewMode] });
+
   if (!images.length) return null;
   const sel = modalIdx !== null ? combined[modalIdx] : null;
 
   return (
-    <div className="hall">
+    <div className="hall" ref={hallRef}>
       <div className="hall-spacer" />
 
       {/* 预加载遮罩 — 所有图片缓存完毕前阻止交互 */}
@@ -96,16 +167,35 @@ export default function ExhibitionHall({ images, theme = 'forest' }) {
       )}
 
       {preloaded && (<>
-      <motion.div
-        className="hall-header"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
-      >
+      <div className="hall-header">
         <div className="hall-divider" />
-        <h2>{isCyber ? '赛博光影集' : '森林光影集'}</h2>
-        <p>{isCyber ? 'Cyber Light Collection' : 'Forest Light Collection'}</p>
-      </motion.div>
+        <h2
+          className={isConstellation ? 'hall-title-btn' : ''}
+          onClick={isConstellation ? () => onViewModeChange(viewMode === 'star' ? 'gallery' : 'star') : undefined}
+        >{isConstellation ? '星空图谱' : isCyber ? '赛博光影集' : '森林光影集'}</h2>
+        <p>{isConstellation ? 'Constellation Atlas' : isCyber ? 'Cyber Light Collection' : 'Forest Light Collection'}</p>
+      </div>
+
+      {/* 星座欢迎页 — 留白让背景星座成为焦点 */}
+      {isConstellation && (
+        <div className="hall-sky-top" ref={skyRef} onClick={() => onViewModeChange('gallery')}>
+          <div className="sky-welcome">
+            {/* 星图展示区 — 大面积留白 */}
+            <div className="sky-space" />
+            {/* 底部信息栏 */}
+            <div className="sky-footer">
+              <div className="sky-footer-info">
+                <span className="sky-footer-symbol">{zod.symbol}</span>
+                <span className="sky-footer-name">{zod.name} · {zod.en}</span>
+              </div>
+              <button className="sky-switch-btn" onClick={(e) => { e.stopPropagation(); onZodiacChange?.(zodiacIdx + 1); }}>
+                <span className="sky-switch-icon">✦</span>
+              </button>
+            </div>
+            <p className="sky-welcome-hint">点击任意位置进入画廊</p>
+          </div>
+        </div>
+      )}
 
       {/* 缩略图网格 — 横版 / 竖版分开，各用 flex-wrap 行排 */}
       <div className="hall-grid">
@@ -123,7 +213,7 @@ export default function ExhibitionHall({ images, theme = 'forest' }) {
         </>)}
       </div>
 
-      {/* 详情区 — combined = 横版在前 竖版在后，与缩略图完全同序 */}
+      {/* 详情区 */}
       <div className="hall-detail">
         <div className="dl"><div className="dd" /><span>作品详情</span><div className="dd" /></div>
         {combined.map((img, i) => (
@@ -138,7 +228,7 @@ export default function ExhibitionHall({ images, theme = 'forest' }) {
       </div>
 
       <div className="hall-foot">
-        <p>{isCyber ? '— End of Transmission —' : '— End of Exhibition —'}</p>
+        <p>{isConstellation ? '— End of Star Map —' : isCyber ? '— End of Transmission —' : '— End of Exhibition —'}</p>
       </div>
 
       {/* 模态 */}
@@ -260,7 +350,54 @@ export default function ExhibitionHall({ images, theme = 'forest' }) {
         @media(max-width:680px){ .masonry .thumb { flex: 1 1 100%; min-width: 0; } .masonry-p .thumb { flex: 0 1 160px; } }
 
         .hall-detail { padding-top: var(--space-2xl); }
+        .hall-detail-section { padding-top: var(--space-2xl); }
         .dl { display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md); font-family: var(--font-display); font-size: .78rem; color: var(--color-accent-dim); letter-spacing: .1em; text-transform: uppercase; }
+
+        /* 星座欢迎页 — 留白给背景星图，信息栏沉底 */
+        .hall-sky-top { padding-bottom: var(--space-2xl); cursor: pointer; overflow: hidden; }
+        .sky-welcome {
+          display: flex; flex-direction: column; min-height: 62vh;
+        }
+        .sky-space { flex: 1; min-height: 40vh; }
+        .sky-footer {
+          display: flex; align-items: center; justify-content: center; gap: 16px;
+          padding: var(--space-md) 0;
+        }
+        .sky-footer-info { display: flex; align-items: baseline; gap: 10px; }
+        .sky-footer-symbol { font-size: 1.6rem; line-height: 1; opacity: .6; }
+        .sky-footer-name {
+          font-family: var(--font-display); font-size: .85rem;
+          color: var(--color-accent-pale); letter-spacing: .08em;
+        }
+        .sky-welcome-hint {
+          text-align: center; margin-top: 0;
+          font-size: .62rem; color: var(--color-text-muted);
+          letter-spacing: .06em; opacity: .35;
+        }
+
+        /* 星座模式下概览区下移，避免与星图重叠 */
+        .theme-constellation .hall-grid { padding-top: var(--space-lg); }
+        .sky-switch-btn {
+          display: flex; align-items: center; justify-content: center;
+          width: 44px; height: 44px; border-radius: 50%;
+          border: 1px solid var(--color-accent-card-border);
+          background: transparent;
+          color: var(--color-accent-dim); cursor: pointer; transition: all .25s;
+        }
+        .sky-switch-btn:hover {
+          border-color: var(--color-accent);
+          color: var(--color-accent-light); background: rgba(136,153,204,0.08);
+        }
+        .sky-switch-icon { font-size: 1.3rem; line-height: 1; }
+
+        .hall-title-btn {
+          cursor: pointer; user-select: none;
+          transition: color .3s, text-shadow .3s;
+        }
+        .hall-title-btn:hover {
+          color: var(--color-accent-pale);
+          text-shadow: 0 0 20px rgba(136,153,204,0.3);
+        }
         .dd { flex: 1; height: 1px; background: var(--color-accent-card-border); }
         .hall-foot { text-align: center; padding: var(--space-2xl) 0 var(--space-3xl); font-family: var(--font-display); font-size: .85rem; color: var(--color-text-muted); letter-spacing: .1em; }
 

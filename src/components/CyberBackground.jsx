@@ -1,24 +1,90 @@
-/**
- * CyberBackground — 赛博博物馆背景系统
- * Hermes 暗色玻璃拟态风格
- * - 3 层环境光晕（琥珀暖光 + 冷青微光）
- * - Dither 点阵纹理
- * - 扫描线动画
- */
+import { useRef } from 'react';
+import { gsap } from 'gsap';
+import { useGSAP } from '@gsap/react';
 
+/**
+ * CyberBackground — 赛博博物馆背景（GSAP 驱动）
+ * - 琥珀光晕呼吸（sine 缓动，交错相位）
+ * - 扫描线变速脉冲
+ * - Dither 纹理微闪烁
+ * - 数字粒子光点
+ */
 export default function CyberBackground() {
+  const containerRef = useRef(null);
+
+  useGSAP(() => {
+    // 光晕呼吸 — 各层不同相位
+    gsap.to('.cbg-glow--tl', {
+      opacity: 0.28, scale: 1.08, duration: 6, ease: 'sine.inOut',
+      yoyo: true, repeat: -1, repeatDelay: 0,
+    });
+    gsap.to('.cbg-glow--br', {
+      opacity: 0.22, scale: 1.05, duration: 8, ease: 'sine.inOut',
+      yoyo: true, repeat: -1, delay: 2,
+    });
+    gsap.to('.cbg-glow--ctr', {
+      opacity: 0.12, scale: 1.12, duration: 10, ease: 'sine.inOut',
+      yoyo: true, repeat: -1, delay: 5,
+    });
+
+    // 扫描线 — 变速 + 透明度脉冲
+    const scanTl = gsap.timeline({ repeat: -1, repeatDelay: 0.5 });
+    scanTl.fromTo('.cbg-scan', { yPercent: -100, opacity: 0.2 }, { yPercent: 100, opacity: 0.7, duration: 4, ease: 'power2.inOut' })
+      .to('.cbg-scan', { opacity: 0, duration: 0.4, ease: 'power2.in' })
+      .to('.cbg-scan', { yPercent: -100, duration: 0, ease: 'none' });
+
+    // Dither 纹理微闪
+    gsap.to('.cbg-dither', {
+      opacity: 0.04, duration: 3, ease: 'steps(5)',
+      yoyo: true, repeat: -1,
+    });
+
+    // 数字粒子光点
+    const particles = gsap.utils.toArray('.cbg-particle');
+    particles.forEach((p, i) => {
+      gsap.to(p, {
+        opacity: gsap.utils.random(0.1, 0.5),
+        y: gsap.utils.random(-30, 30),
+        x: gsap.utils.random(-20, 20),
+        duration: gsap.utils.random(2, 5),
+        ease: 'sine.inOut',
+        yoyo: true, repeat: -1,
+        delay: gsap.utils.random(0, 3),
+      });
+    });
+  }, { scope: containerRef });
+
   return (
-    <div className="cbg">
+    <div className="cbg" ref={containerRef}>
       {/* 环境光晕 */}
       <div className="cbg-glow cbg-glow--tl" />
       <div className="cbg-glow cbg-glow--br" />
       <div className="cbg-glow cbg-glow--ctr" />
 
-      {/* Dither 纹理覆盖层 */}
+      {/* Dither 纹理 */}
       <div className="cbg-dither" />
 
       {/* 扫描线 */}
       <div className="cbg-scan" />
+
+      {/* 数字粒子 — 散布的琥珀光点 */}
+      {Array.from({ length: 12 }, (_, i) => (
+        <div
+          key={`p-${i}`}
+          className="cbg-particle"
+          style={{
+            position: 'absolute',
+            left: `${10 + (i * 7.3) % 85}%`,
+            top: `${5 + (i * 11.7) % 90}%`,
+            width: `${1.5 + (i % 3) * 1.5}px`,
+            height: `${1.5 + (i % 3) * 1.5}px`,
+            borderRadius: '50%',
+            background: `rgba(255,172,2,${0.3 + (i % 4) * 0.1})`,
+            boxShadow: `0 0 ${3 + (i % 3) * 2}px rgba(255,172,2,0.5)`,
+            pointerEvents: 'none',
+          }}
+        />
+      ))}
 
       <style>{`
         .cbg {
@@ -27,34 +93,26 @@ export default function CyberBackground() {
           overflow: hidden;
         }
 
-        /* --- 环境光晕 --- */
         .cbg-glow {
-          position: absolute;
-          border-radius: 50%;
-          filter: blur(120px);
-          opacity: 0.18;
+          position: absolute; border-radius: 50%;
+          filter: blur(120px); opacity: 0.18;
         }
         .cbg-glow--tl {
-          top: -10%; left: -5%;
-          width: 60vw; height: 60vw;
+          top: -10%; left: -5%; width: 60vw; height: 60vw;
           background: radial-gradient(circle, rgba(255, 172, 2, 0.25) 0%, transparent 60%);
         }
         .cbg-glow--br {
-          bottom: -15%; right: -10%;
-          width: 50vw; height: 50vw;
+          bottom: -15%; right: -10%; width: 50vw; height: 50vw;
           background: radial-gradient(circle, rgba(255, 172, 2, 0.12) 0%, transparent 55%);
         }
         .cbg-glow--ctr {
-          top: 40%; left: 30%;
-          width: 40vw; height: 40vw;
+          top: 40%; left: 30%; width: 40vw; height: 40vw;
           background: radial-gradient(circle, rgba(0, 229, 255, 0.05) 0%, transparent 50%);
           opacity: 0.06;
         }
 
-        /* --- Dither 纹理（Hermes conic-gradient 点阵） --- */
         .cbg-dither {
-          position: absolute; inset: 0;
-          opacity: 0.025;
+          position: absolute; inset: 0; opacity: 0.025;
           background: repeating-conic-gradient(
             var(--color-text-primary, #fff) 0% 25%,
             transparent 0% 50%
@@ -62,7 +120,6 @@ export default function CyberBackground() {
           mix-blend-mode: overlay;
         }
 
-        /* --- 扫描线 --- */
         .cbg-scan {
           position: absolute; top: 0; left: 0; right: 0;
           height: 2px;
@@ -74,7 +131,6 @@ export default function CyberBackground() {
             rgba(255, 172, 2, 0.2) 70%,
             transparent 100%
           );
-          animation: scan-line 8s linear infinite;
         }
       `}</style>
     </div>

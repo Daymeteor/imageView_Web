@@ -1,9 +1,7 @@
-import { useMemo } from 'react';
-
-/**
- * LightBeam — 穿林光束
- * 多层叠加，响应鼠标微调 + 滚动视差
- */
+import { useRef, useMemo } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 
 const BEAM_CONFIGS = [
   { width: 70,  skew: -12, top: '3%',  left: '-5%', opacity: 0.10, blur: 70,  delay: 0 },
@@ -13,30 +11,82 @@ const BEAM_CONFIGS = [
   { width: 35,  skew: -7,  top: '8%',  left: '18%', opacity: 0.16, blur: 28,  delay: 3.5 },
 ];
 
-export default function LightBeam({ mouseX = 0.5, mouseY = 0.3, scrollProgress = 0 }) {
-  const beams = useMemo(() => {
-    return BEAM_CONFIGS.map((config, i) => ({
-      ...config,
-      id: `beam-${i}`,
-      // 鼠标微调 + 滚动视差（光束随滚动微微偏移）
-      adjustedSkew: config.skew + (mouseX - 0.5) * 4 - scrollProgress * 2,
-      adjustedTop: `calc(${config.top} + ${(mouseY - 0.3) * 2}% + ${scrollProgress * 5}%)`,
-      adjustedLeft: `calc(${config.left} + ${(mouseX - 0.5) * 4}%)`,
-    }));
-  }, [mouseX, mouseY, scrollProgress]);
+export default function LightBeam() {
+  const containerRef = useRef(null);
+  const beamRefs = useRef([]);
+  const spotRefs = useRef([]);
+
+  useGSAP(() => {
+    // 鼠标平滑跟踪（quickTo 比 rAF 轮询性能更好）
+    const skewTo = beamRefs.current.map((el) =>
+      el ? gsap.quickTo(el, 'skewX', { duration: 0.6, ease: 'power2.out' }) : null
+    );
+    const xTo = beamRefs.current.map((el) =>
+      el ? gsap.quickTo(el, 'x', { duration: 0.5, ease: 'power2.out' }) : null
+    );
+    const yTo = beamRefs.current.map((el) =>
+      el ? gsap.quickTo(el, 'y', { duration: 0.4, ease: 'power2.out' }) : null
+    );
+
+    const onMouse = (e) => {
+      const mx = (e.clientX / window.innerWidth - 0.5) * 2;  // -1 ~ 1
+      const my = (e.clientY / window.innerHeight - 0.5) * 2;
+      beamRefs.current.forEach((_, i) => {
+        if (skewTo[i]) skewTo[i](BEAM_CONFIGS[i].skew + mx * 4);
+        if (xTo[i]) xTo[i](mx * 20);
+        if (yTo[i]) yTo[i](my * 12);
+      });
+    };
+    window.addEventListener('mousemove', onMouse, { passive: true });
+    return () => window.removeEventListener('mousemove', onMouse);
+  }, { scope: containerRef });
+
+  // 滚动视差（scrub）
+  useGSAP(() => {
+    beamRefs.current.forEach((el, i) => {
+      if (!el) return;
+      gsap.to(el, {
+        yPercent: 12 + i * 3,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: document.body,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 0.5,
+        },
+      });
+    });
+    spotRefs.current.forEach((el, i) => {
+      if (!el) return;
+      gsap.to(el, {
+        yPercent: 20 + i * 5,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: document.body,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 0.8,
+        },
+      });
+    });
+  }, { scope: containerRef });
+
+  const setBeamRef = (i) => (el) => { beamRefs.current[i] = el; };
+  const setSpotRef = (i) => (el) => { spotRefs.current[i] = el; };
 
   return (
-    <div style={{
+    <div ref={containerRef} style={{
       position: 'fixed', inset: 0, zIndex: 2,
       pointerEvents: 'none', overflow: 'hidden',
     }}>
-      {beams.map((beam) => (
+      {BEAM_CONFIGS.map((beam, i) => (
         <div
-          key={beam.id}
+          key={`beam-${i}`}
+          ref={setBeamRef(i)}
           style={{
             position: 'absolute',
-            top: beam.adjustedTop,
-            left: beam.adjustedLeft,
+            top: beam.top,
+            left: beam.left,
             width: `${beam.width}px`,
             height: '130vh',
             background: `linear-gradient(
@@ -47,7 +97,7 @@ export default function LightBeam({ mouseX = 0.5, mouseY = 0.3, scrollProgress =
               rgba(120, 158, 102, ${beam.opacity * 0.2}) 80%,
               transparent 100%
             )`,
-            transform: `skewX(${beam.adjustedSkew}deg)`,
+            transform: `skewX(${beam.skew}deg)`,
             filter: `blur(${beam.blur}px)`,
             animation: `beamFlow ${9 + beam.delay}s ease-in-out infinite`,
             animationDelay: `${beam.delay}s`,
@@ -56,14 +106,14 @@ export default function LightBeam({ mouseX = 0.5, mouseY = 0.3, scrollProgress =
         />
       ))}
 
-      {/* 光斑 */}
-      {beams.slice(0, 4).map((beam, i) => (
+      {BEAM_CONFIGS.slice(0, 4).map((beam, i) => (
         <div
-          key={`spot-${beam.id}`}
+          key={`spot-${i}`}
+          ref={setSpotRef(i)}
           style={{
             position: 'absolute',
-            top: `calc(${beam.adjustedTop} + ${25 + i * 18}%)`,
-            left: `calc(${beam.adjustedLeft} + ${35 + i * 12}%)`,
+            top: `calc(${beam.top} + ${25 + i * 18}%)`,
+            left: `calc(${beam.left} + ${35 + i * 12}%)`,
             width: `${beam.width * 1.6}px`,
             height: `${beam.width * 1.6}px`,
             background: `radial-gradient(

@@ -1,10 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import useFolderReader from './hooks/useFolderReader';
-import useParallax from './hooks/useParallax';
-import useScrollParallax from './hooks/useScrollParallax';
 import ParticleSystem from './components/ParticleSystem';
 import LightBeam from './components/LightBeam';
 import CyberBackground from './components/CyberBackground';
+import ConstellationBackground from './components/ConstellationBackground';
 import NavigationBar from './components/NavigationBar';
 import FolderSelector from './components/FolderSelector';
 import ExhibitionHall from './components/ExhibitionHall';
@@ -12,22 +11,17 @@ import LandingPage from './components/LandingPage';
 import './styles/global.css';
 import './styles/animations.css';
 
-export default function App() {
-  const [theme, setTheme] = useState('landing'); // 'landing' | 'forest' | 'cyber'
-  const { images, folderName, loading, error, selectFolder, cleanup } = useFolderReader();
-  const mouseRef = useParallax();
-  const scrollData = useScrollParallax();
-  const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.3 });
+// GSAP 插件注册（全局一次性）
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-  useEffect(() => {
-    let rafId;
-    const poll = () => {
-      if (mouseRef.current) setMousePos({ x: mouseRef.current.x, y: mouseRef.current.y });
-      rafId = requestAnimationFrame(poll);
-    };
-    rafId = requestAnimationFrame(poll);
-    return () => cancelAnimationFrame(rafId);
-  }, [mouseRef]);
+export default function App() {
+  const [theme, setTheme] = useState('landing');
+  const [zodiacIdx, setZodiacIdx] = useState(() => Math.floor(Math.random() * 12));
+  const [constViewMode, setConstViewMode] = useState('star'); // 'star' | 'gallery'
+  const { images, folderName, loading, error, selectFolder, cleanup } = useFolderReader();
 
   useEffect(() => () => cleanup(), [cleanup]);
 
@@ -38,14 +32,23 @@ export default function App() {
   const hasImages = images.length > 0;
   const isForest = theme === 'forest';
   const isCyber = theme === 'cyber';
+  const isConstellation = theme === 'constellation';
 
-  // 赛博主题时给 body 添加 class（控制 body::before/::after）
+  // 星座主题：30s 自动切换星座
   useEffect(() => {
-    if (isCyber) {
-      document.body.classList.add('body-cyber');
-      return () => document.body.classList.remove('body-cyber');
-    }
-  }, [isCyber]);
+    if (!isConstellation) return;
+    const t = setInterval(() => setZodiacIdx(i => (i + Math.ceil(Math.random() * 11)) % 12), 30000);
+    return () => clearInterval(t);
+  }, [isConstellation]);
+
+  // 赛博/星座主题时给 body 添加 class
+  useEffect(() => {
+    if (isCyber) document.body.classList.add('body-cyber');
+    if (isConstellation) document.body.classList.add('body-constellation');
+    return () => {
+      document.body.classList.remove('body-cyber', 'body-constellation');
+    };
+  }, [isCyber, isConstellation]);
 
   // Landing page
   if (theme === 'landing') {
@@ -59,20 +62,22 @@ export default function App() {
       {isForest && (
         <>
           <ParticleSystem />
-          <LightBeam mouseX={mousePos.x} mouseY={mousePos.y} scrollProgress={scrollData.progress} />
+          <LightBeam />
         </>
       )}
 
       {/* 赛博主题背景 */}
       {isCyber && <CyberBackground />}
+      {/* 星座主题背景 */}
+      {isConstellation && <ConstellationBackground zodiacIdx={zodiacIdx} prominent={constViewMode === 'star'} />}
 
       {/* 导航栏 */}
       <NavigationBar
-        folderName={isForest ? folderName : ''}
+        folderName={isForest || isConstellation ? folderName : ''}
         imageCount={images.length}
         onSwitchFolder={switchFolder}
         onBack={backToLanding}
-        themeName={isForest ? '森林光影' : '赛博博物馆'}
+        themeName={isForest ? '森林光影' : isCyber ? '赛博博物馆' : '暗夜星座'}
       />
 
       {/* 文件夹选择器（森林主题） */}
@@ -107,10 +112,25 @@ export default function App() {
       )}
       {isCyber && hasImages && <ExhibitionHall images={images} theme="cyber" />}
 
+      {/* 星座主题 — 完整展览 */}
+      {isConstellation && !hasImages && !loading && (
+        <FolderSelector onSelect={selectFolder} loading={loading} error={error} theme="constellation" />
+      )}
+      {isConstellation && loading && (
+        <div className="loading-overlay">
+          <div className="loading-content">
+            <div className="loading-ring loading-ring--star" />
+            <p className="loading-text">正在绘制星图...</p>
+          </div>
+        </div>
+      )}
+      {isConstellation && hasImages && <ExhibitionHall images={images} theme="constellation" zodiacIdx={zodiacIdx} onZodiacChange={setZodiacIdx} viewMode={constViewMode} onViewModeChange={setConstViewMode} />}
+
       <style>{`
         .app { min-height: 100vh; }
         .app.theme-forest { background: var(--color-bg-deep); }
         .app.theme-cyber { background: #060810; }
+        .app.theme-constellation { background: #060612; }
 
         .loading-overlay {
           position: fixed; inset: 0; z-index: 100;
@@ -125,6 +145,9 @@ export default function App() {
         }
         .loading-ring--amber {
           border-color: rgba(255,172,2,.15); border-top-color: #ffac02;
+        }
+        .loading-ring--star {
+          border-color: rgba(136,153,204,.15); border-top-color: #8899cc;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
         .loading-text { color: var(--color-text-secondary); font-size: .9rem; letter-spacing: .04em; }

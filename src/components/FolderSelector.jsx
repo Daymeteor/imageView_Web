@@ -5,6 +5,7 @@
 
 export default function FolderSelector({ onSelect, loading, error, theme = 'forest' }) {
   const isCyber = theme === 'cyber';
+  const isConstellation = theme === 'constellation';
 
   return (
     <div className="folder-selector">
@@ -14,7 +15,23 @@ export default function FolderSelector({ onSelect, loading, error, theme = 'fore
 
         {/* 图标 */}
         <div className="selector-icon">
-          {isCyber ? (
+          {isConstellation ? (
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="32" cy="22" r="2.5" fill="currentColor" opacity="0.9" />
+              <circle cx="22" cy="32" r="2" fill="currentColor" opacity="0.7" />
+              <circle cx="42" cy="32" r="2" fill="currentColor" opacity="0.7" />
+              <circle cx="26" cy="46" r="1.5" fill="currentColor" opacity="0.5" />
+              <circle cx="38" cy="46" r="1.5" fill="currentColor" opacity="0.5" />
+              <circle cx="50" cy="40" r="1.8" fill="currentColor" opacity="0.6" />
+              <line x1="32" y1="22" x2="22" y2="32" stroke="currentColor" strokeWidth="0.4" opacity="0.35" />
+              <line x1="32" y1="22" x2="42" y2="32" stroke="currentColor" strokeWidth="0.4" opacity="0.35" />
+              <line x1="22" y1="32" x2="26" y2="46" stroke="currentColor" strokeWidth="0.3" opacity="0.25" />
+              <line x1="42" y1="32" x2="38" y2="46" stroke="currentColor" strokeWidth="0.3" opacity="0.25" />
+              <line x1="26" y1="46" x2="38" y2="46" stroke="currentColor" strokeWidth="0.3" opacity="0.2" />
+              <line x1="42" y1="32" x2="50" y2="40" stroke="currentColor" strokeWidth="0.3" opacity="0.2" />
+              <polygon points="32,32 34,24 38,26 36,32" fill="currentColor" opacity="0.15" className="icon-draw" />
+            </svg>
+          ) : isCyber ? (
             <svg
               width="64"
               height="64"
@@ -84,12 +101,12 @@ export default function FolderSelector({ onSelect, loading, error, theme = 'fore
         </div>
 
         {/* 文字 */}
-        <h1 className="selector-title">{isCyber ? '赛博博物馆' : '光影艺术展'}</h1>
+        <h1 className="selector-title">{isConstellation ? '暗夜星座' : isCyber ? '赛博博物馆' : '光影艺术展'}</h1>
         <p className="selector-subtitle">
-          {isCyber ? 'Cyber Museum' : 'Forest Light Exhibition'}
+          {isConstellation ? 'Constellation Atlas' : isCyber ? 'Cyber Museum' : 'Forest Light Exhibition'}
         </p>
         <p className="selector-desc">
-          {isCyber ? '选择一个包含照片的文件夹，开启数字考古之旅' : '选择一个包含照片的文件夹，开启你的森林光影展览'}
+          {isConstellation ? '选择一个包含照片的文件夹，在星空下展开你的图像星图' : isCyber ? '选择一个包含照片的文件夹，开启数字考古之旅' : '选择一个包含照片的文件夹，开启你的森林光影展览'}
         </p>
 
         {/* 选择按钮 */}
