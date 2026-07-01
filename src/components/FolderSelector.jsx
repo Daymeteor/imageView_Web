@@ -3,7 +3,10 @@
  * 空状态时显示的大选择按钮
  */
 
+import { getTheme } from '../data/themeConfig';
+
 export default function FolderSelector({ onSelect, loading, error, theme = 'forest' }) {
+  const t = getTheme(theme);
   const isCyber = theme === 'cyber';
   const isConstellation = theme === 'constellation';
 
@@ -101,13 +104,9 @@ export default function FolderSelector({ onSelect, loading, error, theme = 'fore
         </div>
 
         {/* 文字 */}
-        <h1 className="selector-title">{isConstellation ? '暗夜星座' : isCyber ? '赛博博物馆' : '光影艺术展'}</h1>
-        <p className="selector-subtitle">
-          {isConstellation ? 'Constellation Atlas' : isCyber ? 'Cyber Museum' : 'Forest Light Exhibition'}
-        </p>
-        <p className="selector-desc">
-          {isConstellation ? '选择一个包含照片的文件夹，在星空下展开你的图像星图' : isCyber ? '选择一个包含照片的文件夹，开启数字考古之旅' : '选择一个包含照片的文件夹，开启你的森林光影展览'}
-        </p>
+        <h1 className="selector-title">{t.selectTitle}</h1>
+        <p className="selector-subtitle">{t.selectSubtitle}</p>
+        <p className="selector-desc">{t.selectDesc}</p>
 
         {/* 选择按钮 */}
         <button

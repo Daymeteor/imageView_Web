@@ -1,37 +1,10 @@
 import { motion } from 'framer-motion';
+import { THEMES } from '../data/themeConfig';
 
-const themes = [
-  {
-    id: 'forest',
-    title: '森林光影',
-    subtitle: 'Forest Light',
-    desc: '复古森系 · 光影艺术展',
-    icon: '🌿',
-    gradient: 'linear-gradient(135deg, #1a2e14, #0a1209)',
-    accent: '#bf9b5e',
-    glow: 'rgba(191, 155, 94, 0.15)',
-  },
-  {
-    id: 'cyber',
-    title: '赛博博物馆',
-    subtitle: 'Cyber Museum',
-    desc: '数字遗迹 · 琥珀暗房',
-    icon: '◆',
-    gradient: 'linear-gradient(135deg, #041c1c, #0a1f1f)',
-    accent: '#ffac02',
-    glow: 'rgba(255, 172, 2, 0.15)',
-  },
-  {
-    id: 'constellation',
-    title: '暗夜星座',
-    subtitle: 'Constellation',
-    desc: '星辰图谱 · 十二宫巡礼',
-    icon: '✦',
-    gradient: 'linear-gradient(135deg, #0d0d24, #060612)',
-    accent: '#8899cc',
-    glow: 'rgba(136, 153, 204, 0.12)',
-  },
-];
+const themes = THEMES.map(t => ({
+  id: t.id, title: t.title, subtitle: t.subtitle, desc: t.desc,
+  icon: t.icon, gradient: t.gradient, accent: t.accent, glow: t.glow,
+}));
 
 export default function LandingPage({ onEnter }) {
   return (
@@ -63,6 +36,9 @@ export default function LandingPage({ onEnter }) {
               whileHover={{ y: -8, scale: 1.02, boxShadow: `0 20px 60px rgba(0,0,0,0.6), 0 0 60px ${t.glow}` }}
               whileTap={{ scale: 0.97 }}
               onClick={() => onEnter(t.id)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onEnter(t.id); }}
             >
               <div className="theme-bg" />
               <div className="theme-content">

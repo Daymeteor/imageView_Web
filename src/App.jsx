@@ -8,6 +8,7 @@ import NavigationBar from './components/NavigationBar';
 import FolderSelector from './components/FolderSelector';
 import ExhibitionHall from './components/ExhibitionHall';
 import LandingPage from './components/LandingPage';
+import { getTheme } from './data/themeConfig';
 import './styles/global.css';
 import './styles/animations.css';
 
@@ -77,7 +78,7 @@ export default function App() {
         imageCount={images.length}
         onSwitchFolder={switchFolder}
         onBack={backToLanding}
-        themeName={isForest ? '森林光影' : isCyber ? '赛博博物馆' : '暗夜星座'}
+        themeName={getTheme(theme).title}
       />
 
       {/* 文件夹选择器（森林主题） */}
@@ -105,7 +106,7 @@ export default function App() {
       {isCyber && loading && (
         <div className="loading-overlay">
           <div className="loading-content">
-            <div className="loading-ring loading-ring--amber" />
+            <div className="loading-ring" />
             <p className="loading-text">正在读取数据...</p>
           </div>
         </div>
@@ -119,7 +120,7 @@ export default function App() {
       {isConstellation && loading && (
         <div className="loading-overlay">
           <div className="loading-content">
-            <div className="loading-ring loading-ring--star" />
+            <div className="loading-ring" />
             <p className="loading-text">正在绘制星图...</p>
           </div>
         </div>
@@ -129,8 +130,8 @@ export default function App() {
       <style>{`
         .app { min-height: 100vh; }
         .app.theme-forest { background: var(--color-bg-deep); }
-        .app.theme-cyber { background: #060810; }
-        .app.theme-constellation { background: #060612; }
+        .app.theme-cyber { background: var(--color-bg-deep); }
+        .app.theme-constellation { background: var(--color-bg-deep); }
 
         .loading-overlay {
           position: fixed; inset: 0; z-index: 100;
@@ -143,33 +144,9 @@ export default function App() {
           border: 2px solid color-mix(in oklab, var(--color-accent) 15%, transparent); border-top-color: var(--color-accent);
           border-radius: 50%; animation: spin 1s linear infinite;
         }
-        .loading-ring--amber {
-          border-color: rgba(255,172,2,.15); border-top-color: #ffac02;
-        }
-        .loading-ring--star {
-          border-color: rgba(136,153,204,.15); border-top-color: #8899cc;
-        }
         @keyframes spin { to { transform: rotate(360deg); } }
         .loading-text { color: var(--color-text-secondary); font-size: .9rem; letter-spacing: .04em; }
 
-        .cyber-bg {
-          position: fixed; inset: 0; pointer-events: none; z-index: -1;
-          background:
-            radial-gradient(ellipse at 20% 10%, rgba(0,229,255,.04) 0%, transparent 50%),
-            radial-gradient(ellipse at 80% 70%, rgba(128,0,255,.04) 0%, transparent 50%);
-        }
-
-        .theme-placeholder {
-          display: flex; flex-direction: column; align-items: center; justify-content: center;
-          min-height: 100vh; text-align: center;
-        }
-        .theme-placeholder h2 {
-          font-family: var(--font-display); font-size: 2rem; font-weight: 400;
-          color: #00e5ff; letter-spacing: .08em; margin-bottom: 12px;
-        }
-        .theme-placeholder p {
-          font-size: .9rem; color: rgba(255,255,255,.3); letter-spacing: .1em;
-        }
       `}</style>
     </div>
   );

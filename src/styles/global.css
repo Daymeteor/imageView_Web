@@ -186,6 +186,19 @@ button {
   color: inherit;
 }
 
+/* --- 全局焦点可见 --- */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+/* 输入框和按钮用更柔和的焦点环 */
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+}
+
 /* ============================================
    赛博博物馆 — Hermes 暗色玻璃拟态主题
    ============================================ */

@@ -36,31 +36,10 @@
   }
 }
 
-/* --- 光点闪烁 --- */
-@keyframes twinkle {
-  0%, 100% { opacity: 0.25; transform: scale(0.8); }
-  30%  { opacity: 0.8; transform: scale(1.3); }
-  60%  { opacity: 0.4; transform: scale(1); }
-}
-
 /* --- 光斑呼吸 --- */
 @keyframes beamBreath {
   0%, 100% { filter: brightness(1) blur(var(--beam-blur)); }
   50%      { filter: brightness(1.4) blur(calc(var(--beam-blur) * 0.8)); }
-}
-
-/* --- 卡片入场（从下方浮起 + 淡入） --- */
-@keyframes cardEnter {
-  from {
-    opacity: 0;
-    transform: translateY(50px) scale(0.94);
-    filter: brightness(0.7);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: brightness(1);
-  }
 }
 
 /* --- 标题入场 --- */
@@ -75,46 +54,6 @@
   to   { opacity: 1; }
 }
 
-/* --- 导航栏滑入 --- */
-@keyframes navSlideIn {
-  from { transform: translateY(-100%); opacity: 0; }
-  to   { transform: translateY(0); opacity: 1; }
-}
-
-/* --- 灯箱 --- */
-@keyframes lightboxIn {
-  from { opacity: 0; backdrop-filter: blur(0px); }
-  to   { opacity: 1; backdrop-filter: blur(20px); }
-}
-
-@keyframes lightboxImageIn {
-  from { opacity: 0; transform: scale(0.88); }
-  to   { opacity: 1; transform: scale(1); }
-}
-
-/* --- 分割线展开 --- */
-@keyframes dividerExpand {
-  from { transform: scaleX(0); opacity: 0; }
-  to   { transform: scaleX(1); opacity: 1; }
-}
-
-/* ====== 滚动驱动动画 ====== */
-
-/* 初始隐藏（等待滚动触发） */
-.anim-on-scroll {
-  opacity: 0;
-  transform: translateY(40px);
-  transition:
-    opacity 0.8s var(--ease-out-expo),
-    transform 0.8s var(--ease-out-expo);
-}
-
-/* JS 添加此类触发动画 */
-.anim-on-scroll.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 /* ====== 工具类 ====== */
 .animate-fadeInUp {
   animation: fadeInUp 0.8s var(--ease-out-expo) both;
@@ -123,18 +62,6 @@
 .animate-fadeIn {
   animation: fadeIn 0.5s var(--ease-out-quint) both;
 }
-
-/* 交错延迟（配合 cardEnter） */
-.stagger-1  { animation-delay: 0.06s; }
-.stagger-2  { animation-delay: 0.12s; }
-.stagger-3  { animation-delay: 0.18s; }
-.stagger-4  { animation-delay: 0.24s; }
-.stagger-5  { animation-delay: 0.30s; }
-.stagger-6  { animation-delay: 0.36s; }
-.stagger-7  { animation-delay: 0.42s; }
-.stagger-8  { animation-delay: 0.48s; }
-.stagger-9  { animation-delay: 0.54s; }
-.stagger-10 { animation-delay: 0.60s; }
 
 /* ============================================
    Hermes 赛博动画
