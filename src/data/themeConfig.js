@@ -51,6 +51,22 @@ export const THEMES = [
     headerSub: 'Constellation Atlas',
     footer: '— End of Star Map —',
   },
+  {
+    id: 'anime',
+    title: '漫影剧场',
+    subtitle: 'Anime Theater',
+    desc: '次元跃迁 · 霓虹幻梦',
+    icon: '✿',
+    gradient: 'linear-gradient(135deg, #1a0a2e, #0d0a1a)',
+    accent: '#ff6b9d',
+    glow: 'rgba(255, 107, 157, 0.18)',
+    selectTitle: '漫影剧场',
+    selectSubtitle: 'Anime Theater',
+    selectDesc: '选择一个包含照片的文件夹，进入次元画廊，让回忆在樱花与霓虹中放映',
+    headerTitle: '次元画廊',
+    headerSub: 'Anime Gallery',
+    footer: '— End of Scene —',
+  },
 ];
 
 /** 按 id 查找主题 */

@@ -26,72 +26,71 @@ export default function PhotoDetail({ image, index, onImageClick, isActive }) {
   const name = image.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
 
   return (
-    <section ref={sectionRef} id={`detail-${image.id}`} className="pd">
-      <div className="pd-anchor">
-        <span className="pd-num">{String(index + 1).padStart(2, '0')}</span>
-        <span className="pd-anchor-name">{name}</span>
+    <section ref={sectionRef} id={`detail-${image.id}`} className="py-[var(--space-3xl)]">
+      {/* 锚点 */}
+      <div className="mb-8 flex items-center gap-4 rounded-lg border border-[var(--color-accent-card-border)] bg-[var(--color-accent-glass-bg)] px-4 py-3 backdrop-blur-md transition-colors duration-300 hover:border-[var(--color-accent-card-border-hover)]">
+        <span className="flex-shrink-0 font-display text-sm tracking-[0.08em] text-[var(--color-accent)]">
+          {String(index + 1).padStart(2, '0')}
+        </span>
+        <span className="truncate font-display text-sm tracking-[0.05em] text-[var(--color-accent-pale)]">
+          {name}
+        </span>
       </div>
 
-      <div className="pd-layout">
+      <div className="pd-layout grid items-start gap-8 lg:grid-cols-[1fr_340px]">
+        {/* 图片 */}
         <div
           ref={imgRef}
-          className="pd-img"
+          className="pd-img group cursor-pointer overflow-hidden rounded-lg border border-[var(--color-accent-card-border)] bg-[var(--color-bg-surface)] transition-all duration-300 hover:border-[var(--color-accent-card-border-hover)] hover:shadow-[var(--card-shadow-hover)]"
           onMouseEnter={onImgEnter}
           onMouseLeave={onImgLeave}
           onClick={(e) => onImageClick(image, e)}
         >
-          <img src={image.url} alt={name} draggable="false" />
+          <img src={image.url} alt={name} draggable="false" className="block h-auto w-full select-none" />
         </div>
 
-        <div className="pd-info">
-          <h3 className="pd-name">{name}</h3>
+        {/* 信息面板 */}
+        <div className="pd-info glass rounded-xl p-6 lg:p-7">
+          <h3 className="mb-6 border-b border-[color-mix(in_oklab,var(--color-accent)_10%,transparent)] pb-4 font-display text-lg font-normal tracking-[0.04em] text-[var(--color-accent-pale)]">
+            {name}
+          </h3>
+
           {exif?.hasData ? (
-            <>
-              {exif.camera && <div className="pd-row"><span>相机</span><span>{exif.camera}</span></div>}
-              {exif.lens && <div className="pd-row"><span>镜头</span><span>{exif.lens}</span></div>}
-              {exif.aperture && <div className="pd-row"><span>光圈</span><span>{exif.aperture}</span></div>}
-              {exif.shutter && <div className="pd-row"><span>快门</span><span>{exif.shutter}</span></div>}
-              {exif.iso && <div className="pd-row"><span>ISO</span><span>{exif.iso}</span></div>}
-              {exif.focalLength && <div className="pd-row"><span>焦距</span><span>{exif.focalLength}</span></div>}
-              <div className="pd-sep" />
-              {exif.date && <div className="pd-row"><span>拍摄日期</span><span>{exif.date} · {exif.timeOfDay} · {exif.season}季</span></div>}
-              {exif.gps && <div className="pd-row"><span>拍摄地点</span><span className="gps">{exif.gps}</span></div>}
-            </>
+            <div className="space-y-0">
+              <ExifRow label="相机" value={exif.camera} />
+              <ExifRow label="镜头" value={exif.lens} />
+              <ExifRow label="光圈" value={exif.aperture} />
+              <ExifRow label="快门" value={exif.shutter} />
+              <ExifRow label="ISO" value={exif.iso} />
+              <ExifRow label="焦距" value={exif.focalLength} />
+
+              <div className="h-4" />
+
+              <ExifRow
+                label="拍摄日期"
+                value={exif.date ? `${exif.date} · ${exif.timeOfDay} · ${exif.season}季` : null}
+              />
+              <ExifRow label="拍摄地点" value={exif.gps} valueClass="text-[11px]" />
+            </div>
           ) : (
-            <p className="pd-none">无 EXIF 信息</p>
+            <p className="py-4 text-sm text-[var(--color-text-muted)]">无 EXIF 信息</p>
           )}
         </div>
       </div>
-
-      <style>{`
-        .pd { padding: var(--space-3xl) 0; }
-        .pd-anchor {
-          display: flex; align-items: center; gap: var(--space-md);
-          margin-bottom: var(--space-2xl); padding: var(--space-md) var(--space-lg);
-          border: 1px solid var(--color-accent-card-border); border-radius: 8px;
-          background: var(--color-accent-glass-bg);
-          backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-        }
-        .pd-num { font-family: var(--font-display); font-size: .85rem; color: var(--color-accent); letter-spacing: .08em; flex-shrink: 0; }
-        .pd-anchor-name { font-family: var(--font-display); font-size: .9rem; color: var(--color-accent-pale); letter-spacing: .05em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .pd-layout { display: grid; grid-template-columns: 1fr 340px; gap: var(--space-2xl); align-items: start; }
-        @media(max-width:860px){ .pd-layout { grid-template-columns: 1fr; } }
-        .pd-img { border-radius: 8px; overflow: hidden; cursor: pointer; background: var(--color-bg-surface); border: 1px solid var(--color-accent-card-border); transition: border-color .3s, box-shadow .3s; }
-        .pd-img:hover { border-color: var(--color-accent-card-border-hover); box-shadow: var(--card-shadow-hover); }
-        .pd-img img { display: block; width: 100%; height: auto; user-select: none; -webkit-user-drag: none; }
-        .pd-info {
-          background: var(--glass-bg); border: 1px solid var(--glass-border);
-          backdrop-filter: blur(var(--glass-blur)); -webkit-backdrop-filter: blur(var(--glass-blur));
-          border-radius: 10px; padding: var(--space-xl); box-shadow: var(--glass-shadow);
-        }
-        .pd-name { font-family: var(--font-display); font-size: 1.15rem; font-weight: 400; color: var(--color-accent-pale); letter-spacing: .04em; margin-bottom: var(--space-xl); }
-        .pd-row { display: flex; justify-content: space-between; align-items: baseline; padding: 7px 0; border-bottom: 1px solid color-mix(in oklab, var(--color-accent) 8%, transparent); }
-        .pd-row span:first-child { font-size: .74rem; color: var(--color-text-muted); letter-spacing: .04em; flex-shrink: 0; margin-right: var(--space-md); }
-        .pd-row span:last-child { font-size: .8rem; color: var(--color-text-primary); text-align: right; font-family: var(--font-display); }
-        .pd-row span.gps { font-size: .72rem; }
-        .pd-sep { height: var(--space-md); }
-        .pd-none { font-size: .8rem; color: var(--color-text-muted); padding: var(--space-lg) 0; }
-      `}</style>
     </section>
+  );
+}
+
+function ExifRow({ label, value, valueClass = '' }) {
+  if (!value) return null;
+  return (
+    <div className="flex items-baseline justify-between border-b border-[color-mix(in_oklab,var(--color-accent)_6%,transparent)] py-2.5">
+      <span className="flex-shrink-0 text-[11px] tracking-[0.04em] text-[var(--color-text-muted)]">
+        {label}
+      </span>
+      <span className={`text-right font-display text-xs text-[var(--color-text-primary)] ${valueClass}`}>
+        {value}
+      </span>
+    </div>
   );
 }

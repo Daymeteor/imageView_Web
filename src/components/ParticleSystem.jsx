@@ -7,6 +7,7 @@ import useParallax from '../hooks/useParallax';
  */
 
 const PARTICLE_COUNT = 80;
+const SPARKLE_COUNT = 15;
 const PARTICLE_COLORS = [
   'rgba(220, 200, 154, ',  // 暖金
   'rgba(191, 155, 94, ',   // 暗金
@@ -14,6 +15,26 @@ const PARTICLE_COLORS = [
   'rgba(163, 188, 148, ',  // 苔色光点
   'rgba(120, 158, 102, ',  // 若草色
 ];
+
+// 绘制四角星形闪光
+function drawSparkle(ctx, x, y, size, alpha) {
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.fillStyle = '#fff';
+  ctx.beginPath();
+  const s = size;
+  ctx.moveTo(x, y - s);
+  ctx.quadraticCurveTo(x + s * 0.3, y - s * 0.3, x + s, y);
+  ctx.quadraticCurveTo(x + s * 0.3, y + s * 0.3, x, y + s * 0.3);
+  ctx.quadraticCurveTo(x - s * 0.3, y + s * 0.3, x - s * 0.3, y);
+  ctx.quadraticCurveTo(x - s * 0.3, y - s * 0.3, x, y - s);
+  ctx.fill();
+  // 十字光
+  ctx.globalAlpha = alpha * 0.4;
+  ctx.fillRect(x - s * 1.5, y - 1, s * 3, 2);
+  ctx.fillRect(x - 1, y - s * 1.5, 2, s * 3);
+  ctx.restore();
+}
 
 export default function ParticleSystem() {
   const canvasRef = useRef(null);
@@ -107,6 +128,16 @@ export default function ParticleSystem() {
       particlesRef.current.push(new Particle());
     }
 
+    // 闪光粒子（Magic UI sparkle 风格）
+    const sparkles = Array.from({ length: SPARKLE_COUNT }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      size: Math.random() * 4 + 3,
+      timer: Math.random() * 300,
+      interval: 2000 + Math.random() * 5000,
+      alpha: 0,
+    }));
+
     const animate = (time) => {
       ctx.clearRect(0, 0, width, height);
 
@@ -116,6 +147,22 @@ export default function ParticleSystem() {
       particlesRef.current.forEach((p) => {
         p.update(time, mx, my);
         p.draw(ctx);
+      });
+
+      // 闪光粒子
+      sparkles.forEach((sp) => {
+        sp.timer += 16;
+        if (sp.timer > sp.interval) {
+          sp.timer = 0;
+          sp.x = Math.random() * width;
+          sp.y = Math.random() * height;
+          sp.size = Math.random() * 5 + 3;
+          sp.alpha = 0.8 + Math.random() * 0.2;
+        }
+        if (sp.alpha > 0) {
+          sp.alpha -= 0.015;
+          drawSparkle(ctx, sp.x, sp.y, sp.size, Math.max(0, sp.alpha));
+        }
       });
 
       animationId = requestAnimationFrame(animate);

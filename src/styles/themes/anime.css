@@ -1,0 +1,87 @@
+/* ============================================
+   漫影剧场 — 动漫/二次元霓虹主题
+   ============================================ */
+
+.theme-anime,
+[data-theme='anime'] {
+  /* --- 基底色系 — 深紫蓝夜空 --- */
+  --color-bg-deep: #0a0912;
+  --color-bg-primary: #120d1f;
+  --color-bg-surface: #181024;
+  --color-bg-elevated: #221430;
+
+  /* --- 霓虹粉紫系 — 次元Accent --- */
+  --color-gold: #ff6b9d;
+  --color-gold-light: #ff8fb8;
+  --color-gold-pale: #ffc2d8;
+  --color-gold-dim: #c94e7a;
+  --color-gold-subtle: #7a2e4a;
+
+  /* --- 电光蓝/薄荷绿 — 辅助色 --- */
+  --color-moss: #00d4ff;
+  --color-moss-light: #5ce1ff;
+  --color-moss-pale: #a8efff;
+  --color-leaf: #0099cc;
+  --color-mist: #9d7bff;
+  --color-mist-light: #b8a0ff;
+  --color-twilight: #4a3578;
+
+  /* --- 语义化 accent 覆盖（霓虹粉） --- */
+  --color-accent: var(--color-gold);
+  --color-accent-light: var(--color-gold-light);
+  --color-accent-pale: var(--color-gold-pale);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-subtle: var(--color-gold-subtle);
+  --color-accent-glass-border: color-mix(in oklab, var(--color-gold) 18%, transparent);
+  --color-accent-glass-bg: rgba(24, 16, 36, 0.65);
+  --color-accent-card-border: color-mix(in oklab, var(--color-gold) 14%, transparent);
+  --color-accent-card-border-hover: color-mix(in oklab, var(--color-gold) 45%, transparent);
+  --color-accent-shadow: rgba(255, 107, 157, 0.1);
+  --color-accent-shadow-hover: rgba(255, 107, 157, 0.25);
+
+  /* --- 文字层级 --- */
+  --color-text-primary: #f0e8f5;
+  --color-text-secondary: rgba(220, 200, 235, 0.65);
+  --color-text-muted: rgba(180, 160, 200, 0.4);
+
+  /* --- 玻璃拟态 — 霓虹都市风 --- */
+  --glass-bg: rgba(24, 16, 36, 0.6);
+  --glass-border: color-mix(in oklab, var(--color-gold) 18%, transparent);
+  --glass-blur: 14px;
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.45),
+                  0 0 24px rgba(255, 107, 157, 0.08);
+
+  /* --- 卡片 --- */
+  --card-radius: 8px;
+  --card-border: 1px solid var(--color-accent-card-border);
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.5),
+                 0 0 30px var(--color-accent-shadow);
+  --card-shadow-hover: 0 8px 40px rgba(0, 0, 0, 0.65),
+                       0 0 60px var(--color-accent-shadow-hover);
+
+  /* --- 字体 — 动漫感圆体/等宽混合 --- */
+  --font-display: 'Georgia', 'Times New Roman', 'Noto Serif SC', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.theme-anime .body-accent::before,
+[data-theme='anime'] .body-accent::before {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(255, 107, 157, 0.07) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 30%, rgba(0, 212, 255, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(157, 123, 255, 0.05) 0%, transparent 50%);
+}
+
+.theme-anime .body-accent::after,
+[data-theme='anime'] .body-accent::after {
+  opacity: 0.025;
+}
+
+/* --- 动漫主题专用工具类 --- */
+.theme-anime .anime-glow-pink {
+  box-shadow: 0 0 40px rgba(255, 107, 157, 0.25);
+}
+
+.theme-anime .anime-glow-cyan {
+  box-shadow: 0 0 40px rgba(0, 212, 255, 0.2);
+}

@@ -1,0 +1,66 @@
+/* ============================================
+   暗夜星座 — 深空星图主题
+   ============================================ */
+
+.theme-constellation,
+[data-theme='constellation'] {
+  --color-bg-deep: #060612;
+  --color-bg-primary: #0a0a1a;
+  --color-bg-surface: #0e0e22;
+  --color-bg-elevated: #14142a;
+
+  --color-gold: #8899cc;
+  --color-gold-light: #aabbdd;
+  --color-gold-pale: #ccd5ee;
+  --color-gold-dim: #6677aa;
+  --color-gold-subtle: #445588;
+
+  --color-moss: #556688;
+  --color-moss-light: #6677aa;
+  --color-moss-pale: #8899cc;
+  --color-leaf: #334466;
+  --color-mist: #445566;
+  --color-mist-light: #556688;
+  --color-twilight: #223344;
+
+  --color-accent: var(--color-gold);
+  --color-accent-light: var(--color-gold-light);
+  --color-accent-pale: var(--color-gold-pale);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-subtle: var(--color-gold-subtle);
+  --color-accent-glass-border: color-mix(in oklab, var(--color-gold) 15%, transparent);
+  --color-accent-glass-bg: rgba(10, 10, 26, 0.7);
+  --color-accent-card-border: color-mix(in oklab, var(--color-gold) 12%, transparent);
+  --color-accent-card-border-hover: color-mix(in oklab, var(--color-gold) 35%, transparent);
+  --color-accent-shadow: rgba(136, 153, 204, 0.08);
+  --color-accent-shadow-hover: rgba(136, 153, 204, 0.2);
+
+  --color-text-primary: #e0e4f0;
+  --color-text-secondary: rgba(200, 210, 230, 0.6);
+  --color-text-muted: rgba(180, 190, 220, 0.35);
+
+  --glass-bg: var(--color-accent-glass-bg);
+  --glass-border: var(--color-accent-glass-border);
+  --glass-blur: 12px;
+  --glass-shadow: 0 8px 32px rgba(0,0,0,0.5);
+
+  --card-radius: 6px;
+  --card-border: 1px solid var(--color-accent-card-border);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.5), 0 0 20px var(--color-accent-shadow);
+  --card-shadow-hover: 0 8px 40px rgba(0,0,0,0.65), 0 0 50px var(--color-accent-shadow-hover);
+
+  --font-display: 'Georgia', 'Times New Roman', 'Noto Serif SC', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.theme-constellation .body-accent::before,
+[data-theme='constellation'] .body-accent::before {
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(136, 153, 204, 0.04) 0%, transparent 55%),
+    radial-gradient(ellipse at 70% 60%, rgba(100, 120, 180, 0.03) 0%, transparent 50%);
+}
+
+.theme-constellation .body-accent::after,
+[data-theme='constellation'] .body-accent::after {
+  opacity: 0.02;
+}

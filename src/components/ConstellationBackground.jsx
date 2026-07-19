@@ -70,22 +70,33 @@ export default function ConstellationBackground({ zodiacIdx = 0, prominent = fal
   const w = typeof window !== 'undefined' ? window.innerWidth : 1200;
   const h = typeof window !== 'undefined' ? window.innerHeight : 800;
   const size = Math.min(w, h) * 0.65;
-  const ctrX = w / 2;  // viewport 中心
+  const ctrX = w / 2;
   const ctrY = h / 2;
-  // 星座重心（0-100 坐标均值）
   const sx = zodiac.stars.reduce((s, p) => s + p[0], 0) / zodiac.stars.length;
   const sy = zodiac.stars.reduce((s, p) => s + p[1], 0) / zodiac.stars.length;
   const sc = size / 100;
 
   return (
-    <div className="cz-bg">
-      <canvas ref={canvasRef} className="cz-canvas" />
+    <div
+      className="fixed inset-0 z-0 overflow-hidden pointer-events-none"
+      style={{
+        background: 'radial-gradient(ellipse at 35% 30%, #101030 0%, #060612 50%, #020208 100%)',
+      }}
+    >
+      <canvas ref={canvasRef} className="absolute inset-0" />
 
-      <div ref={overlayRef} className="cz-overlay">
+      <div ref={overlayRef} className="cz-overlay absolute inset-0">
         {/* 星座中心辉光 */}
-        <div className="cz-aura" />
+        <div
+          className="cz-aura pointer-events-none absolute left-1/2 top-1/2 max-h-[500px] max-w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full"
+          style={{
+            width: '45vw',
+            height: '45vw',
+            background: 'radial-gradient(circle, rgba(136,153,204,0.08) 0%, rgba(100,120,180,0.03) 40%, transparent 70%)',
+          }}
+        />
 
-        <svg viewBox={`0 0 ${w} ${h}`} className="cz-svg">
+        <svg viewBox={`0 0 ${w} ${h}`} className="h-full w-full">
           <defs>
             <filter id="czGlow">
               <feGaussianBlur stdDeviation="3" result="blur" />
@@ -121,42 +132,13 @@ export default function ConstellationBackground({ zodiacIdx = 0, prominent = fal
         </svg>
 
         {/* 标签 */}
-        <div className="cz-label">
-          <span className="cz-symbol">{zodiac.symbol}</span>
-          <span className="cz-name">{zodiac.name} · {zodiac.en}</span>
+        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-0.5 opacity-85">
+          <span className="text-4xl leading-none">{zodiac.symbol}</span>
+          <span className="font-display text-base tracking-[0.12em] text-[#d0d8f0]">
+            {zodiac.name} · {zodiac.en}
+          </span>
         </div>
       </div>
-
-      <style>{`
-        .cz-bg {
-          position: fixed; inset: 0; pointer-events: none; z-index: 0;
-          background: radial-gradient(ellipse at 35% 30%, #101030 0%, #060612 50%, #020208 100%);
-          overflow: hidden;
-        }
-        .cz-canvas { position: absolute; inset: 0; }
-        .cz-overlay { position: absolute; inset: 0; }
-        .cz-svg { width: 100%; height: 100%; }
-
-        .cz-aura {
-          position: absolute; top: 50%; left: 50%;
-          transform: translate(-50%, -50%);
-          width: 45vw; height: 45vw; max-width: 500px; max-height: 500px;
-          border-radius: 50%;
-          background: radial-gradient(circle, rgba(136,153,204,0.08) 0%, rgba(100,120,180,0.03) 40%, transparent 70%);
-          pointer-events: none;
-        }
-
-        .cz-label {
-          position: absolute; bottom: 48px; left: 50%; transform: translateX(-50%);
-          display: flex; flex-direction: column; align-items: center; gap: 2px;
-          opacity: 0.85;
-        }
-        .cz-symbol { font-size: 2.4rem; line-height: 1; }
-        .cz-name {
-          font-family: var(--font-display); font-size: 1rem;
-          color: #d0d8f0; letter-spacing: .12em;
-        }
-      `}</style>
     </div>
   );
 }

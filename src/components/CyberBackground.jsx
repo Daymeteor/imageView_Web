@@ -55,84 +55,73 @@ export default function CyberBackground() {
   }, { scope: containerRef });
 
   return (
-    <div className="cbg" ref={containerRef}>
+    <div
+      ref={containerRef}
+      className="fixed inset-0 z-0 overflow-hidden bg-[var(--color-bg-deep)] pointer-events-none"
+    >
       {/* 环境光晕 */}
-      <div className="cbg-glow cbg-glow--tl" />
-      <div className="cbg-glow cbg-glow--br" />
-      <div className="cbg-glow cbg-glow--ctr" />
+      <div
+        className="cbg-glow cbg-glow--tl absolute rounded-full opacity-[0.18] blur-[120px]"
+        style={{
+          top: '-10%',
+          left: '-5%',
+          width: '60vw',
+          height: '60vw',
+          background: 'radial-gradient(circle, rgba(255, 172, 2, 0.25) 0%, transparent 60%)',
+        }}
+      />
+      <div
+        className="cbg-glow cbg-glow--br absolute rounded-full opacity-[0.18] blur-[120px]"
+        style={{
+          bottom: '-15%',
+          right: '-10%',
+          width: '50vw',
+          height: '50vw',
+          background: 'radial-gradient(circle, rgba(255, 172, 2, 0.12) 0%, transparent 55%)',
+        }}
+      />
+      <div
+        className="cbg-glow cbg-glow--ctr absolute rounded-full opacity-[0.06] blur-[120px]"
+        style={{
+          top: '40%',
+          left: '30%',
+          width: '40vw',
+          height: '40vw',
+          background: 'radial-gradient(circle, rgba(0, 229, 255, 0.05) 0%, transparent 50%)',
+        }}
+      />
 
       {/* Dither 纹理 */}
-      <div className="cbg-dither" />
+      <div
+        className="cbg-dither absolute inset-0 opacity-[0.025] mix-blend-overlay"
+        style={{
+          background: 'repeating-conic-gradient(var(--color-text-primary, #fff) 0% 25%, transparent 0% 50%) 0 0 / 2px 2px',
+        }}
+      />
 
       {/* 扫描线 */}
-      <div className="cbg-scan" />
+      <div
+        className="cbg-scan absolute left-0 right-0 top-0 h-0.5"
+        style={{
+          background: 'linear-gradient(90deg, transparent 0%, rgba(255, 172, 2, 0.2) 30%, rgba(255, 172, 2, 0.45) 50%, rgba(255, 172, 2, 0.2) 70%, transparent 100%)',
+        }}
+      />
 
       {/* 数字粒子 — 散布的琥珀光点 */}
       {Array.from({ length: 12 }, (_, i) => (
         <div
           key={`p-${i}`}
-          className="cbg-particle"
+          className="cbg-particle absolute rounded-full pointer-events-none"
           style={{
-            position: 'absolute',
             left: `${10 + (i * 7.3) % 85}%`,
             top: `${5 + (i * 11.7) % 90}%`,
             width: `${1.5 + (i % 3) * 1.5}px`,
             height: `${1.5 + (i % 3) * 1.5}px`,
-            borderRadius: '50%',
             background: `rgba(255,172,2,${0.3 + (i % 4) * 0.1})`,
             boxShadow: `0 0 ${3 + (i % 3) * 2}px rgba(255,172,2,0.5)`,
-            pointerEvents: 'none',
           }}
         />
       ))}
-
-      <style>{`
-        .cbg {
-          position: fixed; inset: 0; pointer-events: none; z-index: -1;
-          background: var(--color-bg-deep, #041c1c);
-          overflow: hidden;
-        }
-
-        .cbg-glow {
-          position: absolute; border-radius: 50%;
-          filter: blur(120px); opacity: 0.18;
-        }
-        .cbg-glow--tl {
-          top: -10%; left: -5%; width: 60vw; height: 60vw;
-          background: radial-gradient(circle, rgba(255, 172, 2, 0.25) 0%, transparent 60%);
-        }
-        .cbg-glow--br {
-          bottom: -15%; right: -10%; width: 50vw; height: 50vw;
-          background: radial-gradient(circle, rgba(255, 172, 2, 0.12) 0%, transparent 55%);
-        }
-        .cbg-glow--ctr {
-          top: 40%; left: 30%; width: 40vw; height: 40vw;
-          background: radial-gradient(circle, rgba(0, 229, 255, 0.05) 0%, transparent 50%);
-          opacity: 0.06;
-        }
-
-        .cbg-dither {
-          position: absolute; inset: 0; opacity: 0.025;
-          background: repeating-conic-gradient(
-            var(--color-text-primary, #fff) 0% 25%,
-            transparent 0% 50%
-          ) 0 0 / 2px 2px;
-          mix-blend-mode: overlay;
-        }
-
-        .cbg-scan {
-          position: absolute; top: 0; left: 0; right: 0;
-          height: 2px;
-          background: linear-gradient(
-            90deg,
-            transparent 0%,
-            rgba(255, 172, 2, 0.2) 30%,
-            rgba(255, 172, 2, 0.45) 50%,
-            rgba(255, 172, 2, 0.2) 70%,
-            transparent 100%
-          );
-        }
-      `}</style>
     </div>
   );
 }

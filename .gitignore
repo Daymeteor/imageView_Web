@@ -2,3 +2,9 @@ node_modules/
 dist/
 .DS_Store
 *.local
+
+# Verification artifacts
+screenshot*.png
+final-*.png
+playwright-test*.cjs
+playwright-final-test.cjs

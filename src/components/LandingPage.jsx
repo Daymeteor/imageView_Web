@@ -1,159 +1,160 @@
 import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 import { THEMES } from '../data/themeConfig';
+import { cn } from '../lib/utils';
 
-const themes = THEMES.map(t => ({
-  id: t.id, title: t.title, subtitle: t.subtitle, desc: t.desc,
-  icon: t.icon, gradient: t.gradient, accent: t.accent, glow: t.glow,
+const themes = THEMES.map((t) => ({
+  id: t.id,
+  title: t.title,
+  subtitle: t.subtitle,
+  desc: t.desc,
+  icon: t.icon,
+  gradient: t.gradient,
+  accent: t.accent,
+  glow: t.glow,
 }));
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.12, delayChildren: 0.2 },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: [0.19, 1, 0.22, 1] },
+  },
+};
 
 export default function LandingPage({ onEnter }) {
   return (
-    <div className="landing">
-      <div className="landing-bg" />
+    <div className="fixed inset-0 z-[200] flex items-center justify-center overflow-hidden bg-[#060806]">
+      {/* 环境光晕背景 */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(ellipse at 30% 20%, rgba(191,155,94,.04) 0%, transparent 55%), radial-gradient(ellipse at 70% 60%, rgba(0,229,255,.03) 0%, transparent 55%), radial-gradient(ellipse at 50% 80%, rgba(90,125,74,.04) 0%, transparent 50%)',
+        }}
+      />
+
+      {/* 顶部微光 */}
+      <div className="pointer-events-none absolute left-1/2 top-[15%] h-px w-40 -translate-x-1/2 bg-gradient-to-r from-transparent via-[var(--color-gold-dim)] to-transparent opacity-40" />
 
       <motion.div
-        className="landing-content"
+        className="relative z-10 w-[90%] max-w-[880px] text-center"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, ease: [0.19, 1, 0.22, 1] }}
       >
-        <div className="landing-header">
-          <div className="landing-divider" />
-          <h1>光影艺术展</h1>
-          <p>Light & Shadow Exhibition</p>
-          <span className="landing-sub">选择一个主题进入</span>
-        </div>
+        {/* Header */}
+        <header className="mb-12 md:mb-16">
+          <div className="mx-auto mb-6 h-px w-16 bg-gradient-to-r from-transparent via-[var(--color-gold)] to-transparent" />
+          <h1 className="font-display text-3xl font-normal tracking-[0.12em] text-[var(--color-gold-pale)] md:text-4xl lg:text-5xl">
+            光影艺术展
+          </h1>
+          <p className="mt-2 text-xs uppercase tracking-[0.16em] text-[var(--color-text-muted)]">
+            Light & Shadow Exhibition
+          </p>
+          <span className="mt-5 inline-block text-xs tracking-[0.08em] text-[var(--color-text-muted)] opacity-60">
+            选择一个主题进入
+          </span>
+        </header>
 
-        <div className="landing-cards">
-          {themes.map((t, i) => (
-            <motion.div
-              key={t.id}
-              className="theme-card"
-              style={{ '--accent': t.accent, '--glow': t.glow, '--gradient': t.gradient }}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 + i * 0.15, duration: 0.7, ease: [0.19, 1, 0.22, 1] }}
-              whileHover={{ y: -8, scale: 1.02, boxShadow: `0 20px 60px rgba(0,0,0,0.6), 0 0 60px ${t.glow}` }}
-              whileTap={{ scale: 0.97 }}
-              onClick={() => onEnter(t.id)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onEnter(t.id); }}
-            >
-              <div className="theme-bg" />
-              <div className="theme-content">
-                <span className="theme-icon">{t.icon}</span>
-                <h2 className="theme-title">{t.title}</h2>
-                <p className="theme-sub">{t.subtitle}</p>
-                <p className="theme-desc">{t.desc}</p>
-                <span className="theme-enter">
-                  进入
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </span>
-              </div>
-            </motion.div>
+        {/* Theme Cards */}
+        <motion.div
+          className="flex flex-col items-center justify-center gap-5 md:flex-row md:gap-6"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {themes.map((t) => (
+            <ThemeCard key={t.id} theme={t} onEnter={onEnter} />
           ))}
-        </div>
+        </motion.div>
       </motion.div>
-
-      <style>{`
-        .landing {
-          position: fixed; inset: 0; z-index: 200;
-          display: flex; align-items: center; justify-content: center;
-          background: #060806;
-          overflow: hidden;
-        }
-
-        .landing-bg {
-          position: absolute; inset: 0;
-          background:
-            radial-gradient(ellipse at 30% 20%, rgba(191,155,94,.04) 0%, transparent 55%),
-            radial-gradient(ellipse at 70% 60%, rgba(0,229,255,.03) 0%, transparent 55%),
-            radial-gradient(ellipse at 50% 80%, rgba(90,125,74,.04) 0%, transparent 50%);
-          pointer-events: none;
-        }
-
-        .landing-content {
-          position: relative; text-align: center;
-          max-width: 700px; width: 90%;
-        }
-
-        .landing-header { margin-bottom: 48px; }
-        .landing-header h1 {
-          font-family: var(--font-display); font-size: 2.4rem; font-weight: 400;
-          color: var(--color-gold-pale); letter-spacing: .12em;
-        }
-        .landing-header p {
-          font-size: .9rem; color: var(--color-text-muted);
-          letter-spacing: .16em; text-transform: uppercase; margin-top: 6px;
-        }
-        .landing-sub {
-          display: inline-block; margin-top: 18px;
-          font-size: .75rem; color: var(--color-text-muted);
-          letter-spacing: .08em; opacity: .6;
-        }
-        .landing-divider {
-          width: 50px; height: 1px; margin: 0 auto 24px;
-          background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
-        }
-
-        .landing-cards { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; }
-
-        .theme-card {
-          position: relative; width: 280px; padding: 40px 28px 32px;
-          border-radius: 14px; cursor: pointer;
-          border: 1px solid rgba(255,255,255,.06);
-          overflow: hidden;
-          transition: border-color .35s, box-shadow .35s;
-        }
-
-        .theme-card:hover { border-color: rgba(255,255,255,.1); }
-
-        .theme-bg {
-          position: absolute; inset: 0;
-          background: var(--gradient); opacity: .85;
-          transition: opacity .35s;
-        }
-
-        .theme-card:hover .theme-bg { opacity: 1; }
-
-        .theme-content { position: relative; z-index: 1; }
-
-        .theme-icon { font-size: 2.8rem; display: block; margin-bottom: 14px; }
-
-        .theme-title {
-          font-family: var(--font-display); font-size: 1.6rem; font-weight: 400;
-          color: #e8e0d0; letter-spacing: .08em; margin-bottom: 4px;
-        }
-
-        .theme-sub {
-          font-size: .78rem; color: rgba(255,255,255,.4);
-          letter-spacing: .1em; text-transform: uppercase; margin-bottom: 12px;
-        }
-
-        .theme-desc {
-          font-size: .8rem; color: rgba(255,255,255,.35);
-          letter-spacing: .04em; margin-bottom: 22px;
-        }
-
-        .theme-enter {
-          display: inline-flex; align-items: center; gap: 6px;
-          font-size: .78rem; color: var(--accent, #bf9b5e);
-          letter-spacing: .06em;
-          padding: 6px 20px; border-radius: 20px;
-          border: 1px solid var(--accent, #bf9b5e);
-          opacity: .7; transition: opacity .25s, background .25s;
-        }
-
-        .theme-card:hover .theme-enter {
-          opacity: 1; background: rgba(255,255,255,.04);
-        }
-
-        @media(max-width:640px){
-          .landing-cards { flex-direction: column; align-items: center; }
-          .theme-card { width: 100%; max-width: 320px; }
-        }
-      `}</style>
     </div>
+  );
+}
+
+function ThemeCard({ theme, onEnter }) {
+  return (
+    <motion.div
+      className={cn(
+        'group relative w-full max-w-[320px] cursor-pointer overflow-hidden rounded-2xl',
+        'border border-white/[0.07] p-8 text-left md:w-[270px] md:p-9',
+        'transition-all duration-500 hover:border-white/[0.18]'
+      )}
+      style={{ '--accent': theme.accent, '--glow': theme.glow }}
+      variants={cardVariants}
+      whileHover={{ y: -8, scale: 1.02 }}
+      whileTap={{ scale: 0.97 }}
+      onClick={() => onEnter(theme.id)}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onEnter(theme.id); }}
+      aria-label={`进入${theme.title}`}
+    >
+      {/* 卡片背景渐变 */}
+      <div
+        className="absolute inset-0 opacity-80 transition-opacity duration-500 group-hover:opacity-100"
+        style={{ background: theme.gradient }}
+      />
+
+      {/* 边框发光层 */}
+      <div
+        className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{
+          boxShadow: `inset 0 1px 0 0 rgba(255,255,255,0.08), 0 0 40px ${theme.glow}`,
+        }}
+      />
+
+      {/* Hover 顶部光晕 */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-24 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{
+          background: `linear-gradient(180deg, ${theme.glow} 0%, transparent 70%)`,
+        }}
+      />
+
+      {/* 顶部渐变线 */}
+      <div
+        className="absolute left-0 right-0 top-0 h-px opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{
+          background: `linear-gradient(90deg, transparent, ${theme.accent}, transparent)`,
+        }}
+      />
+
+      {/* 内容 */}
+      <div className="relative z-10">
+        <span className="mb-4 block text-4xl transition-transform duration-500 group-hover:scale-110">{theme.icon}</span>
+        <h2 className="font-display text-xl font-normal tracking-[0.06em] text-[#f0ece4]">
+          {theme.title}
+        </h2>
+        <p className="mb-3 text-[10px] uppercase tracking-[0.12em] text-white/50">
+          {theme.subtitle}
+        </p>
+        <p className="mb-8 text-xs leading-relaxed tracking-wide text-white/45">
+          {theme.desc}
+        </p>
+
+        <span
+          className={cn(
+            'inline-flex items-center gap-1.5 rounded-full border px-4 py-1.5 text-[11px] tracking-[0.06em]',
+            'opacity-80 transition-all duration-300 group-hover:opacity-100',
+            'group-hover:bg-white/[0.05]'
+          )}
+          style={{ borderColor: theme.accent, color: theme.accent }}
+        >
+          进入
+          <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5" />
+        </span>
+      </div>
+    </motion.div>
   );
 }

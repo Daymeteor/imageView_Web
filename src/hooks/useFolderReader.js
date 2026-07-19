@@ -112,6 +112,65 @@ export default function useFolderReader() {
   }, [readDirectoryEntries]);
 
   /**
+   * 加载 public/demo 目录下的示例图片（用于演示/测试）
+   */
+  const loadDemo = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      revokeAllImageURLs(urlsRef.current);
+      urlsRef.current = [];
+
+      const demoFiles = [
+        'demo_1_1200x1200.jpg',
+        'demo_2_1600x1600.jpg',
+        'demo_3_1600x1200.jpg',
+        'demo_4_1600x1400.jpg',
+        'demo_5_1400x800.jpg',
+        'demo_6_1200x1400.jpg',
+        'demo_7_1200x1000.jpg',
+        'demo_8_1600x1600.jpg',
+      ];
+
+      const imageList = await Promise.all(
+        demoFiles.map(async (name) => {
+          const url = `/demo/${name}`;
+          urlsRef.current.push(url);
+          return {
+            id: crypto.randomUUID(),
+            name,
+            url,
+            width: 0,
+            height: 0,
+          };
+        })
+      );
+
+      const sizedImages = await Promise.all(
+        imageList.map((img) => {
+          return new Promise((resolve) => {
+            const image = new Image();
+            image.onload = () => {
+              resolve({ ...img, width: image.naturalWidth, height: image.naturalHeight });
+            };
+            image.onerror = () => resolve(img);
+            image.src = img.url;
+          });
+        })
+      );
+
+      sizedImages.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }));
+      setImages(sizedImages);
+      setFolderName('Demo Gallery');
+    } catch (err) {
+      console.error('加载示例图片失败:', err);
+      setError('加载示例图片失败: ' + err.message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  /**
    * 清除所有图片
    */
   const clearImages = useCallback(() => {
@@ -134,6 +193,7 @@ export default function useFolderReader() {
     loading,
     error,
     selectFolder,
+    loadDemo,
     clearImages,
     cleanup,
   };

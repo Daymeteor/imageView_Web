@@ -1,0 +1,18 @@
+/* ============================================
+   森林光影 — 主题覆盖
+   默认主题已在 :root 定义，此处补充微调
+   ============================================ */
+
+.theme-forest,
+[data-theme='forest'] {
+  /* 森林为默认主题，使用 :root token */
+}
+
+.theme-forest .body-accent::before,
+[data-theme='forest'] .body-accent::before {
+  background:
+    radial-gradient(ellipse at 18% 15%, rgba(191, 155, 94, 0.045) 0%, transparent 55%),
+    radial-gradient(ellipse at 82% 55%, rgba(90, 125, 74, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 45% 85%, rgba(47, 77, 33, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 30%, rgba(138, 154, 137, 0.025) 0%, transparent 45%);
+}

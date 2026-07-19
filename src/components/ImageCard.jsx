@@ -24,27 +24,38 @@ export default function ImageCard({ image, index, onClick }) {
   return (
     <div
       ref={cardRef}
-      className="thumb"
+      className="thumb cursor-pointer overflow-hidden rounded-md will-change-transform"
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
       onMouseDown={onDown}
       onMouseUp={onUp}
       onClick={() => onClick(image)}
+      aria-label={`查看图片 ${image.name}`}
     >
-      <div className="thumb-inner">
+      <div className="group relative overflow-hidden rounded-md border border-[var(--color-accent-card-border)] bg-[var(--color-bg-surface)] shadow-[var(--card-shadow)] transition-all duration-300 hover:border-[var(--color-accent-card-border-hover)] hover:shadow-[var(--card-shadow-hover)]">
         <img
-          src={image.url} alt="" draggable="false"
-          className={`thumb-img${isLoaded ? ' loaded' : ''}`}
-          onLoad={() => setIsLoaded(true)} loading="lazy"
+          src={image.url}
+          alt=""
+          draggable="false"
+          className={`thumb-img block h-auto w-full select-none opacity-0 transition-opacity duration-500 ${isLoaded ? 'opacity-100' : ''}`}
+          onLoad={() => setIsLoaded(true)}
+          loading="lazy"
+        />
+        {/* Magic UI 流光 */}
+        <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <div
+            className="h-full w-full animate-shimmer"
+            style={{
+              background: 'linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.08) 45%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.08) 55%, transparent 60%)',
+            }}
+          />
+        </div>
+
+        {/* 悬停时底部渐变条 */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          style={{ background: 'linear-gradient(90deg, transparent, var(--color-accent), transparent)' }}
         />
       </div>
-      <style>{`
-        .thumb { cursor: pointer; border-radius: 6px; overflow: hidden; will-change: transform; }
-        .thumb-inner { position: relative; background: var(--color-bg-surface); border-radius: 6px; border: var(--card-border, 1px solid var(--color-accent-card-border)); transition: border-color .3s, box-shadow .3s; }
-        .thumb:hover .thumb-inner { border-color: var(--color-accent-card-border-hover); box-shadow: var(--card-shadow-hover); }
-        .thumb-img { display: block; width: 100%; height: auto; opacity: 0; transition: opacity .5s; user-select: none; -webkit-user-drag: none; }
-        .thumb-img.loaded { opacity: 1; }
-      `}</style>
     </div>
   );
 }

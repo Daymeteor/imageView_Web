@@ -4,6 +4,7 @@ import ParticleSystem from './components/ParticleSystem';
 import LightBeam from './components/LightBeam';
 import CyberBackground from './components/CyberBackground';
 import ConstellationBackground from './components/ConstellationBackground';
+import AnimeBackground from './components/AnimeBackground';
 import NavigationBar from './components/NavigationBar';
 import FolderSelector from './components/FolderSelector';
 import ExhibitionHall from './components/ExhibitionHall';
@@ -11,6 +12,10 @@ import LandingPage from './components/LandingPage';
 import { getTheme } from './data/themeConfig';
 import './styles/global.css';
 import './styles/animations.css';
+import './styles/themes/forest.css';
+import './styles/themes/cyber.css';
+import './styles/themes/constellation.css';
+import './styles/themes/anime.css';
 
 // GSAP 插件注册（全局一次性）
 import { gsap } from 'gsap';
@@ -19,12 +24,24 @@ import { useGSAP } from '@gsap/react';
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export default function App() {
-  const [theme, setTheme] = useState('landing');
+  const [theme, setTheme] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    const t = params.get('theme');
+    return ['forest', 'cyber', 'constellation', 'anime'].includes(t) ? t : 'landing';
+  });
   const [zodiacIdx, setZodiacIdx] = useState(() => Math.floor(Math.random() * 12));
   const [constViewMode, setConstViewMode] = useState('star'); // 'star' | 'gallery'
-  const { images, folderName, loading, error, selectFolder, cleanup } = useFolderReader();
+  const { images, folderName, loading, error, selectFolder, loadDemo, cleanup } = useFolderReader();
 
   useEffect(() => () => cleanup(), [cleanup]);
+
+  // Demo 模式：URL 包含 ?demo=1 时自动加载示例图片
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('demo') === '1' && images.length === 0) {
+      loadDemo();
+    }
+  }, [loadDemo, images.length]);
 
   const enterTheme = useCallback((t) => setTheme(t), []);
   const backToLanding = useCallback(() => setTheme('landing'), []);
@@ -34,6 +51,7 @@ export default function App() {
   const isForest = theme === 'forest';
   const isCyber = theme === 'cyber';
   const isConstellation = theme === 'constellation';
+  const isAnime = theme === 'anime';
 
   // 星座主题：30s 自动切换星座
   useEffect(() => {
@@ -42,23 +60,23 @@ export default function App() {
     return () => clearInterval(t);
   }, [isConstellation]);
 
-  // 赛博/星座主题时给 body 添加 class
+  // 非 landing 主题时给 body 添加 body-accent 类，用于环境光覆盖
   useEffect(() => {
-    if (isCyber) document.body.classList.add('body-cyber');
-    if (isConstellation) document.body.classList.add('body-constellation');
+    if (theme !== 'landing') document.body.classList.add('body-accent');
     return () => {
-      document.body.classList.remove('body-cyber', 'body-constellation');
+      document.body.classList.remove('body-accent');
     };
-  }, [isCyber, isConstellation]);
+  }, [theme]);
 
   // Landing page
   if (theme === 'landing') {
     return <LandingPage onEnter={enterTheme} />;
   }
 
-  // Theme pages
+  const themeTitle = getTheme(theme).title;
+
   return (
-    <div className={`app theme-${theme}`}>
+    <div className={`app theme-${theme} min-h-screen bg-[var(--color-bg-deep)]`}>
       {/* 森林主题背景 */}
       {isForest && (
         <>
@@ -71,83 +89,46 @@ export default function App() {
       {isCyber && <CyberBackground />}
       {/* 星座主题背景 */}
       {isConstellation && <ConstellationBackground zodiacIdx={zodiacIdx} prominent={constViewMode === 'star'} />}
+      {/* 动漫主题背景 */}
+      {isAnime && <AnimeBackground />}
 
       {/* 导航栏 */}
       <NavigationBar
-        folderName={isForest || isConstellation ? folderName : ''}
+        folderName={isForest || isConstellation || isAnime ? folderName : ''}
         imageCount={images.length}
         onSwitchFolder={switchFolder}
         onBack={backToLanding}
-        themeName={getTheme(theme).title}
+        themeName={themeTitle}
       />
 
-      {/* 文件夹选择器（森林主题） */}
-      {isForest && !hasImages && !loading && (
-        <FolderSelector onSelect={selectFolder} loading={loading} error={error} />
+      {/* 文件夹选择器 */}
+      {!hasImages && !loading && (
+        <FolderSelector onSelect={selectFolder} loading={loading} error={error} theme={theme} />
       )}
 
-      {/* 加载 */}
-      {isForest && loading && (
-        <div className="loading-overlay">
-          <div className="loading-content">
-            <div className="loading-ring" />
-            <p className="loading-text">正在读取照片...</p>
+      {/* 加载遮罩 */}
+      {loading && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[var(--color-bg-deep)]">
+          <div className="text-center">
+            <div className="mx-auto mb-6 h-10 w-10 rounded-full border-2 border-[color-mix(in_oklab,var(--color-accent)_15%,transparent)] border-t-[var(--color-accent)] animate-spin" />
+            <p className="text-sm tracking-widest text-[var(--color-text-secondary)]">
+              {isForest ? '正在读取照片...' : isCyber ? '正在读取数据...' : isConstellation ? '正在绘制星图...' : '正在渲染场景...'}
+            </p>
           </div>
         </div>
       )}
 
-      {/* 森林主题展览 */}
-      {isForest && hasImages && <ExhibitionHall images={images} />}
-
-      {/* 赛博主题 — 完整展览 */}
-      {isCyber && !hasImages && !loading && (
-        <FolderSelector onSelect={selectFolder} loading={loading} error={error} theme="cyber" />
+      {/* 展览大厅 */}
+      {hasImages && (
+        <ExhibitionHall
+          images={images}
+          theme={theme}
+          zodiacIdx={zodiacIdx}
+          onZodiacChange={setZodiacIdx}
+          viewMode={constViewMode}
+          onViewModeChange={setConstViewMode}
+        />
       )}
-      {isCyber && loading && (
-        <div className="loading-overlay">
-          <div className="loading-content">
-            <div className="loading-ring" />
-            <p className="loading-text">正在读取数据...</p>
-          </div>
-        </div>
-      )}
-      {isCyber && hasImages && <ExhibitionHall images={images} theme="cyber" />}
-
-      {/* 星座主题 — 完整展览 */}
-      {isConstellation && !hasImages && !loading && (
-        <FolderSelector onSelect={selectFolder} loading={loading} error={error} theme="constellation" />
-      )}
-      {isConstellation && loading && (
-        <div className="loading-overlay">
-          <div className="loading-content">
-            <div className="loading-ring" />
-            <p className="loading-text">正在绘制星图...</p>
-          </div>
-        </div>
-      )}
-      {isConstellation && hasImages && <ExhibitionHall images={images} theme="constellation" zodiacIdx={zodiacIdx} onZodiacChange={setZodiacIdx} viewMode={constViewMode} onViewModeChange={setConstViewMode} />}
-
-      <style>{`
-        .app { min-height: 100vh; }
-        .app.theme-forest { background: var(--color-bg-deep); }
-        .app.theme-cyber { background: var(--color-bg-deep); }
-        .app.theme-constellation { background: var(--color-bg-deep); }
-
-        .loading-overlay {
-          position: fixed; inset: 0; z-index: 100;
-          display: flex; align-items: center; justify-content: center;
-          background: var(--color-bg-deep);
-        }
-        .loading-content { text-align: center; }
-        .loading-ring {
-          width: 40px; height: 40px; margin: 0 auto var(--space-lg);
-          border: 2px solid color-mix(in oklab, var(--color-accent) 15%, transparent); border-top-color: var(--color-accent);
-          border-radius: 50%; animation: spin 1s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .loading-text { color: var(--color-text-secondary); font-size: .9rem; letter-spacing: .04em; }
-
-      `}</style>
     </div>
   );
 }

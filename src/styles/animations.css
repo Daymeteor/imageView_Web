@@ -1,5 +1,5 @@
 /* ============================================
-   动画系统 — 光影流动 · 卡片入场 · 视差辅助
+   Hermes 动画系统 — 关键帧 + 工具类
    ============================================ */
 
 /* --- 光束呼吸 --- */
@@ -42,7 +42,7 @@
   50%      { filter: brightness(1.4) blur(calc(var(--beam-blur) * 0.8)); }
 }
 
-/* --- 标题入场 --- */
+/* --- 淡入上移 --- */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -54,27 +54,12 @@
   to   { opacity: 1; }
 }
 
-/* ====== 工具类 ====== */
-.animate-fadeInUp {
-  animation: fadeInUp 0.8s var(--ease-out-expo) both;
+/* --- 旋转 --- */
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
-.animate-fadeIn {
-  animation: fadeIn 0.5s var(--ease-out-quint) both;
-}
-
-/* ============================================
-   Hermes 赛博动画
-   ============================================ */
-
-/* --- Arc Border 渐变描边旋转 --- */
-@keyframes gradient-stroke {
-  0%   { --arc-angle: 160deg; }
-  50%  { --arc-angle: 340deg; }
-  100% { --arc-angle: 520deg; }
-}
-
-/* --- 慢速旋转（装饰元素） --- */
+/* --- 慢速旋转 --- */
 @keyframes spin-slow {
   to { transform: rotate(360deg); }
 }
@@ -96,3 +81,93 @@
   0%, 100% { box-shadow: 0 0 8px rgba(255, 172, 2, 0.15); }
   50%      { box-shadow: 0 0 24px rgba(255, 172, 2, 0.35); }
 }
+
+/* --- 微光扫过 --- */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* --- 呼吸光晕 --- */
+@keyframes glow-breathe {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* --- SVG 描边动画 --- */
+@keyframes dash {
+  0% { stroke-dashoffset: 200; }
+  50% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -200; }
+}
+
+/* --- Arc Border 渐变描边旋转 --- */
+@keyframes gradient-stroke {
+  0%   { --arc-angle: 160deg; }
+  50%  { --arc-angle: 340deg; }
+  100% { --arc-angle: 520deg; }
+}
+
+/* ====== 动画工具类 ====== */
+.animate-beam-flow {
+  animation: beamFlow 8s ease-in-out infinite;
+}
+
+.animate-glow-pulse {
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+.animate-beam-breath {
+  animation: beamBreath 4s ease-in-out infinite;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s var(--ease-out-expo) both;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s var(--ease-out-quint) both;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 12s linear infinite;
+}
+
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}
+
+.animate-scan-line {
+  animation: scan-line 4s linear infinite;
+}
+
+.animate-amber-pulse {
+  animation: amber-pulse 2s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.animate-glow-breathe {
+  animation: glow-breathe 4s ease-in-out infinite;
+}
+
+.animate-dash {
+  animation: dash 3s ease-in-out infinite;
+}
+
+.animate-gradient-stroke {
+  animation: gradient-stroke 2.23s linear infinite;
+}
+
+/* --- 延迟类 --- */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-700 { animation-delay: 700ms; }
