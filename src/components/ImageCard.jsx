@@ -8,18 +8,22 @@ export default function ImageCard({ image, index, onClick }) {
 
   const { contextSafe } = useGSAP({ scope: cardRef });
 
-  const onEnter = useCallback(() => {
-    gsap.to(cardRef.current, { y: -5, scale: 1.02, duration: 0.35, ease: 'power2.out', overwrite: 'auto' });
-  }, []);
-  const onLeave = useCallback(() => {
-    gsap.to(cardRef.current, { y: 0, scale: 1, duration: 0.4, ease: 'power2.out', overwrite: 'auto' });
-  }, []);
-  const onDown = useCallback(() => {
-    gsap.to(cardRef.current, { scale: 0.97, duration: 0.1, ease: 'power2.in', overwrite: 'auto' });
-  }, []);
-  const onUp = contextSafe(() => {
-    gsap.to(cardRef.current, { scale: 1.02, duration: 0.2, ease: 'back.out(1.7)', overwrite: 'auto' });
+  const to = contextSafe((vars) => {
+    gsap.to(cardRef.current, { ...vars, overwrite: 'auto' });
   });
+
+  const onEnter = useCallback(() => {
+    to({ y: -5, scale: 1.02, duration: 0.35, ease: 'power2.out' });
+  }, [to]);
+  const onLeave = useCallback(() => {
+    to({ y: 0, scale: 1, duration: 0.4, ease: 'power2.out' });
+  }, [to]);
+  const onDown = useCallback(() => {
+    to({ scale: 0.97, duration: 0.1, ease: 'power2.in' });
+  }, [to]);
+  const onUp = useCallback(() => {
+    to({ scale: 1.02, duration: 0.2, ease: 'back.out(1.7)' });
+  }, [to]);
 
   return (
     <div

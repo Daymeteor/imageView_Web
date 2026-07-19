@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { RotateCcw, RotateCw, ChevronLeft, ChevronRight, Undo2 } from 'lucide-react';
 import { Dialog, DialogContent } from './ui/dialog';
 import { cn } from '../lib/utils';
+import { fileNameToTitle } from '../utils/imageHelpers';
 
 export default function PhotoModal({ image, images, onClose, onPrev, onNext }) {
   const [rotation, setRotation] = useState(0);
@@ -13,7 +14,7 @@ export default function PhotoModal({ image, images, onClose, onPrev, onNext }) {
     setRotation(0);
   }, [image?.id]);
 
-  const name = image ? image.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ') : '';
+  const name = image ? fileNameToTitle(image.name) : '';
   const isOpen = !!image;
 
   const handlePrev = (e) => {
@@ -53,20 +54,15 @@ export default function PhotoModal({ image, images, onClose, onPrev, onNext }) {
 }
 
 function ModalInner({ image, name, rotation, setRotation, direction, onPrev, onNext, onClose }) {
-  // 键盘导航
+  // 键盘导航（左右箭头切换，Radix Dialog 已处理 Escape 与焦点陷阱）
   useEffect(() => {
     const onKey = (e) => {
-      if (e.key === 'Escape') onClose();
       if (e.key === 'ArrowLeft') onPrev();
       if (e.key === 'ArrowRight') onNext();
     };
     document.addEventListener('keydown', onKey);
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.removeEventListener('keydown', onKey);
-      document.body.style.overflow = '';
-    };
-  }, [onClose, onPrev, onNext]);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [onPrev, onNext]);
 
   return (
     <div

@@ -30,10 +30,14 @@ export function revokeImageURL(url) {
 }
 
 /**
- * 批量释放图片 URL
+ * 批量释放图片 URL（仅释放 blob: URL）
  */
 export function revokeAllImageURLs(urls) {
-  urls.forEach(url => URL.revokeObjectURL(url));
+  urls.forEach((url) => {
+    if (typeof url === 'string' && url.startsWith('blob:')) {
+      URL.revokeObjectURL(url);
+    }
+  });
 }
 
 /**

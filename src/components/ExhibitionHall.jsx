@@ -90,50 +90,56 @@ export default function ExhibitionHall({
       .fromTo('.hall-header h2', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: fst.titleD }, '-=0.3')
       .fromTo('.hall-header p', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: fst.subD }, '-=0.2');
 
-    ScrollTrigger.batch('.hall-grid .thumb', {
-      onEnter: (els) =>
-        gsap.fromTo(
-          els,
-          { opacity: 0, y: fst.cardY, scale: fst.cardScale },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: isCyber ? 0.6 : 0.9,
-            stagger: fst.stagger,
-            ease: fst.cardEase,
-            overwrite: true,
-          }
-        ),
-      start: 'top 90%',
-      once: true,
-    });
-    ScrollTrigger.batch('.hall-detail .pd-layout', {
-      onEnter: (els) =>
-        gsap.fromTo(
-          els,
-          { opacity: 0, y: isAlt ? 60 : 40 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.7,
-            ease: isAlt ? 'power2.inOut' : 'power2.out',
-            overwrite: true,
-          }
-        ),
-      start: 'top 85%',
-      once: true,
-    });
-    ScrollTrigger.batch('.hall-grid .gl', {
-      onEnter: (els) =>
-        gsap.fromTo(
-          els,
-          { opacity: 0, x: -20 },
-          { opacity: 1, x: 0, duration: 0.5, ease: 'power2.out', overwrite: true }
-        ),
-      start: 'top 95%',
-      once: true,
-    });
+    const batches = [
+      ScrollTrigger.batch('.hall-grid .thumb', {
+        onEnter: (els) =>
+          gsap.fromTo(
+            els,
+            { opacity: 0, y: fst.cardY, scale: fst.cardScale },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              duration: isCyber ? 0.6 : 0.9,
+              stagger: fst.stagger,
+              ease: fst.cardEase,
+              overwrite: true,
+            }
+          ),
+        start: 'top 90%',
+        once: true,
+      }),
+      ScrollTrigger.batch('.hall-detail .pd-layout', {
+        onEnter: (els) =>
+          gsap.fromTo(
+            els,
+            { opacity: 0, y: isAlt ? 60 : 40 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.7,
+              ease: isAlt ? 'power2.inOut' : 'power2.out',
+              overwrite: true,
+            }
+          ),
+        start: 'top 85%',
+        once: true,
+      }),
+      ScrollTrigger.batch('.hall-grid .gl', {
+        onEnter: (els) =>
+          gsap.fromTo(
+            els,
+            { opacity: 0, x: -20 },
+            { opacity: 1, x: 0, duration: 0.5, ease: 'power2.out', overwrite: true }
+          ),
+        start: 'top 95%',
+        once: true,
+      }),
+    ];
+
+    return () => {
+      batches.flat().forEach((st) => st?.kill());
+    };
   }, { scope: hallRef, dependencies: [preloaded, isCyber, isConstellation] });
 
   // ==================== 渲染 ====================

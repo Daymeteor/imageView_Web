@@ -2,6 +2,7 @@ import { useRef, useMemo } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
+import useParallax from '../hooks/useParallax';
 
 const BEAM_CONFIGS = [
   { width: 70,  skew: -12, top: '3%',  left: '-5%', opacity: 0.10, blur: 70,  delay: 0 },
@@ -15,6 +16,7 @@ export default function LightBeam() {
   const containerRef = useRef(null);
   const beamRefs = useRef([]);
   const spotRefs = useRef([]);
+  const mouseRef = useParallax();
 
   useGSAP(() => {
     // 鼠标平滑跟踪（quickTo 比 rAF 轮询性能更好）
@@ -28,17 +30,19 @@ export default function LightBeam() {
       el ? gsap.quickTo(el, 'y', { duration: 0.4, ease: 'power2.out' }) : null
     );
 
-    const onMouse = (e) => {
-      const mx = (e.clientX / window.innerWidth - 0.5) * 2;  // -1 ~ 1
-      const my = (e.clientY / window.innerHeight - 0.5) * 2;
+    let rafId;
+    const update = () => {
+      const mx = (mouseRef.current.x - 0.5) * 2;  // -1 ~ 1
+      const my = (mouseRef.current.y - 0.5) * 2;
       beamRefs.current.forEach((_, i) => {
         if (skewTo[i]) skewTo[i](BEAM_CONFIGS[i].skew + mx * 4);
         if (xTo[i]) xTo[i](mx * 20);
         if (yTo[i]) yTo[i](my * 12);
       });
+      rafId = requestAnimationFrame(update);
     };
-    window.addEventListener('mousemove', onMouse, { passive: true });
-    return () => window.removeEventListener('mousemove', onMouse);
+    rafId = requestAnimationFrame(update);
+    return () => cancelAnimationFrame(rafId);
   }, { scope: containerRef });
 
   // 滚动视差（scrub）

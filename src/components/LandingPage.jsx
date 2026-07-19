@@ -3,17 +3,6 @@ import { ArrowRight } from 'lucide-react';
 import { THEMES } from '../data/themeConfig';
 import { cn } from '../lib/utils';
 
-const themes = THEMES.map((t) => ({
-  id: t.id,
-  title: t.title,
-  subtitle: t.subtitle,
-  desc: t.desc,
-  icon: t.icon,
-  gradient: t.gradient,
-  accent: t.accent,
-  glow: t.glow,
-}));
-
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -73,7 +62,7 @@ export default function LandingPage({ onEnter }) {
           initial="hidden"
           animate="visible"
         >
-          {themes.map((t) => (
+          {THEMES.map((t) => (
             <ThemeCard key={t.id} theme={t} onEnter={onEnter} />
           ))}
         </motion.div>

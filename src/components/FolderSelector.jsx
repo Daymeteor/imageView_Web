@@ -11,6 +11,10 @@ export default function FolderSelector({ onSelect, loading, error, theme = 'fore
   const isCyber = theme === 'cyber';
   const isConstellation = theme === 'constellation';
   const isAnime = theme === 'anime';
+  const isMondrian = theme === 'mondrian';
+  const isMemphis = theme === 'memphis';
+  const isAnimePop = theme === 'animepop';
+  const isBauhaus = theme === 'bauhaus';
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[var(--color-bg-deep)]">
@@ -28,7 +32,14 @@ export default function FolderSelector({ onSelect, loading, error, theme = 'fore
           <div className="animate-glow-breathe rounded-full p-4"
             style={{ boxShadow: '0 0 40px color-mix(in oklab, var(--color-accent) 12%, transparent)' }}
           >
-            {isConstellation ? <ConstellationIcon /> : isCyber ? <CyberIcon /> : isAnime ? <AnimeIcon /> : <ForestIcon />}
+            {isConstellation ? <ConstellationIcon />
+              : isCyber ? <CyberIcon />
+              : isAnime ? <AnimeIcon />
+              : isMondrian ? <MondrianIcon />
+              : isMemphis ? <MemphisIcon />
+              : isAnimePop ? <AnimePopIcon />
+              : isBauhaus ? <BauhausIcon />
+              : <ForestIcon />}
           </div>
         </div>
 
@@ -199,6 +210,52 @@ function AnimeIcon() {
         opacity="0.5"
       />
       <circle cx="16" cy="42" r="2" fill="currentColor" opacity="0.4" />
+    </svg>
+  );
+}
+
+function MondrianIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="6" y="6" width="24" height="24" fill="currentColor" opacity="0.9" />
+      <rect x="34" y="6" width="24" height="14" fill="currentColor" opacity="0.4" />
+      <rect x="34" y="24" width="24" height="34" stroke="currentColor" strokeWidth="2" fill="none" opacity="0.8" />
+      <rect x="6" y="34" width="24" height="24" fill="currentColor" opacity="0.6" />
+      <line x1="32" y1="6" x2="32" y2="58" stroke="currentColor" strokeWidth="3" />
+      <line x1="6" y1="32" x2="58" y2="32" stroke="currentColor" strokeWidth="3" />
+    </svg>
+  );
+}
+
+function MemphisIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="20" r="8" stroke="currentColor" strokeWidth="2" fill="none" />
+      <path d="M42 12L50 28L34 28Z" fill="currentColor" opacity="0.8" />
+      <path d="M12 44Q24 36 36 44T60 44" stroke="currentColor" strokeWidth="2" fill="none" />
+      <rect x="44" y="42" width="10" height="10" fill="currentColor" opacity="0.6" transform="rotate(15 49 47)" />
+    </svg>
+  );
+}
+
+function AnimePopIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M32 8L36 24H52L40 34L44 50L32 40L20 50L24 34L12 24H28L32 8Z" fill="currentColor" opacity="0.9" />
+      <circle cx="50" cy="14" r="4" fill="currentColor" opacity="0.6" />
+      <path d="M8 48L16 52L8 56" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M52 48L44 52L52 56" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function BauhausIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="44" cy="20" r="10" fill="currentColor" opacity="0.9" />
+      <rect x="12" y="14" width="20" height="20" fill="currentColor" opacity="0.5" />
+      <rect x="14" y="38" width="36" height="10" fill="currentColor" opacity="0.7" />
+      <line x1="8" y1="56" x2="56" y2="56" stroke="currentColor" strokeWidth="2" opacity="0.8" />
     </svg>
   );
 }

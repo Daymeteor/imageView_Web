@@ -1,0 +1,117 @@
+/* ============================================
+   蒙德里安 — De Stijl / Piet Mondrian 主题
+   ============================================ */
+
+.theme-mondrian,
+[data-theme='mondrian'] {
+  /* --- 基底色系 — 纯净白底 --- */
+  --color-bg-deep: #f8f9fa;
+  --color-bg-primary: #ffffff;
+  --color-bg-surface: #f5f5f5;
+  --color-bg-elevated: #ffffff;
+
+  /* --- 蒙德里安原色 — 红/蓝/黑 --- */
+  --color-gold: #E63946;
+  --color-gold-light: #ff4d5a;
+  --color-gold-pale: #ff8a93;
+  --color-gold-dim: #b82d38;
+  --color-gold-subtle: #8a1f28;
+
+  /* --- 辅助色 — 原色蓝与黑 --- */
+  --color-moss: #1D3557;
+  --color-moss-light: #2a4a73;
+  --color-moss-pale: #457b9d;
+  --color-leaf: #111111;
+  --color-mist: #457b9d;
+  --color-mist-light: #a8dadc;
+  --color-twilight: #1a1a2e;
+
+  /* --- 语义化 accent 覆盖（蒙德里安红） --- */
+  --color-accent: var(--color-gold);
+  --color-accent-light: var(--color-gold-light);
+  --color-accent-pale: var(--color-gold-pale);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-subtle: var(--color-gold-subtle);
+  --color-accent-glass-border: color-mix(in oklab, var(--color-gold) 18%, transparent);
+  --color-accent-glass-bg: rgba(255, 255, 255, 0.85);
+  --color-accent-card-border: #111111;
+  --color-accent-card-border-hover: var(--color-gold);
+  --color-accent-shadow: rgba(17, 17, 17, 0.08);
+  --color-accent-shadow-hover: rgba(230, 57, 70, 0.15);
+
+  /* --- 文字层级 — 高对比度 --- */
+  --color-text-primary: #111111;
+  --color-text-secondary: rgba(17, 17, 17, 0.65);
+  --color-text-muted: rgba(17, 17, 17, 0.4);
+
+  /* --- 玻璃拟态 — 画廊白框风格 --- */
+  --glass-bg: rgba(255, 255, 255, 0.92);
+  --glass-border: 2px solid #111111;
+  --glass-blur: 0px;
+  --glass-shadow: 4px 4px 0px #111111;
+
+  /* --- 卡片 — 硬边几何风格 --- */
+  --card-radius: 0px;
+  --card-border: 2px solid var(--color-accent-card-border);
+  --card-shadow: 4px 4px 0px #111111;
+  --card-shadow-hover: 6px 6px 0px var(--color-gold), 0 0 0 2px var(--color-gold);
+
+  /* --- 字体 — 现代无衬线，几何感 --- */
+  --font-display: 'Inter', 'Helvetica Neue', 'Arial', sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* --- 蒙德里安背景网格装饰 --- */
+.theme-mondrian .body-accent::before,
+[data-theme='mondrian'] .body-accent::before {
+  background:
+    linear-gradient(90deg, #111111 0px, #111111 3px, transparent 3px),
+    linear-gradient(0deg, #111111 0px, #111111 3px, transparent 3px);
+  background-size: 120px 80px;
+  opacity: 0.06;
+}
+
+.theme-mondrian .body-accent::after,
+[data-theme='mondrian'] .body-accent::after {
+  opacity: 0;
+}
+
+/* --- 蒙德里安主题专用工具类 --- */
+.theme-mondrian .mondrian-block-red,
+[data-theme='mondrian'] .mondrian-block-red {
+  background-color: #E63946;
+  border: 2px solid #111111;
+}
+
+.theme-mondrian .mondrian-block-blue,
+[data-theme='mondrian'] .mondrian-block-blue {
+  background-color: #1D3557;
+  border: 2px solid #111111;
+}
+
+.theme-mondrian .mondrian-block-white,
+[data-theme='mondrian'] .mondrian-block-white {
+  background-color: #F8F9FA;
+  border: 2px solid #111111;
+}
+
+.theme-mondrian .mondrian-block-yellow,
+[data-theme='mondrian'] .mondrian-block-yellow {
+  background-color: #FFD60A;
+  border: 2px solid #111111;
+}
+
+.theme-mondrian .mondrian-text-red,
+[data-theme='mondrian'] .mondrian-text-red {
+  color: #E63946;
+}
+
+.theme-mondrian .mondrian-text-blue,
+[data-theme='mondrian'] .mondrian-text-blue {
+  color: #1D3557;
+}
+
+.theme-mondrian .mondrian-border-thick,
+[data-theme='mondrian'] .mondrian-border-thick {
+  border: 3px solid #111111;
+}

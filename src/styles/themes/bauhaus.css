@@ -1,0 +1,143 @@
+.theme-bauhaus,
+[data-theme='bauhaus'] {
+  /* --- 基底色系 — 包豪斯经典白底 --- */
+  --color-bg-deep: #E8ECE4;
+  --color-bg-primary: #F1FAEE;
+  --color-bg-surface: #FFFFFF;
+  --color-bg-elevated: #FFFFFF;
+
+  /* --- 包豪斯红 — 主强调色 --- */
+  --color-gold: #E63946;
+  --color-gold-light: #F06B75;
+  --color-gold-pale: #F8A0A8;
+  --color-gold-dim: #B82D38;
+  --color-gold-subtle: #7A1E26;
+
+  /* --- 包豪斯蓝/黑 — 辅助色 --- */
+  --color-moss: #1D3557;
+  --color-moss-light: #2E5077;
+  --color-moss-pale: #4A6B8A;
+  --color-leaf: #111111;
+  --color-mist: #457B9D;
+  --color-mist-light: #6A9FB8;
+  --color-twilight: #A8DADC;
+
+  /* --- 语义化 accent 覆盖（包豪斯红） --- */
+  --color-accent: var(--color-gold);
+  --color-accent-light: var(--color-gold-light);
+  --color-accent-pale: var(--color-gold-pale);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-subtle: var(--color-gold-subtle);
+  --color-accent-glass-border: color-mix(in oklab, var(--color-gold) 22%, transparent);
+  --color-accent-glass-bg: rgba(255, 255, 255, 0.72);
+  --color-accent-card-border: color-mix(in oklab, var(--color-gold) 18%, transparent);
+  --color-accent-card-border-hover: color-mix(in oklab, var(--color-gold) 50%, transparent);
+  --color-accent-shadow: rgba(230, 57, 70, 0.08);
+  --color-accent-shadow-hover: rgba(230, 57, 70, 0.2);
+
+  /* --- 文字层级 — 高对比度瑞士排版 --- */
+  --color-text-primary: #111111;
+  --color-text-secondary: rgba(17, 17, 17, 0.55);
+  --color-text-muted: rgba(17, 17, 17, 0.3);
+
+  /* --- 玻璃拟态 — 纯净白底微透 --- */
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: color-mix(in oklab, var(--color-gold) 20%, rgba(29, 53, 87, 0.15));
+  --glass-blur: 8px;
+  --glass-shadow: 0 2px 16px rgba(0, 0, 0, 0.08),
+                  0 0 0 1px rgba(29, 53, 87, 0.06);
+
+  /* --- 卡片 — 锐利直角，包豪斯风格 --- */
+  --card-radius: 0px;
+  --card-border: 2px solid var(--color-accent-card-border);
+  --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.06),
+                 0 0 20px var(--color-accent-shadow);
+  --card-shadow-hover: 0 6px 24px rgba(0, 0, 0, 0.12),
+                      0 0 40px var(--color-accent-shadow-hover);
+
+  /* --- 字体 — 瑞士国际主义无衬线 --- */
+  --font-display: 'Helvetica Neue', 'Arial', 'Noto Sans SC', 'Inter', sans-serif;
+  --font-body: 'Helvetica Neue', 'Arial', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* --- 包豪斯背景覆盖 --- */
+.theme-bauhaus .body-accent::before,
+[data-theme='bauhaus'] .body-accent::before {
+  background:
+    radial-gradient(ellipse at 15% 10%, rgba(230, 57, 70, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 80%, rgba(29, 53, 87, 0.03) 0%, transparent 50%);
+}
+
+.theme-bauhaus .body-accent::after,
+[data-theme='bauhaus'] .body-accent::after {
+  opacity: 0.015;
+}
+
+/* --- 包豪斯主题专用工具类 --- */
+.theme-bauhaus .bauhaus-grid-line,
+[data-theme='bauhaus'] .bauhaus-grid-line {
+  border-color: rgba(17, 17, 17, 0.08);
+}
+
+.theme-bauhaus .bauhaus-accent-bar,
+[data-theme='bauhaus'] .bauhaus-accent-bar {
+  background: var(--color-gold);
+  height: 3px;
+}
+
+.theme-bauhaus .bauhaus-blue-bar,
+[data-theme='bauhaus'] .bauhaus-blue-bar {
+  background: var(--color-moss);
+  height: 2px;
+}
+
+/* --- 包豪斯背景几何动画 --- */
+@keyframes bbgShift1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(8px, 12px) scale(1.02); }
+  66% { transform: translate(-4px, 6px) scale(0.98); }
+}
+@keyframes bbgShift2 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-10px, 8px); }
+}
+@keyframes bbgShift3 {
+  0%, 100% { transform: translate(0, 0) scaleX(1); }
+  50% { transform: translate(6px, -4px) scaleX(1.05); }
+}
+@keyframes bbgShift4 {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(20px); }
+}
+@keyframes bbgShift5 {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+@keyframes bbgShift6 {
+  0%, 100% { transform: translateX(0) scaleX(1); }
+  50% { transform: translateX(-30px) scaleX(1.2); }
+}
+@keyframes bbgShift7 {
+  0%, 100% { transform: rotate(-12deg) translateY(0); }
+  50% { transform: rotate(-10deg) translateY(10px); }
+}
+@keyframes bbgShift8 {
+  0%, 100% { transform: rotate(8deg) translateY(0); }
+  50% { transform: rotate(6deg) translateY(-8px); }
+}
+@keyframes bbgRotate1 {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(45deg); }
+}
+@keyframes bbgRotate2 {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(90deg) scale(1.1); }
+}
+@keyframes bbgRotate3 {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-15deg); }
+}
+@keyframes bbgPulse {
+  0%, 100% { opacity: 0.15; transform: scale(1); }
+  50% { opacity: 0.25; transform: scale(1.15); }
+}

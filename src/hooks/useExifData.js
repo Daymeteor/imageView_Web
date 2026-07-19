@@ -3,11 +3,12 @@ import ExifReader from 'exifreader';
 
 export default function useExifData(image) {
   const [exif, setExif] = useState(null);
-  const doneRef = useRef(false);
+  const lastIdRef = useRef(null);
 
   useEffect(() => {
-    if (!image?.file || doneRef.current) return;
-    doneRef.current = true;
+    if (!image?.file) return;
+    if (lastIdRef.current === image.id) return;
+    lastIdRef.current = image.id;
 
     (async () => {
       try {

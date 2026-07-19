@@ -18,6 +18,7 @@ export default function useImagePreloader(images, concurrency = 6) {
 
     let cancelled = false;
     const urls = images.map((img) => img.url);
+    const loaders = [];
     let idx = 0;
     let active = 0;
 
@@ -26,6 +27,7 @@ export default function useImagePreloader(images, concurrency = 6) {
         const url = urls[idx++];
         active++;
         const img = new Image();
+        loaders.push(img);
         img.onload = img.onerror = () => {
           active--;
           if (!cancelled) {
@@ -41,6 +43,11 @@ export default function useImagePreloader(images, concurrency = 6) {
 
     return () => {
       cancelled = true;
+      // 终止未完成的图片请求
+      loaders.forEach((img) => {
+        img.onload = img.onerror = null;
+        img.src = '';
+      });
     };
   }, [images, concurrency]);
 

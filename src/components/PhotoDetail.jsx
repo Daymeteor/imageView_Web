@@ -2,19 +2,25 @@ import { useEffect, useRef, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import useExifData from '../hooks/useExifData';
+import { fileNameToTitle } from '../utils/imageHelpers';
 
 export default function PhotoDetail({ image, index, onImageClick, isActive }) {
   const sectionRef = useRef(null);
   const imgRef = useRef(null);
   const exif = useExifData(image);
 
-  useGSAP({ scope: sectionRef });
+  const { contextSafe } = useGSAP({ scope: sectionRef });
+
+  const to = contextSafe((vars) => {
+    gsap.to(imgRef.current, { ...vars, overwrite: 'auto' });
+  });
+
   const onImgEnter = useCallback(() => {
-    gsap.to(imgRef.current, { scale: 1.015, duration: 0.35, ease: 'power2.out', overwrite: 'auto' });
-  }, []);
+    to({ scale: 1.015, duration: 0.35, ease: 'power2.out' });
+  }, [to]);
   const onImgLeave = useCallback(() => {
-    gsap.to(imgRef.current, { scale: 1, duration: 0.4, ease: 'power2.out', overwrite: 'auto' });
-  }, []);
+    to({ scale: 1, duration: 0.4, ease: 'power2.out' });
+  }, [to]);
 
   useEffect(() => {
     if (isActive && sectionRef.current) {
@@ -23,7 +29,7 @@ export default function PhotoDetail({ image, index, onImageClick, isActive }) {
     }
   }, [isActive]);
 
-  const name = image.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
+  const name = fileNameToTitle(image.name);
 
   return (
     <section ref={sectionRef} id={`detail-${image.id}`} className="py-[var(--space-3xl)]">

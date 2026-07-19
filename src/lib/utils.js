@@ -24,15 +24,3 @@ export function cn(...inputs) {
 export function pad(num, width = 2) {
   return String(num).padStart(width, '0');
 }
-
-/**
- * 从文件名生成友好标题
- * @param {string} filename
- * @returns {string}
- */
-export function formatFilename(filename) {
-  return filename
-    .replace(/\.[^.]+$/, '')
-    .replace(/[-_]/g, ' ')
-    .trim();
-}
