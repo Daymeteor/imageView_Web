@@ -36,7 +36,7 @@ export default function LandingPage({ onEnter }) {
       <div className="pointer-events-none absolute left-1/2 top-[15%] h-px w-40 -translate-x-1/2 bg-gradient-to-r from-transparent via-[var(--color-gold-dim)] to-transparent opacity-40" />
 
       <motion.div
-        className="relative z-10 w-[90%] max-w-[880px] text-center"
+        className="relative z-10 w-[95%] max-w-[1200px] text-center"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, ease: [0.19, 1, 0.22, 1] }}
@@ -57,7 +57,7 @@ export default function LandingPage({ onEnter }) {
 
         {/* Theme Cards */}
         <motion.div
-          className="flex flex-col items-center justify-center gap-5 md:flex-row md:gap-6"
+          className="grid max-w-[1200px] grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -75,14 +75,16 @@ function ThemeCard({ theme, onEnter }) {
   return (
     <motion.div
       className={cn(
-        'group relative w-full max-w-[320px] cursor-pointer overflow-hidden rounded-2xl',
-        'border border-white/[0.07] p-8 text-left md:w-[270px] md:p-9',
-        'transition-all duration-500 hover:border-white/[0.18]'
+        'group relative flex w-full cursor-pointer flex-col overflow-hidden rounded-2xl',
+        'border border-white/[0.07] p-8 text-left',
+        'transition-all duration-500 ease-out hover:border-white/[0.22]',
+        'md:min-h-[380px] md:p-9'
       )}
       style={{ '--accent': theme.accent, '--glow': theme.glow }}
       variants={cardVariants}
-      whileHover={{ y: -8, scale: 1.02 }}
+      whileHover={{ y: -10, scale: 1.02 }}
       whileTap={{ scale: 0.97 }}
+      transition={{ duration: 0.35, ease: [0.19, 1, 0.22, 1] }}
       onClick={() => onEnter(theme.id)}
       role="button"
       tabIndex={0}
@@ -99,13 +101,16 @@ function ThemeCard({ theme, onEnter }) {
       <div
         className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         style={{
-          boxShadow: `inset 0 1px 0 0 rgba(255,255,255,0.08), 0 0 40px ${theme.glow}`,
+          boxShadow: `inset 0 1px 0 0 rgba(255,255,255,0.1), 0 0 48px ${theme.glow}`,
         }}
       />
 
+      {/* 底部暗色渐变遮罩，保证浅色主题上文字可读 */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/75 via-black/30 to-transparent" />
+
       {/* Hover 顶部光晕 */}
       <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-24 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        className="pointer-events-none absolute inset-x-0 top-0 h-28 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         style={{
           background: `linear-gradient(180deg, ${theme.glow} 0%, transparent 70%)`,
         }}
@@ -120,23 +125,23 @@ function ThemeCard({ theme, onEnter }) {
       />
 
       {/* 内容 */}
-      <div className="relative z-10">
-        <span className="mb-4 block text-4xl transition-transform duration-500 group-hover:scale-110">{theme.icon}</span>
+      <div className="relative z-10 flex flex-1 flex-col">
+        <span className="mb-5 block text-4xl transition-transform duration-500 group-hover:scale-110">{theme.icon}</span>
         <h2 className="font-display text-xl font-normal tracking-[0.06em] text-[#f0ece4]">
           {theme.title}
         </h2>
-        <p className="mb-3 text-[10px] uppercase tracking-[0.12em] text-white/50">
+        <p className="mb-4 text-[10px] uppercase tracking-[0.12em] text-white/50">
           {theme.subtitle}
         </p>
-        <p className="mb-8 text-xs leading-relaxed tracking-wide text-white/45">
+        <p className="mb-8 flex-1 text-xs leading-relaxed tracking-wide text-white/45 md:line-clamp-3">
           {theme.desc}
         </p>
 
         <span
           className={cn(
-            'inline-flex items-center gap-1.5 rounded-full border px-4 py-1.5 text-[11px] tracking-[0.06em]',
+            'inline-flex w-fit items-center gap-1.5 rounded-full border px-4 py-1.5 text-[11px] tracking-[0.06em]',
             'opacity-80 transition-all duration-300 group-hover:opacity-100',
-            'group-hover:bg-white/[0.05]'
+            'group-hover:bg-white/[0.07] group-hover:shadow-[0_0_20px_var(--glow)]'
           )}
           style={{ borderColor: theme.accent, color: theme.accent }}
         >
