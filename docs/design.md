@@ -2,225 +2,173 @@
 
 ## 项目概述
 
-基于 React 的照片展览 Web 应用，支持三主题切换：**森林光影**（复古森系）、**赛博博物馆**（数字考古学）、**暗夜星座**（星辰图谱）。
+基于 React + Vite 的本地照片展览 Web 应用。用户选择本地文件夹（照片不上传），以主题画廊的形式浏览：缩略图墙 → 作品详情（EXIF）→ 大图查看。当前共 **9 个主题**，全部共享同一套设计 Token 架构。
+
+- 技术栈：React 19 · Vite · Tailwind CSS v4 · GSAP (ScrollTrigger) · framer-motion · Radix Dialog · exifreader
+- 入口：`src/App.jsx`（主题路由：URL `?theme=<id>`，`?demo=1` 加载示例图）
+- 主题数据源：`src/data/themeConfig.js`（9 个主题的全部文案/渐变色/accent/深浅色标记）
 
 ---
 
-## 主题设计
+## 设计系统架构
 
-### 森林光影 (Forest Light)
+`:root` 定义默认主题（森林光影）的全部 Token，每个主题一个 CSS 文件，通过 `.theme-<id>` 作用域覆写变量，组件只消费语义化变量，实现"换主题 = 换变量"：
 
-**灵感来源**: 日本森林美学 × 当代暗调画廊
-
-**配色**:
-| 角色 | 色值 | 说明 |
-|------|------|------|
-| 背景 | `#060a06` | 墨色森林基底 |
-| 强调色 | `#bf9b5e` | 穿林光束金 |
-| 辅助色 | `#5a7d4a` | 苔色 |
-| 辅助色 | `#6b7b6a` | 薄明水色 |
-
-**特效**:
-- Canvas 粒子系统（萤火虫光尘，80 颗粒子）
-- 5 道动态光束（CSS skewX + mix-blend-mode: screen，GSAP quickTo 鼠标跟踪 + ScrollTrigger scrub 视差）
-- 4 层环境光晕（radial-gradient）
-- SVG 噪点纹理（feTurbulence）
-- 玻璃拟态面板（backdrop-blur: 14px）
-- 卡片入场 `back.out(1.7)` 有机回弹，`stagger: 0.06`
-
-**字体**: Georgia / Noto Serif SC（衬线）
-
-**动画**: beamFlow, beamBreath, twinkle, glowPulse（有机呼吸感），GSAP timeline 标题序列
-
----
-
-### 赛博博物馆 (Cyber Museum)
-
-**灵感来源**: Hermes Agent Dashboard
-
-**配色**:
-| 角色 | 色值 | 说明 |
-|------|------|------|
-| 背景 | `#041c1c` | 深暗青蓝（非纯黑） |
-| 强调色 | `#ffac02` | 琥珀金数字暖光 |
-| 前景色 | `#ffffff` | 纯白文字 |
-
-**特效**:
-- Arc Border — 160° 渐变描边，2.23s 旋转动画
-- Dither 纹理 — conic-gradient 2px 点阵（GSAP steps 微闪）
-- 扫描线 — GSAP timeline 变速脉冲
-- 12 颗数字粒子光点 — GSAP 随机漂浮
-- 3 层琥珀光晕 — `sine.inOut` 呼吸（6/8/10s 交错相位）
-- 玻璃拟态 — 大暗影 + 内浮雕高光（Hermes 风格）
-- 卡片入场 `power3.inOut` 利落，`stagger: 0.03`
-
-**字体**: Courier Prime / Courier New（等宽衬线）
-
-**动画**: gradient-stroke, scan-line, amber-pulse, spin-slow
-
----
-
-### 暗夜星座 (Constellation)
-
-**灵感来源**: 黄道十二宫 × 深空星野 × 暗色极简
-
-**配色**:
-| 角色 | 色值 | 说明 |
-|------|------|------|
-| 背景 | `#060612` | 深空靛蓝 |
-| 强调色 | `#8899cc` | 月光银蓝 |
-| 前景色 | `#e0e4f0` | 冷白 |
-| 辅助色 | `#556688` | 星尘灰蓝 |
-
-**特效**:
-- Canvas 星野 — 500 颗随机星点，独立闪烁相位
-- SVG 星座 — 基于实际天文星位简化的 12 宫星图，重心居中
-- 过渡动画 — `back.out(1.5)` 星点逐个浮现
-- 星点脉动 — `sine.inOut` 呼吸效果
-- 背景跟随前景 — `prominent` 属性联动，`scale: 1 → 1.6`
-- 欢迎页 — 大面积暗空留白 + 底部星座信息栏
-- 30s 自动切换星座（排除当前，不重复）
-
-**字体**: Georgia / Noto Serif SC（衬线）
-
-**数据**: `src/data/zodiac.js` — 12 星座归一化星图数据（共享于 ConstellationBackground 和 ExhibitionHall）
-
-**欢迎页交互**:
-```
-进入 → 巨型星图欢迎页（背景星座放大 1.6x）
-  ├─ 点击标题 "星空图谱" → 切换画廊模式（星图收起）
-  ├─ 点击欢迎页空白 → 进入画廊
-  ├─ 点击 ✦ 按钮 → 切换星座（背景联动）
-  └─ 画廊模式点击标题 → 返回欢迎页
+```css
+:root               /* 基底色 / 金色系 / 苔色系 / 文字层级 / 卡片 / 玻璃 / 动效曲线 / 字体 */
+.theme-darkroom     /* 同构覆写：--color-accent* 、--color-text-* 、--card-* 、--glass-* 、--font-* */
 ```
 
----
+语义化别名是主题适配的关键，组件内一律使用：
 
-## GSAP 动画引擎
-
-### 安装
-```
-npm install gsap @gsap/react
-```
-
-### 注册
-`App.jsx` 全局注册: `gsap.registerPlugin(ScrollTrigger, useGSAP)`
-
-### 关键模式
-
-| 组件 | GSAP 用法 | 说明 |
-|------|-----------|------|
-| LightBeam | `gsap.quickTo()` | 鼠标跟踪，替代 rAF 轮询 |
-| LightBeam | `ScrollTrigger` + `scrub: 0.5` | 滚动视差 |
-| ExhibitionHall | `gsap.timeline()` | 标题分割线 → 标题 → 副标题序列 |
-| ExhibitionHall | `ScrollTrigger.batch()` | 缩略图 + 详情区批量滚动入场 |
-| ImageCard | `gsap.to()` | hover 抬起 + click 回弹 |
-| PhotoDetail | `gsap.to()` | 图片 hover 放大 |
-| CyberBackground | `gsap.timeline()` | 扫描线变速脉冲 |
-| CyberBackground | `gsap.to()` + `yoyo:true` | 光晕呼吸 + 粒子漂浮 |
-| ConstellationBackground | `gsap.fromTo()` + `stagger` | 星座星点逐个浮现 |
-| ConstellationBackground | `gsap.to()` + `sine.inOut` | 星点脉动呼吸 |
-| ConstellationBackground | `gsap.to()` + `power3.out` | prominent 联动缩放 |
-
-### 移除了
-- `useScrollParallax.js` — 替代为 ScrollTrigger scrub
-- `useParallax.js` 的 rAF 轮询 — 替代为 `gsap.quickTo()`
-- ImageCard/PhotoDetail 的 IntersectionObserver — 替代为 `ScrollTrigger.batch()`
-- Framer-motion 标题入场 — 替代为 `gsap.timeline()`
-- Framer-motion hover 效果 — 替代为 `gsap.to()`
-
----
-
-## 技术架构
-
-### 主题切换机制
-
-```
-App.jsx (theme state: 'landing' | 'forest' | 'cyber' | 'constellation')
-  ├── CSS 类切换: <div className={`app theme-${theme}`}>
-  ├── body 类切换: .body-cyber / .body-constellation
-  └── 条件渲染: isForest && <ParticleSystem />
-```
-
-- **CSS 变量驱动**: 组件通过 CSS 自定义属性获得颜色
-- **语义化 accent 变量**: 三套主题在 `:root` / `.theme-cyber` / `.theme-constellation` 中各自定义
-- **星座状态提升**: `zodiacIdx` 和 `constViewMode` 在 App.jsx 管理，同时传递给背景和前景
-
-### 组件结构
-
-| 组件 | 路径 | 主题感知 | 说明 |
-|------|------|----------|------|
-| App | `src/App.jsx` | ✅ 状态管理 | 主题 + 星座状态 + GSAP 注册 |
-| LandingPage | `src/components/LandingPage.jsx` | ✅ 数据定义 | 三主题卡片 |
-| ParticleSystem | `src/components/ParticleSystem.jsx` | 森林专属 | Canvas 萤火虫粒子 |
-| LightBeam | `src/components/LightBeam.jsx` | 森林专属 | GSAP quickTo 光束 |
-| CyberBackground | `src/components/CyberBackground.jsx` | 赛博专属 | GSAP 光晕 + 扫描线 + 粒子 |
-| ConstellationBackground | `src/components/ConstellationBackground.jsx` | 星座专属 | Canvas 星野 + SVG 星座 + prominent 联动 |
-| NavigationBar | `src/components/NavigationBar.jsx` | 仅显示文本 | CSS 变量驱动 |
-| FolderSelector | `src/components/FolderSelector.jsx` | ✅ theme prop | 空状态选择器（三套文案+图标） |
-| ExhibitionHall | `src/components/ExhibitionHall.jsx` | ✅ theme prop | 瀑布流 + 模态框 + 星座欢迎页 |
-| ImageCard | `src/components/ImageCard.jsx` | 否 | CSS 变量 + GSAP hover |
-| PhotoDetail | `src/components/PhotoDetail.jsx` | 否 | CSS 变量 + EXIF + GSAP hover |
-
-### 数据文件
-
-| 文件 | 说明 |
+| 变量 | 用途 |
 |------|------|
-| `src/data/zodiac.js` | 12 星座星图数据（0-100 归一化坐标），共享于 ConstellationBackground 和 ExhibitionHall |
+| `--color-accent` / `-light` / `-pale` / `-dim` / `-subtle` | 强调色全梯队 |
+| `--color-accent-card-border(-hover)` | 卡片描边 |
+| `--color-accent-glass-bg` / `-glass-border` | 玻璃面板 |
+| `--color-accent-shadow(-hover)` | 发光投影 |
+| `--color-text-primary/secondary/muted` | 文字层级（深浅主题各自定义） |
+| `--card-radius` / `--card-shadow(-hover)` | 卡片形态（孟菲斯硬投影、蒙德里安直角等） |
+| `--font-display` / `--font-body` | 每主题字体 |
 
-### CSS 架构
+全局氛围层：`body::before` 环境光晕（每主题可覆写）、`body::after` SVG 噪点（feTurbulence，浅主题下调透明度）。
+
+---
+
+## 字体系统
+
+Google Fonts 按需加载（`index.html`），中西文分工：拉丁字用风格化字体，中文回落 `Noto Serif SC` / 系统黑体。
+
+| 用途 | 字体 | 使用主题 |
+|------|------|----------|
+| 优雅衬线展示 | Cormorant Garamond + Noto Serif SC | 森林 / 星座 / 动漫（默认） |
+| 正文 | Manrope | 大多数主题 |
+| 打字机等宽 | Courier Prime | 赛博（全主题）、暗房（正文/数据） |
+| 波普粗黑 | Archivo Black | 孟菲斯 / 蒙德里安 / 漫波普 |
+| 几何无衬线 | Jost（Futura 血统） | 包豪斯 |
+| 窄体海报 | Oswald | 暗房（标题） |
+
+---
+
+## 九主题一览
+
+| # | 主题 | id | 概念 | Accent | 深浅 |
+|---|------|----|------|--------|------|
+| 01 | 森林光影 | `forest` | 日本森林美学 × 暗调画廊 | 光束金 `#bf9b5e` | 深 |
+| 02 | 赛博博物馆 | `cyber` | 数字遗迹 · 琥珀暗房，打字机等宽 | 琥珀 `#ffac02` | 深 |
+| 03 | 暗夜星座 | `constellation` | 星辰图谱 · 十二宫巡礼（30s 自动轮换，星图/画廊双视图） | 星蓝 `#8899cc` | 深 |
+| 04 | 漫影剧场 | `anime` | 次元跃迁 · 樱花霓虹 | 樱粉 `#ff6b9d` | 深 |
+| 05 | 蒙德里安 | `mondrian` | De Stijl 原色构成，硬边直角 + 原色块背景 | 红 `#E63946` | 浅 |
+| 06 | 孟菲斯 | `memphis` | 80s 波普几何，粗黑描边 + 硬偏移投影 | 品红 `#FF2E63` | 浅 |
+| 07 | 包豪斯 | `bauhaus` | 功能主义几何海报，瑞士排版 | 红 `#E63946` | 浅 |
+| 08 | 漫波普 | `animepop` | 次元拼贴 · 速度线 | 红 `#FF1A1A` | 浅 |
+| 09 | 暗房 | `darkroom` | 红色安全灯下的胶片暗房，**显影交互** | 安全灯红 `#e8452c` | 深 |
+
+浅主题的 Landing 卡片由 `themeConfig.scheme: 'light'` 驱动：深墨文字 + 白色柔光遮罩（深主题为白字 + 暗色遮罩）。
+
+---
+
+## 暗房主题（第 9 主题）— 签名设计
+
+定位：整个应用里最"元"的主题——看照片的应用，界面即摄影暗房。
+
+**视觉**
+- 基底近黑 `#0a0505`，主色安全灯红 `#e8452c`，辅助相纸乳白 `#e8ddd0`
+- 标题 Oswald 窄体（胶片海报字），正文/数据 Courier Prime（冲洗记录仪器感）
+- `DarkroomBackground.jsx`：安全灯呼吸红光 + 放大机光锥 + 显影盘微光 + 暗角，刻意安静，把视线让给照片
+
+**签名交互 — 显影（Developing）**
+- 所有照片（缩略图 / 详情图 / 大图弹窗）初始为红色负片态：
+  `filter: sepia(0.9) hue-rotate(-32deg) saturate(2.4) brightness(0.5) contrast(1.05)`
+- 进入视口后延迟 350ms 加 `.develop-in`，2.4s 内显影为彩色（`useInView` hook + `cubic-bezier(0.22,0.1,0.13,1)`）
+- **离开视口后重置，再次进入重新显影**（`useInView(threshold, once=false)`）
+- 大图弹窗每次打开/切换也重新显影（弹窗 portal 挂在 body 下，靠 `DialogContent` 上的 `theme-<id>` class 继承主题样式）
+- 延迟 350ms 是关键：保证红色负片态先于显影渲染一帧，否则首帧同帧加类会跳过显影过程
+
+**胶片语言**
+- 缩略图上下两条片孔带（`.thumb .group::before/::after`，radial-gradient 循环齿孔）
+- 左上角红色帧编号 `01/02/…`（Courier Prime + 红光晕，`.frame-no`，其他主题下 `hidden`）
+- 卡片直角（`--card-radius: 2px`），悬停信息条上移避让片孔带
+
+---
+
+## 页面结构
+
+### Landing（`LandingPage.jsx`）
+- 一页展示全部 9 张主题卡（3×3 网格，移动端 1 列）
+- 页头：菱形分隔装饰 + Cormorant 大标题 + 斜体英文副标；页底隐私提示
+- 卡片：编号（01–09）+ accent 着色图标 + 标题/副标/描述 +「进入 →」CTA；hover 上浮 + 顶部光晕 + 边框发光；framer-motion 交错入场
+- 布局为 `overflow-y-auto` + `my-auto`：超高时自然滚动，不裁剪内容
+
+### 文件夹选择（`FolderSelector.jsx`）
+- 每主题独立 SVG 图标（暗房为胶片框 + 齿孔），呼吸光晕 + 扫光按钮（圆角走 `--card-radius`）
+
+### 展览大厅（`ExhibitionHall.jsx`）
+- 展头：菱形分隔线 + 大标题 + 斜体英文副标（GSAP 入场编排）
+- 分区标签（横版/竖版）：菱形点 + 张数 + 延伸细线的编辑排版
+- 缩略图按横/竖分组 masonry；`useImagePreloader` 分块预载 + conic-gradient 进度环
+- ScrollTrigger.batch 滚动入场（赛博/星座用 inOut 快速节奏，其余 back.out 有机回弹）
+
+### 作品详情（`PhotoDetail.jsx`）
+- 锚点条：大号序号 + 竖分隔线 + 文件名（font-display）
+- EXIF 面板：「标签定宽 + 点状引线 + 值」两栏，玻璃拟态
+
+### 大图弹窗（`PhotoModal.jsx`）
+- Radix Dialog，spring 方向性切换、旋转控制、键盘 ←/→；caption 用 font-display
+- 接收 `theme` prop 并在 DialogContent 上挂 `theme-<id>`，保证 portal 内主题样式生效
+
+### 缩略图卡（`ImageCard.jsx`）
+- GSAP hover 上浮/回弹；hover 揭示底部渐变 + 文件名 + accent 渐变条 + 流光扫过
+- 暗房主题下叠加显影/齿孔/帧编号（全部由 `.theme-darkroom` 作用域 CSS 驱动，其他主题零影响）
+
+---
+
+## 动效体系
+
+| 层 | 技术 | 用途 |
+|----|------|------|
+| 页面入场 | framer-motion | Landing 卡片交错、弹窗 spring 切换 |
+| 滚入场 | GSAP ScrollTrigger.batch | 缩略图/详情分批入场（`once: true`） |
+| 微交互 | GSAP quickTo / contextSafe | 卡片 hover、光束鼠标跟踪 |
+| 氛围 | CSS keyframes | 呼吸光晕、流光、虚线描边、噪点 |
+
+缓动统一走 Token：`--ease-out-expo: cubic-bezier(0.19,1,0.22,1)`、`--ease-out-quint: cubic-bezier(0.22,0.1,0.13,1)`。
+
+---
+
+## 组件 / 文件地图
 
 ```
-styles/global.css      — :root 变量、三套主题覆盖、arc-border 工具类
-styles/animations.css  — @keyframes（三主题共用 + Hermes 动画）
-各组件内 <style>       — 组件级样式，使用 var(--color-*) 变量
+src/
+├── App.jsx                      # 主题路由 + 背景懒加载 + 加载遮罩
+├── data/themeConfig.js          # 9 主题数据源（含 scheme 深浅标记）
+├── styles/
+│   ├── global.css               # Token 定义 + Tailwind 注册 + 全局工具类
+│   ├── animations.css           # 关键帧
+│   └── themes/<id>.css          # 每主题变量覆写（共 9 个）
+├── components/
+│   ├── LandingPage.jsx          # 主题选择（3×3 卡片）
+│   ├── FolderSelector.jsx       # 空状态 + 9 个主题 SVG 图标
+│   ├── NavigationBar.jsx        # 毛玻璃药丸导航
+│   ├── ExhibitionHall.jsx       # 画廊编排（GSAP）
+│   ├── ImageCard.jsx            # 缩略图（hover 揭示 + 暗房显影）
+│   ├── PhotoDetail.jsx          # 详情 + EXIF（暗房显影）
+│   ├── PhotoModal.jsx           # 大图弹窗（暗房显影）
+│   ├── ConstellationWelcome.jsx # 星座星图欢迎页
+│   ├── FABGroup.jsx             # 回顶/返回 FAB
+│   ├── <Theme>Background.jsx    # 9 个主题背景（懒加载）
+│   └── ui/dialog.jsx            # Radix Dialog 原语
+├── hooks/
+│   ├── useFolderReader.js       # File System Access API 读文件夹
+│   ├── useImagePreloader.js     # 分块预载
+│   ├── useExifData.js           # EXIF 解析
+│   ├── useInView.js             # 入视口（once 可配，显影用）
+│   └── useParallax.js
+└── utils/imageHelpers.js        # 文件名转标题等
 ```
 
----
+## 工具
 
-## 交互功能
-
-### 右下角浮动按钮（FAB）
-
-- **↑ 回到顶部** — 常驻显示，平滑滚动到页顶
-- **↶ 回到上一个位置** — 有点击跳转历史时出现，弹出栈顶位置返回
-
-### 图片预加载
-
-- 进入展览前 `new Image()` 遍历全部 URL 强制缓存
-- 预加载进度显示（"正在缓存图片… 18/40"）
-- 全部就绪后遮罩消失，开放交互
-
-### 图片定位
-
-- 文件名排序（`localeCompare` + 数字自然排序）
-- 横版/竖版分组展示（各用 flex-wrap 行排）
-- 缩略图、详情区、模态框三处统一顺序（`combined = [...landscape, ...portrait]`）
-- UUID 唯一 ID 避免子目录同名冲突
-
----
-
-## 设计资产参考
-
-### Hermes 设计系统
-
-来源: Hermes Agent Dashboard (Tailwind CSS v4.3.1)
-
-- **配色**: 背景 `#041c1c`，强调色 `#ffac02`
-- **Arc Border**: `@property --arc-angle` + `mask-composite: exclude`
-- **阴影**: 大暗影 + 内浮雕 `inset 1px 1px 0 0 rgba(255,255,255,0.16)`
-- **Dither**: `repeating-conic-gradient` 2px 点阵
-
-### 黄道十二宫
-
-基于实际天文星位简化，每个星座 6-10 颗主星 + 连线。数据详见 `src/data/zodiac.js`。
-
----
-
-## 未来计划
-
-- [ ] 星座主题的全屏星图模式
-- [ ] 键盘快捷键导航
-- [ ] 图片搜索/过滤
-- [ ] 自定义主题系统
-- [ ] 星座主题的 30s 自动轮播可暂停
+- `all-themes-test.cjs`：Playwright 截图脚本，需 dev server（5173）运行，输出 landing + 9 主题画廊图到项目根目录
+- `npm run lint`：oxlint（注意：native binding 损坏时需重装 node_modules）
+- `npm run build` / `npm run dev` / `npm run preview`

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import useExifData from '../hooks/useExifData';
@@ -9,7 +9,15 @@ export default function PhotoDetail({ image, index, onImageClick, isActive }) {
   const sectionRef = useRef(null);
   const imgRef = useRef(null);
   const [imgViewRef, imgInView] = useInView(0.2, false);
+  // 显影：入视口后延迟一拍再加 develop-in，保证红色负片态先渲染
+  const [imgDeveloped, setImgDeveloped] = useState(false);
   const exif = useExifData(image);
+
+  useEffect(() => {
+    if (!imgInView) { setImgDeveloped(false); return; }
+    const t = setTimeout(() => setImgDeveloped(true), 350);
+    return () => clearTimeout(t);
+  }, [imgInView]);
 
   const { contextSafe } = useGSAP({ scope: sectionRef });
 
@@ -50,7 +58,7 @@ export default function PhotoDetail({ image, index, onImageClick, isActive }) {
         {/* 图片 */}
         <div
           ref={(el) => { imgRef.current = el; imgViewRef.current = el; }}
-          className={`pd-img group cursor-pointer overflow-hidden rounded-lg border border-[var(--color-accent-card-border)] bg-[var(--color-bg-surface)] transition-all duration-300 hover:border-[var(--color-accent-card-border-hover)] hover:shadow-[var(--card-shadow-hover)] ${imgInView ? 'develop-in' : ''}`}
+          className={`pd-img group cursor-pointer overflow-hidden rounded-lg border border-[var(--color-accent-card-border)] bg-[var(--color-bg-surface)] transition-all duration-300 hover:border-[var(--color-accent-card-border-hover)] hover:shadow-[var(--card-shadow-hover)] ${imgDeveloped ? 'develop-in' : ''}`}
           onMouseEnter={onImgEnter}
           onMouseLeave={onImgLeave}
           onClick={(e) => onImageClick(image, e)}

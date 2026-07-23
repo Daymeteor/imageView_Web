@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { fileNameToTitle } from '../utils/imageHelpers';
@@ -8,6 +8,16 @@ export default function ImageCard({ image, index, onClick }) {
   const cardRef = useRef(null);
   const [viewRef, inView] = useInView(0.15, false);
   const [isLoaded, setIsLoaded] = useState(false);
+  // 显影：入视口 + 图片加载后延迟一拍再加 develop-in，
+  // 保证红色负片态先渲染出来（否则首帧同帧加类会跳过显影过程）
+  const [developed, setDeveloped] = useState(false);
+
+  useEffect(() => {
+    if (!inView) { setDeveloped(false); return; }
+    if (!isLoaded) return;
+    const t = setTimeout(() => setDeveloped(true), 350);
+    return () => clearTimeout(t);
+  }, [inView, isLoaded]);
 
   const { contextSafe } = useGSAP({ scope: cardRef });
 
@@ -41,7 +51,7 @@ export default function ImageCard({ image, index, onClick }) {
     >
       <div
         ref={viewRef}
-        className={`group relative overflow-hidden rounded-md border border-[var(--color-accent-card-border)] bg-[var(--color-bg-surface)] shadow-[var(--card-shadow)] transition-all duration-300 hover:border-[var(--color-accent-card-border-hover)] hover:shadow-[var(--card-shadow-hover)] ${inView ? 'develop-in' : ''}`}
+        className={`group relative overflow-hidden rounded-md border border-[var(--color-accent-card-border)] bg-[var(--color-bg-surface)] shadow-[var(--card-shadow)] transition-all duration-300 hover:border-[var(--color-accent-card-border-hover)] hover:shadow-[var(--card-shadow-hover)] ${developed ? 'develop-in' : ''}`}
       >
         <img
           src={image.url}
