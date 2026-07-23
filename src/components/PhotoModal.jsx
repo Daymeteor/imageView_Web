@@ -5,7 +5,7 @@ import { Dialog, DialogContent } from './ui/dialog';
 import { cn } from '../lib/utils';
 import { fileNameToTitle } from '../utils/imageHelpers';
 
-export default function PhotoModal({ image, images, onClose, onPrev, onNext }) {
+export default function PhotoModal({ image, images, theme, onClose, onPrev, onNext }) {
   const [rotation, setRotation] = useState(0);
   const [direction, setDirection] = useState(0);
 
@@ -32,7 +32,7 @@ export default function PhotoModal({ image, images, onClose, onPrev, onNext }) {
   return (
     <Dialog open={isOpen} onOpenChange={(open) => { if (!open) onClose(); }}>
       <DialogContent
-        className="border-none bg-transparent p-0 shadow-none"
+        className={cn('border-none bg-transparent p-0 shadow-none', theme && `theme-${theme}`)}
         showCloseButton={false}
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
@@ -54,6 +54,14 @@ export default function PhotoModal({ image, images, onClose, onPrev, onNext }) {
 }
 
 function ModalInner({ image, name, rotation, setRotation, direction, onPrev, onNext, onClose }) {
+  // 暗房主题：大图打开/切换时从红色负片重新显影
+  const [developed, setDeveloped] = useState(false);
+  useEffect(() => {
+    setDeveloped(false);
+    const t = setTimeout(() => setDeveloped(true), 400);
+    return () => clearTimeout(t);
+  }, [image.id]);
+
   // 键盘导航（左右箭头切换，Radix Dialog 已处理 Escape 与焦点陷阱）
   useEffect(() => {
     const onKey = (e) => {
@@ -90,7 +98,7 @@ function ModalInner({ image, name, rotation, setRotation, direction, onPrev, onN
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={image.id}
-            className="flex items-center justify-center"
+            className={`dm-photo flex items-center justify-center ${developed ? 'develop-in' : ''}`}
             style={{
               width: '75vw',
               height: '85vh',
@@ -116,9 +124,9 @@ function ModalInner({ image, name, rotation, setRotation, direction, onPrev, onN
 
       {/* 图片名称 */}
       <motion.p
-        className="mt-4 font-display text-sm tracking-[0.05em] text-[var(--color-accent-pale)] opacity-60"
+        className="mt-4 font-display text-[13px] tracking-[0.12em] text-[var(--color-accent-pale)] opacity-70"
         initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 0.6, y: 0 }}
+        animate={{ opacity: 0.7, y: 0 }}
         transition={{ delay: 0.15 }}
       >
         {name}

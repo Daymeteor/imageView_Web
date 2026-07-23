@@ -81,8 +81,8 @@
   --transition-fast: 0.2s var(--ease-out-quint);
 
   /* 字体 */
-  --font-display: 'Georgia', 'Times New Roman', 'Noto Serif SC', serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'Songti SC', serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Segoe UI', sans-serif;
 
   /* --- 语义化 accent 别名（默认：森林金） --- */
   --color-accent: var(--color-gold);

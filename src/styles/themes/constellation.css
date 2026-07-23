@@ -49,8 +49,8 @@
   --card-shadow: 0 4px 24px rgba(0,0,0,0.5), 0 0 20px var(--color-accent-shadow);
   --card-shadow-hover: 0 8px 40px rgba(0,0,0,0.65), 0 0 50px var(--color-accent-shadow-hover);
 
-  --font-display: 'Georgia', 'Times New Roman', 'Noto Serif SC', serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'Songti SC', serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
 }
 
 .theme-constellation .body-accent::before,

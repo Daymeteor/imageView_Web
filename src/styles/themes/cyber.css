@@ -68,9 +68,9 @@
   --card-shadow-hover: 0 8px 40px rgba(0, 0, 0, 0.7),
                        0 0 60px var(--color-accent-shadow-hover);
 
-  /* --- 字体 — 等宽衬线混合 --- */
-  --font-display: 'Courier Prime', 'Courier New', 'Georgia', monospace;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, monospace;
+  /* --- 字体 — 打字机等宽，数字遗迹感 --- */
+  --font-display: 'Courier Prime', 'Courier New', 'Noto Serif SC', monospace;
+  --font-body: 'Courier Prime', 'Courier New', 'PingFang SC', monospace;
 }
 
 .theme-cyber .body-accent::before,

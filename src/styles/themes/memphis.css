@@ -59,8 +59,8 @@
   --card-shadow-hover: 10px 10px 0px #1a1a1a;
 
   /* --- 字体 — 粗体无衬线，波普感 --- */
-  --font-display: 'Georgia', 'Times New Roman', 'Noto Serif SC', serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Archivo Black', 'Noto Serif SC', 'PingFang SC', sans-serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
 }
 
 /* --- 孟菲斯背景层叠加 --- */

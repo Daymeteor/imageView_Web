@@ -15,6 +15,7 @@ export default function FolderSelector({ onSelect, loading, error, theme = 'fore
   const isMemphis = theme === 'memphis';
   const isAnimePop = theme === 'animepop';
   const isBauhaus = theme === 'bauhaus';
+  const isDarkroom = theme === 'darkroom';
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[var(--color-bg-deep)]">
@@ -39,6 +40,7 @@ export default function FolderSelector({ onSelect, loading, error, theme = 'fore
               : isMemphis ? <MemphisIcon />
               : isAnimePop ? <AnimePopIcon />
               : isBauhaus ? <BauhausIcon />
+              : isDarkroom ? <DarkroomIcon />
               : <ForestIcon />}
           </div>
         </div>
@@ -57,7 +59,7 @@ export default function FolderSelector({ onSelect, loading, error, theme = 'fore
         {/* 选择按钮 */}
         <button
           className={cn(
-            'group relative z-10 inline-flex items-center gap-2 overflow-hidden rounded-sm',
+            'group relative z-10 inline-flex items-center gap-2 overflow-hidden rounded-[var(--card-radius)]',
             'border border-[color-mix(in_oklab,var(--color-accent)_40%,transparent)]',
             'bg-[color-mix(in_oklab,var(--color-accent)_12%,transparent)]',
             'px-9 py-4 text-sm tracking-[0.06em] text-[var(--color-accent-pale)]',
@@ -256,6 +258,28 @@ function BauhausIcon() {
       <rect x="12" y="14" width="20" height="20" fill="currentColor" opacity="0.5" />
       <rect x="14" y="38" width="36" height="10" fill="currentColor" opacity="0.7" />
       <line x1="8" y1="56" x2="56" y2="56" stroke="currentColor" strokeWidth="2" opacity="0.8" />
+    </svg>
+  );
+}
+
+function DarkroomIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 胶片框 */}
+      <rect x="10" y="14" width="44" height="36" stroke="currentColor" strokeWidth="1.5" fill="none" />
+      {/* 齿孔 */}
+      <rect x="14" y="18" width="5" height="4" fill="currentColor" opacity="0.6" />
+      <rect x="23" y="18" width="5" height="4" fill="currentColor" opacity="0.6" />
+      <rect x="32" y="18" width="5" height="4" fill="currentColor" opacity="0.6" />
+      <rect x="41" y="18" width="5" height="4" fill="currentColor" opacity="0.6" />
+      <rect x="14" y="42" width="5" height="4" fill="currentColor" opacity="0.6" />
+      <rect x="23" y="42" width="5" height="4" fill="currentColor" opacity="0.6" />
+      <rect x="32" y="42" width="5" height="4" fill="currentColor" opacity="0.6" />
+      <rect x="41" y="42" width="5" height="4" fill="currentColor" opacity="0.6" />
+      {/* 画幅内显影中的影像 */}
+      <rect x="14" y="25" width="32" height="14" fill="currentColor" opacity="0.2" />
+      <circle cx="26" cy="32" r="5" fill="currentColor" opacity="0.55" />
+      <path d="M14 39L24 30L32 36L40 28L46 33V39H14Z" fill="currentColor" opacity="0.35" />
     </svg>
   );
 }

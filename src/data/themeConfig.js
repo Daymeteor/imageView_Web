@@ -5,6 +5,7 @@
 export const THEMES = [
   {
     id: 'forest',
+    scheme: 'dark',
     title: '森林光影',
     subtitle: 'Forest Light',
     desc: '复古森系 · 光影艺术展',
@@ -21,6 +22,7 @@ export const THEMES = [
   },
   {
     id: 'cyber',
+    scheme: 'dark',
     title: '赛博博物馆',
     subtitle: 'Cyber Museum',
     desc: '数字遗迹 · 琥珀暗房',
@@ -37,6 +39,7 @@ export const THEMES = [
   },
   {
     id: 'constellation',
+    scheme: 'dark',
     title: '暗夜星座',
     subtitle: 'Constellation',
     desc: '星辰图谱 · 十二宫巡礼',
@@ -53,6 +56,7 @@ export const THEMES = [
   },
   {
     id: 'anime',
+    scheme: 'dark',
     title: '漫影剧场',
     subtitle: 'Anime Theater',
     desc: '次元跃迁 · 霓虹幻梦',
@@ -69,6 +73,7 @@ export const THEMES = [
   },
   {
     id: 'mondrian',
+    scheme: 'light',
     title: '蒙德里安',
     subtitle: 'Mondrian',
     desc: '几何秩序 · 原色画廊',
@@ -85,6 +90,7 @@ export const THEMES = [
   },
   {
     id: 'memphis',
+    scheme: 'light',
     title: '孟菲斯',
     subtitle: 'Memphis',
     desc: '波普几何 · 复古跃动',
@@ -101,6 +107,7 @@ export const THEMES = [
   },
   {
     id: 'bauhaus',
+    scheme: 'light',
     title: '包豪斯',
     subtitle: 'Bauhaus',
     desc: '功能主义 · 几何海报',
@@ -117,6 +124,7 @@ export const THEMES = [
   },
   {
     id: 'animepop',
+    scheme: 'light',
     title: '漫波普',
     subtitle: 'Anime Pop',
     desc: '次元拼贴 · 速度线',
@@ -130,6 +138,23 @@ export const THEMES = [
     headerTitle: '次元拼贴',
     headerSub: 'Anime Pop Collage',
     footer: '— End of Episode —',
+  },
+  {
+    id: 'darkroom',
+    scheme: 'dark',
+    title: '暗房',
+    subtitle: 'Darkroom',
+    desc: '红色安全灯 · 显影之中',
+    icon: '🎞',
+    gradient: 'linear-gradient(135deg, #2a0c08, #0a0505)',
+    accent: '#e8452c',
+    glow: 'rgba(232, 69, 44, 0.18)',
+    selectTitle: '暗房',
+    selectSubtitle: 'Darkroom',
+    selectDesc: '选择一个包含照片的文件夹，在红色安全灯下冲洗你的照片',
+    headerTitle: '显影集',
+    headerSub: 'Developing Collection',
+    footer: '— End of Developing —',
   },
 ];
 

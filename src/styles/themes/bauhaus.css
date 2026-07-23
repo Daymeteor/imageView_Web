@@ -55,9 +55,9 @@
   --card-shadow-hover: 0 6px 24px rgba(0, 0, 0, 0.12),
                       0 0 40px var(--color-accent-shadow-hover);
 
-  /* --- 字体 — 瑞士国际主义无衬线 --- */
-  --font-display: 'Helvetica Neue', 'Arial', 'Noto Sans SC', 'Inter', sans-serif;
-  --font-body: 'Helvetica Neue', 'Arial', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* --- 字体 — 几何无衬线（Futura 血统） --- */
+  --font-display: 'Jost', 'Noto Serif SC', 'PingFang SC', sans-serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
 }
 
 /* --- 包豪斯背景覆盖 --- */

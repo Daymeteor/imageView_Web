@@ -170,17 +170,21 @@ export default function ExhibitionHall({
       {preloaded && (
         <>
           {/* 标题 */}
-          <header className="hall-header py-10 text-center md:py-14">
-            <div className="hall-divider mx-auto mb-6 h-px w-16 origin-center bg-gradient-to-r from-transparent via-[var(--color-accent)] to-transparent" />
+          <header className="hall-header py-12 text-center md:py-16">
+            <div className="hall-divider mx-auto mb-7 flex origin-center items-center justify-center gap-3">
+              <span className="h-px w-14 bg-gradient-to-r from-transparent to-[var(--color-accent)] opacity-70" />
+              <span className="h-1 w-1 rotate-45 bg-[var(--color-accent)]" />
+              <span className="h-px w-14 bg-gradient-to-l from-transparent to-[var(--color-accent)] opacity-70" />
+            </div>
             <h2
-              className={`font-display text-2xl font-normal tracking-[0.08em] text-[var(--color-accent-light)] md:text-3xl ${isConstellation ? 'cursor-pointer select-none transition-all duration-300 hover:text-[var(--color-accent-pale)]' : ''}`}
+              className={`font-display text-3xl font-normal tracking-[0.1em] text-[var(--color-accent-light)] md:text-4xl ${isConstellation ? 'cursor-pointer select-none transition-all duration-300 hover:text-[var(--color-accent-pale)]' : ''}`}
               style={isConstellation ? { textShadow: '0 0 24px rgba(136,153,204,0.2)' } : {}}
               onClick={isConstellation ? () => onViewModeChange(viewMode === 'star' ? 'gallery' : 'star') : undefined}
               title={isConstellation ? '切换星图/画廊' : undefined}
             >
               {t.headerTitle}
             </h2>
-            <p className="mt-2 text-[11px] uppercase tracking-[0.12em] text-[var(--color-text-muted)]">
+            <p className="mt-3 font-display text-[11px] uppercase italic tracking-[0.26em] text-[var(--color-text-muted)]">
               {t.headerSub}
             </p>
           </header>
@@ -199,10 +203,11 @@ export default function ExhibitionHall({
           <div className="hall-grid pb-8">
             {landscape.length > 0 && (
               <>
-                <div className="gl mb-3 flex items-center gap-2 py-4 font-display text-[11px] uppercase tracking-[0.06em] text-[var(--color-accent-dim)]">
-                  <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[var(--color-accent)]" />
+                <div className="gl mb-4 flex items-center gap-3 py-4 font-display text-[11px] uppercase tracking-[0.14em] text-[var(--color-accent-dim)]">
+                  <span className="h-1.5 w-1.5 flex-shrink-0 rotate-45 bg-[var(--color-accent)]" />
                   横版
-                  <span className="text-[10px] text-[var(--color-text-muted)]">{landscape.length} 张</span>
+                  <span className="text-[10px] tracking-[0.08em] text-[var(--color-text-muted)]">{landscape.length} 张</span>
+                  <span className="h-px flex-1 bg-[color-mix(in_oklab,var(--color-accent)_12%,transparent)]" />
                 </div>
                 <div className="masonry flex flex-wrap gap-4">
                   {landscape.map((img, i) => (
@@ -214,10 +219,11 @@ export default function ExhibitionHall({
 
             {portrait.length > 0 && (
               <>
-                <div className="gl gl-p mb-3 mt-10 flex items-center gap-2 border-t border-[color-mix(in_oklab,var(--color-accent)_8%,transparent)] pt-6 font-display text-[11px] uppercase tracking-[0.06em] text-[var(--color-accent-dim)]">
-                  <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[var(--color-moss-light)]" />
+                <div className="gl gl-p mb-4 mt-10 flex items-center gap-3 border-t border-[color-mix(in_oklab,var(--color-accent)_8%,transparent)] pt-6 font-display text-[11px] uppercase tracking-[0.14em] text-[var(--color-accent-dim)]">
+                  <span className="h-1.5 w-1.5 flex-shrink-0 rotate-45 bg-[var(--color-moss-light)]" />
                   竖版
-                  <span className="text-[10px] text-[var(--color-text-muted)]">{portrait.length} 张</span>
+                  <span className="text-[10px] tracking-[0.08em] text-[var(--color-text-muted)]">{portrait.length} 张</span>
+                  <span className="h-px flex-1 bg-[color-mix(in_oklab,var(--color-accent)_12%,transparent)]" />
                 </div>
                 <div className="masonry-p masonry flex flex-wrap gap-4">
                   {portrait.map((img, i) => (
@@ -230,9 +236,11 @@ export default function ExhibitionHall({
 
           {/* 详情区 */}
           <div className="hall-detail pt-[var(--space-2xl)]">
-            <div className="mb-8 flex items-center gap-4 font-display text-[11px] uppercase tracking-[0.1em] text-[var(--color-accent-dim)]">
+            <div className="mb-8 flex items-center gap-4 font-display text-[11px] uppercase tracking-[0.2em] text-[var(--color-accent-dim)]">
               <div className="h-px flex-1 bg-[var(--color-accent-card-border)]" />
+              <span className="h-1 w-1 rotate-45 bg-[var(--color-accent)] opacity-70" />
               <span>作品详情</span>
+              <span className="h-1 w-1 rotate-45 bg-[var(--color-accent)] opacity-70" />
               <div className="h-px flex-1 bg-[var(--color-accent-card-border)]" />
             </div>
             {combined.map((img, i) => (
@@ -248,6 +256,7 @@ export default function ExhibitionHall({
           <PhotoModal
             image={sel}
             images={combined}
+            theme={theme}
             onClose={closeModal}
             onPrev={() => setModalIdx((i) => { let n = i - 1; if (n < 0) n = combined.length - 1; return n; })}
             onNext={() => setModalIdx((i) => { let n = i + 1; if (n >= combined.length) n = 0; return n; })}

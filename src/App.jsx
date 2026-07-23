@@ -17,6 +17,7 @@ import './styles/themes/mondrian.css';
 import './styles/themes/memphis.css';
 import './styles/themes/anime-pop.css';
 import './styles/themes/bauhaus.css';
+import './styles/themes/darkroom.css';
 
 // GSAP 插件注册（全局一次性）
 gsap.registerPlugin(ScrollTrigger);
@@ -31,8 +32,9 @@ const MondrianBackground = lazy(() => import('./components/MondrianBackground'))
 const MemphisBackground = lazy(() => import('./components/MemphisBackground'));
 const AnimePopBackground = lazy(() => import('./components/AnimePopBackground'));
 const BauhausBackground = lazy(() => import('./components/BauhausBackground'));
+const DarkroomBackground = lazy(() => import('./components/DarkroomBackground'));
 
-const VALID_THEMES = ['forest', 'cyber', 'constellation', 'anime', 'mondrian', 'memphis', 'animepop', 'bauhaus'];
+const VALID_THEMES = ['forest', 'cyber', 'constellation', 'anime', 'mondrian', 'memphis', 'animepop', 'bauhaus', 'darkroom'];
 
 export default function App() {
   const [theme, setTheme] = useState(() => {
@@ -66,6 +68,7 @@ export default function App() {
   const isMemphis = theme === 'memphis';
   const isAnimePop = theme === 'animepop';
   const isBauhaus = theme === 'bauhaus';
+  const isDarkroom = theme === 'darkroom';
 
   // 星座主题：30s 自动切换星座
   useEffect(() => {
@@ -88,7 +91,7 @@ export default function App() {
   }
 
   const themeTitle = getTheme(theme).title;
-  const showFolderName = isForest || isConstellation || isAnime || isMondrian || isMemphis || isAnimePop || isBauhaus;
+  const showFolderName = isForest || isConstellation || isAnime || isMondrian || isMemphis || isAnimePop || isBauhaus || isDarkroom;
 
   const loadingText = isForest
     ? '正在读取照片...'
@@ -96,6 +99,8 @@ export default function App() {
     ? '正在读取数据...'
     : isConstellation
     ? '正在绘制星图...'
+    : isDarkroom
+    ? '正在冲洗照片...'
     : '正在渲染场景...';
 
   return (
@@ -115,6 +120,7 @@ export default function App() {
         {isMemphis && <MemphisBackground />}
         {isAnimePop && <AnimePopBackground />}
         {isBauhaus && <BauhausBackground />}
+        {isDarkroom && <DarkroomBackground />}
       </Suspense>
 
       {/* 导航栏 */}

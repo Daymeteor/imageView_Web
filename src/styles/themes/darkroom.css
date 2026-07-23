@@ -1,0 +1,166 @@
+/* ============================================
+   暗房 — Darkroom 主题
+   灵感：红色安全灯下的胶片暗房
+   签名交互：照片从红色负片状态"显影"为彩色
+   ============================================ */
+
+.theme-darkroom,
+[data-theme='darkroom'] {
+  /* --- 基底色系 — 近黑的显影液 --- */
+  --color-bg-deep: #0a0505;
+  --color-bg-primary: #120807;
+  --color-bg-surface: #1a0d0a;
+  --color-bg-elevated: #241311;
+
+  /* --- 安全灯红 — 主 accent --- */
+  --color-gold: #e8452c;
+  --color-gold-light: #ff6b4a;
+  --color-gold-pale: #f2b8a6;
+  --color-gold-dim: #b33020;
+  --color-gold-subtle: #7d2015;
+
+  /* --- 相纸乳白 — 辅助色 --- */
+  --color-moss: #c9b8a6;
+  --color-moss-light: #e0d2c2;
+  --color-moss-pale: #efe6da;
+  --color-leaf: #4a3628;
+  --color-mist: #8a7a6e;
+  --color-mist-light: #a89a8c;
+  --color-twilight: #3a2a24;
+
+  /* --- 语义化 accent 覆盖 --- */
+  --color-accent: var(--color-gold);
+  --color-accent-light: var(--color-gold-light);
+  --color-accent-pale: var(--color-gold-pale);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-subtle: var(--color-gold-subtle);
+  --color-accent-glass-border: rgba(232, 69, 44, 0.2);
+  --color-accent-glass-bg: rgba(26, 13, 10, 0.62);
+  --color-accent-card-border: rgba(232, 69, 44, 0.16);
+  --color-accent-card-border-hover: rgba(232, 69, 44, 0.45);
+  --color-accent-shadow: rgba(232, 69, 44, 0.08);
+  --color-accent-shadow-hover: rgba(232, 69, 44, 0.2);
+
+  /* --- 文字层级 — 暖白，相纸感 --- */
+  --color-text-primary: #e8ddd0;
+  --color-text-secondary: rgba(232, 221, 208, 0.6);
+  --color-text-muted: rgba(232, 221, 208, 0.38);
+
+  /* --- 玻璃拟态 — 暗红雾化玻璃 --- */
+  --glass-bg: rgba(26, 13, 10, 0.6);
+  --glass-border: rgba(232, 69, 44, 0.16);
+  --glass-blur: 12px;
+  --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+
+  /* --- 卡片 — 相纸直角 + 红光 --- */
+  --card-radius: 2px;
+  --card-border: 1px solid var(--color-accent-card-border);
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.6),
+                 0 0 30px var(--color-accent-shadow);
+  --card-shadow-hover: 0 8px 40px rgba(0, 0, 0, 0.75),
+                       0 0 60px var(--color-accent-shadow-hover);
+
+  /* --- 字体 — 窄体标题（胶片海报）+ 等宽正文（冲洗记录） --- */
+  --font-display: 'Oswald', 'Noto Serif SC', 'PingFang SC', sans-serif;
+  --font-body: 'Courier Prime', 'Courier New', 'PingFang SC', monospace;
+}
+
+/* --- 暗房环境光 — 安全灯从头顶角落洒下 --- */
+.theme-darkroom .body-accent::before,
+[data-theme='darkroom'] .body-accent::before {
+  background:
+    radial-gradient(ellipse at 85% 0%, rgba(232, 69, 44, 0.07) 0%, transparent 45%),
+    radial-gradient(ellipse at 10% 90%, rgba(232, 69, 44, 0.03) 0%, transparent 40%);
+}
+
+.theme-darkroom .body-accent::after,
+[data-theme='darkroom'] .body-accent::after {
+  opacity: 0.05;
+}
+
+/* ============================================
+   显影 — 照片从红色负片逐渐显影为彩色
+   ImageCard / PhotoDetail 进入视口时加 .develop-in
+   ============================================ */
+.theme-darkroom .thumb .thumb-img {
+  filter: sepia(0.9) hue-rotate(-32deg) saturate(2.4) brightness(0.5) contrast(1.05);
+  transition: opacity 0.5s, transform 0.5s, filter 2.4s cubic-bezier(0.22, 0.1, 0.13, 1);
+}
+
+.theme-darkroom .thumb .develop-in .thumb-img {
+  filter: none;
+}
+
+.theme-darkroom .pd-img img {
+  filter: sepia(0.9) hue-rotate(-32deg) saturate(2.4) brightness(0.5) contrast(1.05);
+  transition: filter 2.6s cubic-bezier(0.22, 0.1, 0.13, 1);
+}
+
+.theme-darkroom .pd-img.develop-in img {
+  filter: none;
+}
+
+/* ============================================
+   胶片齿孔 — 缩略图上下两边的片孔带
+   ============================================ */
+.theme-darkroom .thumb .group::before,
+.theme-darkroom .thumb .group::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 14px;
+  z-index: 2;
+  pointer-events: none;
+  background-color: rgba(0, 0, 0, 0.92);
+  background-image: radial-gradient(
+    circle at 9px 7px,
+    rgba(232, 221, 208, 0.8) 2.6px,
+    transparent 3.2px
+  );
+  background-size: 19px 14px;
+  background-position: 4px 0;
+}
+
+.theme-darkroom .thumb .group::before {
+  top: 0;
+}
+
+.theme-darkroom .thumb .group::after {
+  bottom: 0;
+}
+
+/* --- 帧编号 — 印相小样上的红笔试号 --- */
+.theme-darkroom .thumb .frame-no {
+  display: block;
+  position: absolute;
+  top: 18px;
+  left: 8px;
+  z-index: 3;
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--color-accent-light);
+  opacity: 0.9;
+  pointer-events: none;
+  text-shadow: 0 0 8px rgba(232, 69, 44, 0.5);
+}
+
+/* --- 悬停信息条让位于齿孔带，上移 --- */
+.theme-darkroom .thumb .hover-caption {
+  z-index: 3;
+  bottom: 14px;
+}
+
+/* ============================================
+   大图显影 — 弹窗内照片同样从红色负片显影
+   （弹窗挂在 body 下，靠 DialogContent 上的 theme class 生效）
+   ============================================ */
+.theme-darkroom .dm-photo img {
+  filter: sepia(0.9) hue-rotate(-32deg) saturate(2.4) brightness(0.5) contrast(1.05);
+  transition: filter 2.2s cubic-bezier(0.22, 0.1, 0.13, 1);
+}
+
+.theme-darkroom .dm-photo.develop-in img {
+  filter: none;
+}

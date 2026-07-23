@@ -59,9 +59,9 @@
   --card-shadow-hover: 0 8px 40px rgba(0, 0, 0, 0.65),
                        0 0 60px var(--color-accent-shadow-hover);
 
-  /* --- 字体 — 动漫感圆体/等宽混合 --- */
-  --font-display: 'Georgia', 'Times New Roman', 'Noto Serif SC', serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  /* --- 字体 — 优雅衬线 + 霓虹 --- */
+  --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'Songti SC', serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
 }
 
 .theme-anime .body-accent::before,

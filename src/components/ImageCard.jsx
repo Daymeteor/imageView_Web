@@ -1,9 +1,12 @@
 import { useRef, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
+import { fileNameToTitle } from '../utils/imageHelpers';
+import useInView from '../hooks/useInView';
 
 export default function ImageCard({ image, index, onClick }) {
   const cardRef = useRef(null);
+  const [viewRef, inView] = useInView(0.15, false);
   const [isLoaded, setIsLoaded] = useState(false);
 
   const { contextSafe } = useGSAP({ scope: cardRef });
@@ -36,15 +39,20 @@ export default function ImageCard({ image, index, onClick }) {
       onClick={() => onClick(image)}
       aria-label={`查看图片 ${image.name}`}
     >
-      <div className="group relative overflow-hidden rounded-md border border-[var(--color-accent-card-border)] bg-[var(--color-bg-surface)] shadow-[var(--card-shadow)] transition-all duration-300 hover:border-[var(--color-accent-card-border-hover)] hover:shadow-[var(--card-shadow-hover)]">
+      <div
+        ref={viewRef}
+        className={`group relative overflow-hidden rounded-md border border-[var(--color-accent-card-border)] bg-[var(--color-bg-surface)] shadow-[var(--card-shadow)] transition-all duration-300 hover:border-[var(--color-accent-card-border-hover)] hover:shadow-[var(--card-shadow-hover)] ${inView ? 'develop-in' : ''}`}
+      >
         <img
           src={image.url}
           alt=""
           draggable="false"
-          className={`thumb-img block h-auto w-full select-none opacity-0 transition-opacity duration-500 ${isLoaded ? 'opacity-100' : ''}`}
+          className={`thumb-img block h-auto w-full select-none opacity-0 transition-[opacity,transform] duration-500 group-hover:scale-[1.03] ${isLoaded ? 'opacity-100' : ''}`}
           onLoad={() => setIsLoaded(true)}
           loading="lazy"
         />
+        {/* 暗房主题：胶片帧编号（其他主题下隐藏） */}
+        <span className="frame-no hidden">{String(index + 1).padStart(2, '0')}</span>
         {/* Magic UI 流光 */}
         <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
           <div
@@ -53,6 +61,13 @@ export default function ImageCard({ image, index, onClick }) {
               background: 'linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.08) 45%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.08) 55%, transparent 60%)',
             }}
           />
+        </div>
+
+        {/* 悬停信息揭示：底部渐变 + 文件名 */}
+        <div className="hover-caption pointer-events-none absolute inset-x-0 bottom-0 flex h-16 items-end bg-gradient-to-t from-black/60 via-black/25 to-transparent px-3 pb-2.5 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <span className="translate-y-1 truncate font-display text-[11px] tracking-[0.06em] text-white/85 transition-transform duration-300 group-hover:translate-y-0">
+            {fileNameToTitle(image.name)}
+          </span>
         </div>
 
         {/* 悬停时底部渐变条 */}
