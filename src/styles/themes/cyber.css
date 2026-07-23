@@ -1,87 +1,270 @@
 /* ============================================
-   赛博博物馆 — Hermes 暗色玻璃拟态主题
+   赛博博物馆 — 夜之城美术馆
+   概念：不是身处赛博空间，而是收藏赛博的博物馆。
+   夜之城结束了，文物留下了——照片即数字遗迹。
+   色彩纪律：沥青夜黑 + 铜琥珀展签 + 全息青发丝线，
+   品红只做窗外远处的一点反光。
    ============================================ */
 
 .theme-cyber,
 [data-theme='cyber'] {
-  /* --- 基底色系 — 深暗青蓝 --- */
-  --color-bg-deep: #041c1c;
-  --color-bg-primary: #061e1e;
-  --color-bg-surface: #0a2424;
-  --color-bg-elevated: #0f2a2a;
+  /* --- 基底色系 — 沥青夜黑（带蓝调） --- */
+  --color-bg-deep: #0b0d12;
+  --color-bg-primary: #0f1219;
+  --color-bg-surface: #141821;
+  --color-bg-elevated: #1a1f2b;
 
-  /* --- 琥珀色系 — 数字暖光 --- */
-  --color-gold: #ffac02;
-  --color-gold-light: #ffbd38;
-  --color-gold-pale: #ffd580;
-  --color-gold-dim: #b87a00;
-  --color-gold-subtle: #664400;
+  /* --- 铜琥珀 — 展签与射灯（降饱和的 CP2077 黄） --- */
+  --color-gold: #e8a33d;
+  --color-gold-light: #f2bc5e;
+  --color-gold-pale: #f5d9a8;
+  --color-gold-dim: #b87f2a;
+  --color-gold-subtle: #8a5f1f;
 
-  /* --- 苔色/水色系 — 减弱 --- */
-  --color-moss: #4a6a3a;
-  --color-moss-light: #5a7a4a;
-  --color-moss-pale: #7a9a6a;
-  --color-leaf: #1a3a12;
-  --color-mist: #4a5a4a;
-  --color-mist-light: #6a7a6a;
-  --color-twilight: #2a3a2a;
+  /* --- 全息青 — 只做发丝线与微光（面积 < 5%） --- */
+  --color-moss: #59c2d8;
+  --color-moss-light: #8ad8e8;
+  --color-moss-pale: #c8ecf4;
+  --color-leaf: #1d4a5a;
+  --color-mist: #5a7a8a;
+  --color-mist-light: #7d9dab;
+  --color-twilight: #16303f;
 
-  /* --- 语义化 accent 覆盖（琥珀金） --- */
+  /* --- 语义化 accent 覆盖（铜琥珀） --- */
   --color-accent: var(--color-gold);
   --color-accent-light: var(--color-gold-light);
   --color-accent-pale: var(--color-gold-pale);
   --color-accent-dim: var(--color-gold-dim);
   --color-accent-subtle: var(--color-gold-subtle);
-  --color-accent-glass-border: color-mix(in oklab, var(--color-gold) 15%, transparent);
-  --color-accent-glass-bg: rgba(4, 28, 28, 0.65);
-  --color-accent-card-border: color-mix(in oklab, var(--color-gold) 12%, transparent);
-  --color-accent-card-border-hover: color-mix(in oklab, var(--color-gold) 35%, transparent);
-  --color-accent-shadow: rgba(255, 172, 2, 0.08);
-  --color-accent-shadow-hover: rgba(255, 172, 2, 0.18);
+  --color-accent-glass-border: rgba(232, 163, 61, 0.16);
+  --color-accent-glass-bg: rgba(15, 18, 25, 0.68);
+  --color-accent-card-border: rgba(232, 163, 61, 0.14);
+  --color-accent-card-border-hover: rgba(232, 163, 61, 0.42);
+  --color-accent-shadow: rgba(232, 163, 61, 0.07);
+  --color-accent-shadow-hover: rgba(232, 163, 61, 0.18);
 
-  /* --- 文字层级 --- */
-  --color-text-primary: #ffffff;
-  --color-text-secondary: rgba(255, 255, 255, 0.6);
-  --color-text-muted: rgba(255, 255, 255, 0.35);
+  /* --- 文字层级 — 展签用的暖纸白 --- */
+  --color-text-primary: #e6e1d5;
+  --color-text-secondary: rgba(230, 225, 213, 0.6);
+  --color-text-muted: rgba(230, 225, 213, 0.36);
 
-  /* --- 玻璃拟态（Hermes 风格：大暗影 + 内浮雕高光） --- */
-  --glass-bg: var(--color-accent-glass-bg);
-  --glass-border: var(--color-accent-glass-border);
-  --glass-blur: 12px;
-  --glass-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.6),
-                  inset -1px -1px 0 0 rgba(0, 0, 0, 0.5),
-                  inset 1px 1px 0 0 rgba(255, 255, 255, 0.16);
+  /* --- 玻璃拟态 — 展厅玻璃柜 --- */
+  --glass-bg: rgba(15, 18, 25, 0.62);
+  --glass-border: rgba(232, 163, 61, 0.14);
+  --glass-blur: 14px;
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.5),
+                  inset 0 1px 0 rgba(232, 163, 61, 0.06);
 
-  /* --- Arc Border 参数 --- */
-  --arc-c0: var(--color-text-primary);
-  --arc-c1: var(--color-gold);
-  --arc-c2: var(--color-bg-deep);
-  --arc-angle: 160deg;
-  --arc-inset: -2px;
-  --arc-width: 1.25px;
-
-  /* --- 卡片 --- */
-  --card-radius: 6px;
+  /* --- 卡片 — 克制直角 + 细琥珀描边 --- */
+  --card-radius: 3px;
   --card-border: 1px solid var(--color-accent-card-border);
   --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.55),
                  0 0 30px var(--color-accent-shadow);
-  --card-shadow-hover: 0 8px 40px rgba(0, 0, 0, 0.7),
-                       0 0 60px var(--color-accent-shadow-hover);
+  --card-shadow-hover: 0 10px 44px rgba(0, 0, 0, 0.7),
+                       0 0 56px var(--color-accent-shadow-hover);
 
-  /* --- 字体 — 打字机等宽，数字遗迹感 --- */
-  --font-display: 'Courier Prime', 'Courier New', 'Noto Serif SC', monospace;
-  --font-body: 'Courier Prime', 'Courier New', 'PingFang SC', monospace;
+  /* --- 字体 — 衬线负责凝视，等宽负责档案 --- */
+  --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'Songti SC', serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
 }
 
+/* --- 展厅环境光：顶部琥珀 + 右侧品红窗光 --- */
 .theme-cyber .body-accent::before,
 [data-theme='cyber'] .body-accent::before {
   background:
-    radial-gradient(ellipse at 18% 15%, rgba(255, 172, 2, 0.05) 0%, transparent 55%),
-    radial-gradient(ellipse at 82% 55%, rgba(255, 172, 2, 0.03) 0%, transparent 50%),
-    radial-gradient(ellipse at 45% 85%, rgba(0, 229, 255, 0.02) 0%, transparent 50%);
+    radial-gradient(ellipse at 50% 0%, rgba(232, 163, 61, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 100% 45%, rgba(255, 42, 109, 0.035) 0%, transparent 45%),
+    radial-gradient(ellipse at 0% 90%, rgba(89, 194, 216, 0.025) 0%, transparent 45%);
 }
 
 .theme-cyber .body-accent::after,
 [data-theme='cyber'] .body-accent::after {
-  opacity: 0.025;
+  opacity: 0.03;
+}
+
+/* ============================================
+   馆藏编号 — RELIC-01，等宽落款，细琥珀
+   ============================================ */
+.theme-cyber .thumb .frame-no {
+  display: block;
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  z-index: 3;
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--color-accent-dim);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.theme-cyber .thumb .frame-no::before {
+  content: 'RELIC-';
+  opacity: 0.65;
+}
+
+/* --- 悬停信息条置顶于编号层 --- */
+.theme-cyber .thumb .hover-caption {
+  z-index: 3;
+}
+
+/* ============================================
+   展品射灯 — 每幅详情图上方一束窄琥珀光锥
+   ============================================ */
+.theme-cyber .pd-img {
+  position: relative;
+}
+
+.theme-cyber .pd-img::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(232, 163, 61, 0.09) 0%, transparent 34%);
+}
+
+/* ============================================
+   博物馆墙签 — EXIF 面板改为展签形制
+   ============================================ */
+.theme-cyber .pd-info {
+  position: relative;
+  border: 1px solid var(--color-accent-glass-border);
+  outline: 1px solid rgba(232, 163, 61, 0.06);
+  outline-offset: 4px;
+}
+
+.theme-cyber .pd-info::before {
+  content: '数字影像 · 馆藏';
+  display: block;
+  margin: -8px 0 14px;
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--color-accent-dim);
+}
+
+/* ============================================
+   全息鉴定 — hover 时 HUD 角框亮起 + 扫描带掠过
+   ============================================ */
+.theme-cyber .thumb .group::before {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-out-quint);
+  background:
+    linear-gradient(to right, var(--color-moss) 1.5px, transparent 1.5px) 0 0,
+    linear-gradient(to bottom, var(--color-moss) 1.5px, transparent 1.5px) 0 0,
+    linear-gradient(to left, var(--color-moss) 1.5px, transparent 1.5px) 100% 0,
+    linear-gradient(to bottom, var(--color-moss) 1.5px, transparent 1.5px) 100% 0,
+    linear-gradient(to right, var(--color-moss) 1.5px, transparent 1.5px) 0 100%,
+    linear-gradient(to top, var(--color-moss) 1.5px, transparent 1.5px) 0 100%,
+    linear-gradient(to left, var(--color-moss) 1.5px, transparent 1.5px) 100% 100%,
+    linear-gradient(to top, var(--color-moss) 1.5px, transparent 1.5px) 100% 100%;
+  background-repeat: no-repeat;
+  background-size: 14px 14px;
+  filter: drop-shadow(0 0 4px rgba(89, 194, 216, 0.5));
+}
+
+.theme-cyber .thumb .group:hover::before {
+  opacity: 1;
+}
+
+.theme-cyber .thumb .group::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -30%;
+  height: 30%;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(89, 194, 216, 0.16) 55%,
+    rgba(89, 194, 216, 0.3) 92%,
+    rgba(200, 236, 244, 0.5) 100%
+  );
+}
+
+.theme-cyber .thumb .group:hover::after {
+  animation: cyber-scan 0.75s var(--ease-out-quint);
+}
+
+@keyframes cyber-scan {
+  0% { top: -30%; opacity: 0; }
+  12% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* --- 鉴定时编号亮起 --- */
+.theme-cyber .thumb .group:hover .frame-no {
+  color: var(--color-accent-light);
+  text-shadow: 0 0 8px rgba(232, 163, 61, 0.5);
+  transition: color 0.3s, text-shadow 0.3s;
+}
+
+/* ============================================
+   全息成像 — 图片进入视口时 RGB 色散闪烁后定格
+   （复用 develop-in 类，离开视口再进入会重新成像）
+   ============================================ */
+.theme-cyber .thumb .develop-in .thumb-img,
+.theme-cyber .pd-img.develop-in img {
+  animation: cyber-materialize 0.7s ease-out;
+}
+
+@keyframes cyber-materialize {
+  0% {
+    opacity: 0;
+    transform: none;
+    filter: none;
+  }
+  12% {
+    opacity: 0.9;
+    transform: translateX(-2px);
+    filter: drop-shadow(3px 0 0 rgba(255, 42, 109, 0.45)) drop-shadow(-3px 0 0 rgba(89, 194, 216, 0.45));
+  }
+  26% {
+    opacity: 0.35;
+    transform: translateX(2px);
+    filter: none;
+  }
+  42% {
+    opacity: 1;
+    transform: translateX(-1px);
+    filter: drop-shadow(2px 0 0 rgba(255, 42, 109, 0.3)) drop-shadow(-2px 0 0 rgba(89, 194, 216, 0.3));
+  }
+  58% {
+    opacity: 0.6;
+    transform: translateX(1px);
+    filter: none;
+  }
+  74% {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+/* ============================================
+   窗玻璃雨痕 — 右侧霓虹区的雨（CyberBackground）
+   ============================================ */
+@keyframes cyber-rain {
+  0% { transform: translateY(-15vh); opacity: 0; }
+  12% { opacity: 0.55; }
+  85% { opacity: 0.55; }
+  100% { transform: translateY(110vh); opacity: 0; }
 }

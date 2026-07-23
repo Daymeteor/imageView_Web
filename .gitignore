@@ -11,3 +11,4 @@ all-landing.png
 all-themes-test.cjs
 playwright-test*.cjs
 playwright-final-test.cjs
+verify-*.png

@@ -96,7 +96,7 @@ export default function App() {
   const loadingText = isForest
     ? '正在读取照片...'
     : isCyber
-    ? '正在读取数据...'
+    ? '正在调取馆藏...'
     : isConstellation
     ? '正在绘制星图...'
     : isDarkroom

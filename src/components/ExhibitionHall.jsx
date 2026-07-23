@@ -62,8 +62,21 @@ export default function ExhibitionHall({
   useGSAP(() => {
     if (!preloaded) return;
 
-    const isAlt = isCyber || isConstellation;
-    const fst = isAlt
+    // 赛博博物馆：《疾速追杀》运镜——缓慢、有重量、长 expo 推近
+    // 星座：快速 inOut；其余：有机回弹
+    const fst = isCyber
+      ? {
+          dividerD: 0.9,
+          titleD: 1.4,
+          subD: 0.7,
+          titleEase: 'expo.out',
+          cardEase: 'expo.out',
+          cardY: 64,
+          cardScale: 0.95,
+          stagger: 0.08,
+          cardDur: 1.15,
+        }
+      : isConstellation
       ? {
           dividerD: 0.5,
           titleD: 0.55,
@@ -73,6 +86,7 @@ export default function ExhibitionHall({
           cardY: 60,
           cardScale: 0.88,
           stagger: 0.03,
+          cardDur: 0.6,
         }
       : {
           dividerD: 0.7,
@@ -83,12 +97,23 @@ export default function ExhibitionHall({
           cardY: 50,
           cardScale: 0.93,
           stagger: 0.06,
+          cardDur: 0.9,
         };
 
     const tl = gsap.timeline({ defaults: { ease: fst.titleEase } });
-    tl.fromTo('.hall-divider', { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: fst.dividerD })
-      .fromTo('.hall-header h2', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: fst.titleD }, '-=0.3')
-      .fromTo('.hall-header p', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: fst.subD }, '-=0.2');
+    tl.fromTo('.hall-divider', { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: fst.dividerD });
+    if (isCyber) {
+      // 标题对焦 — 从失焦到清晰的电影字幕感
+      tl.fromTo(
+        '.hall-header h2',
+        { opacity: 0, filter: 'blur(10px)', letterSpacing: '0.42em' },
+        { opacity: 1, filter: 'blur(0px)', letterSpacing: '0.1em', duration: fst.titleD },
+        '-=0.3'
+      );
+    } else {
+      tl.fromTo('.hall-header h2', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: fst.titleD }, '-=0.3');
+    }
+    tl.fromTo('.hall-header p', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: fst.subD }, '-=0.2');
 
     const batches = [
       ScrollTrigger.batch('.hall-grid .thumb', {
@@ -100,7 +125,7 @@ export default function ExhibitionHall({
               opacity: 1,
               y: 0,
               scale: 1,
-              duration: isCyber ? 0.6 : 0.9,
+              duration: fst.cardDur,
               stagger: fst.stagger,
               ease: fst.cardEase,
               overwrite: true,
@@ -113,12 +138,12 @@ export default function ExhibitionHall({
         onEnter: (els) =>
           gsap.fromTo(
             els,
-            { opacity: 0, y: isAlt ? 60 : 40 },
+            { opacity: 0, y: isCyber ? 56 : isConstellation ? 60 : 40 },
             {
               opacity: 1,
               y: 0,
-              duration: 0.7,
-              ease: isAlt ? 'power2.inOut' : 'power2.out',
+              duration: isCyber ? 1.0 : 0.7,
+              ease: isCyber ? 'expo.out' : isConstellation ? 'power2.inOut' : 'power2.out',
               overwrite: true,
             }
           ),
@@ -136,6 +161,28 @@ export default function ExhibitionHall({
         once: true,
       }),
     ];
+
+    // 赛博博物馆：展签逐行打印 — 先隐藏，进入视口后逐行显出
+    if (isCyber) {
+      const labelRows = '.hall-detail .pd-info h3, .hall-detail .pd-info .space-y-0 > *, .hall-detail .pd-info > p';
+      gsap.set(labelRows, { opacity: 0, x: -10 });
+      batches.push(
+        ScrollTrigger.batch(labelRows, {
+          onEnter: (els) =>
+            gsap.to(els, {
+              opacity: 1,
+              x: 0,
+              duration: 0.5,
+              stagger: 0.08,
+              delay: 0.35,
+              ease: 'power2.out',
+              overwrite: true,
+            }),
+          start: 'top 88%',
+          once: true,
+        })
+      );
+    }
 
     return () => {
       batches.flat().forEach((st) => st?.kill());
