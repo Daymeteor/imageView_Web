@@ -156,6 +156,23 @@ export const THEMES = [
     headerSub: 'Developing Collection',
     footer: '— End of Developing —',
   },
+  {
+    id: 'album',
+    scheme: 'dark',
+    title: '纪念册',
+    subtitle: 'Keepsake Album',
+    desc: '一本会翻页的书 · 把照片装订成册',
+    icon: '📖',
+    gradient: 'linear-gradient(135deg, #2b1d14, #17100b)',
+    accent: '#c9a86a',
+    glow: 'rgba(201, 168, 106, 0.16)',
+    selectTitle: '纪念册',
+    selectSubtitle: 'Keepsake Album',
+    selectDesc: '选择一个包含照片的文件夹，把它们装订成一本会翻页的书',
+    headerTitle: '纪念册',
+    headerSub: 'Keepsake Album',
+    footer: '— 完 —',
+  },
 ];
 
 /** 按 id 查找主题 */

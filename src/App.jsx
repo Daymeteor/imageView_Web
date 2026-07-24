@@ -18,6 +18,7 @@ import './styles/themes/memphis.css';
 import './styles/themes/anime-pop.css';
 import './styles/themes/bauhaus.css';
 import './styles/themes/darkroom.css';
+import './styles/themes/album.css';
 
 // GSAP 插件注册（全局一次性）
 gsap.registerPlugin(ScrollTrigger);
@@ -33,8 +34,10 @@ const MemphisBackground = lazy(() => import('./components/MemphisBackground'));
 const AnimePopBackground = lazy(() => import('./components/AnimePopBackground'));
 const BauhausBackground = lazy(() => import('./components/BauhausBackground'));
 const DarkroomBackground = lazy(() => import('./components/DarkroomBackground'));
+const AlbumBackground = lazy(() => import('./components/AlbumBackground'));
+const BookReader = lazy(() => import('./components/BookReader'));
 
-const VALID_THEMES = ['forest', 'cyber', 'constellation', 'anime', 'mondrian', 'memphis', 'animepop', 'bauhaus', 'darkroom'];
+const VALID_THEMES = ['forest', 'cyber', 'constellation', 'anime', 'mondrian', 'memphis', 'animepop', 'bauhaus', 'darkroom', 'album'];
 
 export default function App() {
   const [theme, setTheme] = useState(() => {
@@ -69,6 +72,7 @@ export default function App() {
   const isAnimePop = theme === 'animepop';
   const isBauhaus = theme === 'bauhaus';
   const isDarkroom = theme === 'darkroom';
+  const isAlbum = theme === 'album';
 
   // 星座主题：30s 自动切换星座
   useEffect(() => {
@@ -91,7 +95,7 @@ export default function App() {
   }
 
   const themeTitle = getTheme(theme).title;
-  const showFolderName = isForest || isConstellation || isAnime || isMondrian || isMemphis || isAnimePop || isBauhaus || isDarkroom;
+  const showFolderName = isForest || isConstellation || isAnime || isMondrian || isMemphis || isAnimePop || isBauhaus || isDarkroom || isAlbum;
 
   const loadingText = isForest
     ? '正在读取照片...'
@@ -101,6 +105,8 @@ export default function App() {
     ? '正在绘制星图...'
     : isDarkroom
     ? '正在冲洗照片...'
+    : isAlbum
+    ? '正在装订书页...'
     : '正在渲染场景...';
 
   return (
@@ -121,6 +127,7 @@ export default function App() {
         {isAnimePop && <AnimePopBackground />}
         {isBauhaus && <BauhausBackground />}
         {isDarkroom && <DarkroomBackground />}
+        {isAlbum && <AlbumBackground />}
       </Suspense>
 
       {/* 导航栏 */}
@@ -147,16 +154,22 @@ export default function App() {
         </div>
       )}
 
-      {/* 展览大厅 */}
+      {/* 展览大厅 / 纪念册翻书 */}
       {hasImages && (
-        <ExhibitionHall
-          images={images}
-          theme={theme}
-          zodiacIdx={zodiacIdx}
-          onZodiacChange={setZodiacIdx}
-          viewMode={constViewMode}
-          onViewModeChange={setConstViewMode}
-        />
+        isAlbum ? (
+          <Suspense fallback={null}>
+            <BookReader images={images} theme={theme} folderName={folderName} />
+          </Suspense>
+        ) : (
+          <ExhibitionHall
+            images={images}
+            theme={theme}
+            zodiacIdx={zodiacIdx}
+            onZodiacChange={setZodiacIdx}
+            viewMode={constViewMode}
+            onViewModeChange={setConstViewMode}
+          />
+        )
       )}
     </div>
   );

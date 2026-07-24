@@ -2,7 +2,7 @@
 
 ## 项目概述
 
-基于 React + Vite 的本地照片展览 Web 应用。用户选择本地文件夹（照片不上传），以主题画廊的形式浏览：缩略图墙 → 作品详情（EXIF）→ 大图查看。当前共 **9 个主题**，全部共享同一套设计 Token 架构。
+基于 React + Vite 的本地照片展览 Web 应用。用户选择本地文件夹（照片不上传），以主题画廊的形式浏览：缩略图墙 → 作品详情（EXIF）→ 大图查看；纪念册主题则为独立的翻书阅读流。当前共 **10 个主题**，全部共享同一套设计 Token 架构。
 
 - 技术栈：React 19 · Vite · Tailwind CSS v4 · GSAP (ScrollTrigger) · framer-motion · Radix Dialog · exifreader
 - 入口：`src/App.jsx`（主题路由：URL `?theme=<id>`，`?demo=1` 加载示例图）
@@ -41,7 +41,7 @@ Google Fonts 按需加载（`index.html`），中西文分工：拉丁字用风�
 
 | 用途 | 字体 | 使用主题 |
 |------|------|----------|
-| 优雅衬线展示 | Cormorant Garamond + Noto Serif SC | 森林 / 星座 / 动漫 / 赛博（默认） |
+| 优雅衬线展示 | Cormorant Garamond + Noto Serif SC | 森林 / 星座 / 动漫 / 赛博 / 纪念册（默认） |
 | 正文 | Manrope | 大多数主题 |
 | 打字机等宽 | Courier Prime | 赛博（馆藏编号/展签落款）、暗房（正文/数据） |
 | 波普粗黑 | Archivo Black | 孟菲斯 / 蒙德里安 / 漫波普 |
@@ -63,6 +63,7 @@ Google Fonts 按需加载（`index.html`），中西文分工：拉丁字用风�
 | 07 | 包豪斯 | `bauhaus` | 功能主义几何海报，瑞士排版 | 红 `#E63946` | 浅 |
 | 08 | 漫波普 | `animepop` | 次元拼贴 · 速度线 | 红 `#FF1A1A` | 浅 |
 | 09 | 暗房 | `darkroom` | 红色安全灯下的胶片暗房，**显影交互** | 安全灯红 `#e8452c` | 深 |
+| 10 | 纪念册 | `album` | 一本会翻页的书：镂空封面 + 拍立得内页 + 3D 翻页（参考 FLIPIN） | 烫金 `#c9a86a` | 深 |
 
 浅主题的 Landing 卡片由 `themeConfig.scheme: 'light'` 驱动：深墨文字 + 白色柔光遮罩（深主题为白字 + 暗色遮罩）。
 
@@ -122,10 +123,37 @@ Google Fonts 按需加载（`index.html`），中西文分工：拉丁字用风�
 
 ---
 
+## 纪念册（第 10 主题）— 签名设计
+
+定位：**一本会翻页的书**（参考 [FLIPIN](https://flipin.pages.dev/) 的翻书交互）。不走瀑布流画廊，是独立的书本阅读流——`BookReader.jsx` 替代 `ExhibitionHall`。
+
+**流程**：选文件夹 → 合上的书（镂空封面）→ 点击翻开 → 左右翻页 → 末页「完」→ 级联合上。
+
+**封面**
+- 镂空窗口露出第一张照片（FLIPIN 签名式处理）+ 窗口下方 "baigao" 烫金/墨字签名
+- 6 色可选（明黄/橙红/草绿/天蓝/紫罗兰/玫红，高明度鲜明系），浅色封面签名自动切换深色（`light` 标记）
+
+**内页**
+- 米白道林纸（`#f5efe2`），书脊侧内阴影区分左右页
+- 每页一张照片：拍立得白边（微倾斜 ±0.6°）+ 斜体文件名 + 页码
+- 扉页题记（纪念册 + 文件夹名 + 日期 + baigao），末页「完 + 合上书本」
+
+**翻页机制（纯 CSS 3D）**
+- 数据模型：`leaves = [封面, ...照片叶(正反两页), 封底]`，`k` = 已翻叶数
+- 叶：右半册绝对定位，`transform-origin: left center`，`.flipped { rotateY(-180deg) }`，`backface-visibility: hidden` 双面
+- 点击右半页前翻 / 左半页后翻 + 键盘 ←/→；翻动中的叶临时提升 z-index
+- 合上（k=0）/ 读完（k=total）时书体 `translateX(∓25%)` 把半册滑到视觉中心
+- 「合上书本」按 60ms/叶级联回翻，封面最后合上
+- 桌面氛围 `AlbumBackground.jsx`：暖台灯 + 木纹 + 暗角
+
+**大图**：点击拍立得复用 `PhotoModal`（弹窗挂 `theme-album` 继承主题样式）。
+
+---
+
 ## 页面结构
 
 ### Landing（`LandingPage.jsx`）
-- 一页展示全部 9 张主题卡（3×3 网格，移动端 1 列）
+- 一页展示全部 10 张主题卡（lg 3 列网格，移动端 1 列，超高自然滚动）
 - 页头：菱形分隔装饰 + Cormorant 大标题 + 斜体英文副标；页底隐私提示
 - 卡片：编号（01–09）+ accent 着色图标 + 标题/副标/描述 +「进入 →」CTA；hover 上浮 + 顶部光晕 + 边框发光；framer-motion 交错入场
 - 布局为 `overflow-y-auto` + `my-auto`：超高时自然滚动，不裁剪内容
@@ -181,12 +209,13 @@ src/
 │   ├── FolderSelector.jsx       # 空状态 + 9 个主题 SVG 图标
 │   ├── NavigationBar.jsx        # 毛玻璃药丸导航
 │   ├── ExhibitionHall.jsx       # 画廊编排（GSAP）
+│   ├── BookReader.jsx           # 纪念册翻书阅读器（仅 album 主题）
 │   ├── ImageCard.jsx            # 缩略图（hover 揭示 + 暗房显影）
 │   ├── PhotoDetail.jsx          # 详情 + EXIF（暗房显影）
 │   ├── PhotoModal.jsx           # 大图弹窗（暗房显影）
 │   ├── ConstellationWelcome.jsx # 星座星图欢迎页
 │   ├── FABGroup.jsx             # 回顶/返回 FAB
-│   ├── <Theme>Background.jsx    # 9 个主题背景（懒加载）
+│   ├── <Theme>Background.jsx    # 10 个主题背景（懒加载）
 │   └── ui/dialog.jsx            # Radix Dialog 原语
 ├── hooks/
 │   ├── useFolderReader.js       # File System Access API 读文件夹
@@ -199,6 +228,6 @@ src/
 
 ## 工具
 
-- `all-themes-test.cjs`：Playwright 截图脚本，需 dev server（5173）运行，输出 landing + 9 主题画廊图到项目根目录
+- `all-themes-test.cjs`：Playwright 截图脚本，需 dev server（5173）运行，输出 landing + 10 主题画廊图到项目根目录
 - `npm run lint`：oxlint（注意：native binding 损坏时需重装 node_modules）
 - `npm run build` / `npm run dev` / `npm run preview`

@@ -16,6 +16,7 @@ export default function FolderSelector({ onSelect, loading, error, theme = 'fore
   const isAnimePop = theme === 'animepop';
   const isBauhaus = theme === 'bauhaus';
   const isDarkroom = theme === 'darkroom';
+  const isAlbum = theme === 'album';
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[var(--color-bg-deep)]">
@@ -41,6 +42,7 @@ export default function FolderSelector({ onSelect, loading, error, theme = 'fore
               : isAnimePop ? <AnimePopIcon />
               : isBauhaus ? <BauhausIcon />
               : isDarkroom ? <DarkroomIcon />
+              : isAlbum ? <AlbumIcon />
               : <ForestIcon />}
           </div>
         </div>
@@ -280,6 +282,31 @@ function DarkroomIcon() {
       <rect x="14" y="25" width="32" height="14" fill="currentColor" opacity="0.2" />
       <circle cx="26" cy="32" r="5" fill="currentColor" opacity="0.55" />
       <path d="M14 39L24 30L32 36L40 28L46 33V39H14Z" fill="currentColor" opacity="0.35" />
+    </svg>
+  );
+}
+
+function AlbumIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 摊开的书 */}
+      <path
+        d="M32 16C26 11 16 10 10 13V49C16 46 26 47 32 52C38 47 48 46 54 49V13C48 10 38 11 32 16Z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+        fill="none"
+      />
+      {/* 书脊 */}
+      <line x1="32" y1="16" x2="32" y2="52" stroke="currentColor" strokeWidth="1" opacity="0.6" />
+      {/* 左页照片框 */}
+      <rect x="15" y="19" width="12" height="14" fill="currentColor" opacity="0.3" />
+      <circle cx="19" cy="24" r="2" fill="currentColor" opacity="0.55" />
+      <path d="M15 31L20 26L24 29L27 25V33H15V31Z" fill="currentColor" opacity="0.5" />
+      {/* 右页文字行 */}
+      <line x1="37" y1="21" x2="49" y2="21" stroke="currentColor" strokeWidth="1" opacity="0.5" />
+      <line x1="37" y1="26" x2="49" y2="26" stroke="currentColor" strokeWidth="1" opacity="0.35" />
+      <line x1="37" y1="31" x2="46" y2="31" stroke="currentColor" strokeWidth="1" opacity="0.25" />
     </svg>
   );
 }
