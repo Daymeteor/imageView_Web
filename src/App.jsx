@@ -19,6 +19,7 @@ import './styles/themes/anime-pop.css';
 import './styles/themes/bauhaus.css';
 import './styles/themes/darkroom.css';
 import './styles/themes/album.css';
+import './styles/themes/seaside.css';
 
 // GSAP 插件注册（全局一次性）
 gsap.registerPlugin(ScrollTrigger);
@@ -37,8 +38,10 @@ const DarkroomBackground = lazy(() => import('./components/DarkroomBackground'))
 const AlbumBackground = lazy(() => import('./components/AlbumBackground'));
 const BookReader = lazy(() => import('./components/BookReader'));
 const MangaReader = lazy(() => import('./components/MangaReader'));
+const SeasideBackground = lazy(() => import('./components/SeasideBackground'));
+const SeasideReader = lazy(() => import('./components/SeasideReader'));
 
-const VALID_THEMES = ['forest', 'cyber', 'constellation', 'anime', 'mondrian', 'memphis', 'animepop', 'bauhaus', 'darkroom', 'album'];
+const VALID_THEMES = ['forest', 'cyber', 'constellation', 'anime', 'mondrian', 'memphis', 'animepop', 'bauhaus', 'darkroom', 'album', 'seaside'];
 
 export default function App() {
   const [theme, setTheme] = useState(() => {
@@ -74,6 +77,7 @@ export default function App() {
   const isBauhaus = theme === 'bauhaus';
   const isDarkroom = theme === 'darkroom';
   const isAlbum = theme === 'album';
+  const isSeaside = theme === 'seaside';
 
   // 星座主题：30s 自动切换星座
   useEffect(() => {
@@ -96,7 +100,7 @@ export default function App() {
   }
 
   const themeTitle = getTheme(theme).title;
-  const showFolderName = isForest || isConstellation || isAnime || isMondrian || isMemphis || isAnimePop || isBauhaus || isDarkroom || isAlbum;
+  const showFolderName = isForest || isConstellation || isAnime || isMondrian || isMemphis || isAnimePop || isBauhaus || isDarkroom || isAlbum || isSeaside;
 
   const loadingText = isForest
     ? '正在读取照片...'
@@ -108,6 +112,8 @@ export default function App() {
     ? '正在冲洗照片...'
     : isAlbum
     ? '正在装订书页...'
+    : isSeaside
+    ? '正在等潮汐...'
     : '正在渲染场景...';
 
   return (
@@ -129,6 +135,7 @@ export default function App() {
         {isBauhaus && <BauhausBackground />}
         {isDarkroom && <DarkroomBackground />}
         {isAlbum && <AlbumBackground />}
+        {isSeaside && <SeasideBackground />}
       </Suspense>
 
       {/* 导航栏 */}
@@ -164,6 +171,10 @@ export default function App() {
         ) : isAnimePop ? (
           <Suspense fallback={null}>
             <MangaReader images={images} theme={theme} folderName={folderName} />
+          </Suspense>
+        ) : isSeaside ? (
+          <Suspense fallback={null}>
+            <SeasideReader images={images} theme={theme} />
           </Suspense>
         ) : (
           <ExhibitionHall

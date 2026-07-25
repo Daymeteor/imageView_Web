@@ -1,0 +1,168 @@
+/* ============================================
+   拾光海岸 — Seaside Blue Hour 主题
+   概念：手绘海岸，照片晾在渔绳上，日月轮班。
+   素描写意：线条 + 水彩晕染 + 纸纹。
+   ============================================ */
+
+.theme-seaside,
+[data-theme='seaside'] {
+  /* --- 基底色系 — 沙滩暖纸（场景本身是全幅插画，token 服务 UI 层） --- */
+  --color-bg-deep: #e8dcc8;
+  --color-bg-primary: #f2e8d5;
+  --color-bg-surface: #faf3e4;
+  --color-bg-elevated: #ffffff;
+
+  /* --- 夕阳橘 — 主 accent --- */
+  --color-gold: #e8834a;
+  --color-gold-light: #f2a06e;
+  --color-gold-pale: #f8cdb0;
+  --color-gold-dim: #c2612f;
+  --color-gold-subtle: #8a4520;
+
+  /* --- 海蓝 — 辅助色 --- */
+  --color-moss: #3a6a8a;
+  --color-moss-light: #5a8aab;
+  --color-moss-pale: #a8c4d8;
+  --color-leaf: #2b4a5e;
+  --color-mist: #8a9aa8;
+  --color-mist-light: #abb8c4;
+  --color-twilight: #4a5a6e;
+
+  /* --- 语义化 accent 覆盖 --- */
+  --color-accent: var(--color-gold);
+  --color-accent-light: var(--color-gold-light);
+  --color-accent-pale: var(--color-gold-pale);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-subtle: var(--color-gold-subtle);
+  --color-accent-glass-border: rgba(232, 131, 74, 0.3);
+  --color-accent-glass-bg: rgba(250, 243, 228, 0.78);
+  --color-accent-card-border: rgba(43, 58, 74, 0.18);
+  --color-accent-card-border-hover: rgba(232, 131, 74, 0.55);
+  --color-accent-shadow: rgba(232, 131, 74, 0.14);
+  --color-accent-shadow-hover: rgba(232, 131, 74, 0.3);
+
+  /* --- 文字层级 — 素描墨色 --- */
+  --color-text-primary: #2b3a4a;
+  --color-text-secondary: rgba(43, 58, 74, 0.62);
+  --color-text-muted: rgba(43, 58, 74, 0.4);
+
+  /* --- 玻璃拟态 — 宣纸白 --- */
+  --glass-bg: rgba(250, 243, 228, 0.75);
+  --glass-border: rgba(43, 58, 74, 0.14);
+  --glass-blur: 12px;
+  --glass-shadow: 0 4px 24px rgba(43, 58, 74, 0.14);
+
+  /* --- 卡片 --- */
+  --card-radius: 3px;
+  --card-border: 1px solid var(--color-accent-card-border);
+  --card-shadow: 0 4px 20px rgba(43, 58, 74, 0.16);
+  --card-shadow-hover: 0 10px 36px rgba(43, 58, 74, 0.24),
+                       0 0 40px var(--color-accent-shadow-hover);
+
+  /* --- 字体 — 圆润动漫 Gothic 负责温度 --- */
+  --font-display: 'Zen Maru Gothic', 'Noto Serif SC', 'PingFang SC', sans-serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+}
+
+.theme-seaside .body-accent::before,
+[data-theme='seaside'] .body-accent::before {
+  background: none; /* 场景插画自带天空，关掉全局光晕 */
+}
+
+.theme-seaside .body-accent::after,
+[data-theme='seaside'] .body-accent::after {
+  opacity: 0.05; /* 保留纸纹噪点 */
+}
+
+/* ============================================
+   晾衣绳照片 — 海风吹晃（transform-origin 在夹子）
+   ============================================ */
+@keyframes ss-sway {
+  0%, 100% { transform: rotate(-1.1deg); }
+  50% { transform: rotate(1.2deg); }
+}
+
+.ss-photo {
+  transform-origin: 50% 0;
+  animation: ss-sway var(--sway-d, 5s) ease-in-out var(--sway-delay, 0s) infinite;
+}
+
+/* --- 木夹 --- */
+.ss-clip {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  width: 8px;
+  height: 17px;
+  transform: translateX(-50%);
+  border-radius: 3px;
+  background: linear-gradient(180deg, #b98d63, #7d5a3c);
+  box-shadow: 0 1px 2px rgba(43, 58, 74, 0.3);
+  z-index: 2;
+}
+
+/* --- 照片卡：柔边白卡 + 漫射投影 --- */
+.ss-card {
+  background: #fffdf8;
+  padding: 8px 8px 10px;
+  border-radius: 2px;
+  box-shadow: 0 8px 24px rgba(43, 58, 74, 0.18);
+  cursor: pointer;
+  transition: box-shadow 0.4s;
+}
+
+.ss-photo:hover .ss-card {
+  box-shadow: 0 14px 36px rgba(43, 58, 74, 0.26),
+              0 0 36px rgba(255, 180, 110, 0.3);
+}
+
+.ss-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+/* ============================================
+   海鸥 — 振翅（抽帧，手绘感）
+   ============================================ */
+@keyframes ss-flap {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.5); }
+}
+
+/* ============================================
+   星星 — 逐颗点亮后的闪烁
+   ============================================ */
+@keyframes ss-twinkle {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.9; }
+}
+
+/* ============================================
+   海浪 — 平涂剪影层，按各自波长无缝漂移
+   ============================================ */
+@keyframes ss-wave-far {
+  to { transform: translateX(-360px); }
+}
+
+@keyframes ss-wave-mid {
+  to { transform: translateX(-420px); }
+}
+
+@keyframes ss-wave-near {
+  to { transform: translateX(-480px); }
+}
+
+/* --- 动漫云缓飘 --- */
+@keyframes ss-cloud {
+  from { transform: translateX(-40px); }
+  to { transform: translateX(60px); }
+}
+
+/* ============================================
+   手心查看 — 素描手掌
+   ============================================ */
+.ss-palm {
+  filter: drop-shadow(0 4px 12px rgba(43, 58, 74, 0.3));
+}

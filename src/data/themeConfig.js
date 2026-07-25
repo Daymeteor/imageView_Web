@@ -173,6 +173,23 @@ export const THEMES = [
     headerSub: 'Keepsake Album',
     footer: '— 完 —',
   },
+  {
+    id: 'seaside',
+    scheme: 'light',
+    title: '拾光海岸',
+    subtitle: 'Seaside Blue Hour',
+    desc: '手绘海岸 · 日月轮班',
+    icon: '🌅',
+    gradient: 'linear-gradient(135deg, #f7c89a, #7a9ac4)',
+    accent: '#e8834a',
+    glow: 'rgba(232, 131, 74, 0.18)',
+    selectTitle: '拾光海岸',
+    selectSubtitle: 'Seaside Blue Hour',
+    selectDesc: '选择一个包含照片的文件夹，把它们晾在海边的渔绳上',
+    headerTitle: '拾光海岸',
+    headerSub: 'Seaside Blue Hour',
+    footer: '— 潮汐尽头 —',
+  },
 ];
 
 /** 按 id 查找主题 */

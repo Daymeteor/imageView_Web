@@ -17,6 +17,7 @@ export default function FolderSelector({ onSelect, loading, error, theme = 'fore
   const isBauhaus = theme === 'bauhaus';
   const isDarkroom = theme === 'darkroom';
   const isAlbum = theme === 'album';
+  const isSeaside = theme === 'seaside';
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[var(--color-bg-deep)]">
@@ -43,6 +44,7 @@ export default function FolderSelector({ onSelect, loading, error, theme = 'fore
               : isBauhaus ? <BauhausIcon />
               : isDarkroom ? <DarkroomIcon />
               : isAlbum ? <AlbumIcon />
+              : isSeaside ? <SeasideIcon />
               : <ForestIcon />}
           </div>
         </div>
@@ -307,6 +309,25 @@ function AlbumIcon() {
       <line x1="37" y1="21" x2="49" y2="21" stroke="currentColor" strokeWidth="1" opacity="0.5" />
       <line x1="37" y1="26" x2="49" y2="26" stroke="currentColor" strokeWidth="1" opacity="0.35" />
       <line x1="37" y1="31" x2="46" y2="31" stroke="currentColor" strokeWidth="1" opacity="0.25" />
+    </svg>
+  );
+}
+
+function SeasideIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 落日与光芒 */}
+      <circle cx="32" cy="26" r="10" fill="currentColor" opacity="0.85" />
+      <line x1="32" y1="8" x2="32" y2="13" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
+      <line x1="14" y1="26" x2="19" y2="26" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
+      <line x1="45" y1="26" x2="50" y2="26" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
+      <line x1="19" y1="13" x2="22.5" y2="16.5" stroke="currentColor" strokeWidth="1.5" opacity="0.45" />
+      <line x1="45" y1="13" x2="41.5" y2="16.5" stroke="currentColor" strokeWidth="1.5" opacity="0.45" />
+      {/* 海平线 */}
+      <line x1="8" y1="36" x2="56" y2="36" stroke="currentColor" strokeWidth="1.5" />
+      {/* 海浪 */}
+      <path d="M10 44Q16 40 22 44T34 44T46 44T58 44" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.7" />
+      <path d="M14 51Q20 47 26 51T38 51T50 51" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.45" />
     </svg>
   );
 }

@@ -35,7 +35,7 @@ export default function NavigationBar({
 
           <div className="hidden h-4 w-px bg-white/[0.08] sm:block" />
 
-          <span className="font-display text-[15px] tracking-[0.1em] text-[var(--color-accent-pale)]">
+          <span className="font-display text-[15px] tracking-[0.1em] text-[var(--color-accent)]">
             {themeName || '光影艺术展'}
           </span>
         </div>
