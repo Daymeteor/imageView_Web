@@ -20,6 +20,11 @@ import './styles/themes/bauhaus.css';
 import './styles/themes/darkroom.css';
 import './styles/themes/album.css';
 import './styles/themes/seaside.css';
+import './styles/themes/pixel.css';
+import './styles/themes/spirited.css';
+import './styles/themes/nightcity.css';
+import './styles/themes/rdr.css';
+import './styles/themes/potter.css';
 
 // GSAP 插件注册（全局一次性）
 gsap.registerPlugin(ScrollTrigger);
@@ -40,8 +45,18 @@ const BookReader = lazy(() => import('./components/BookReader'));
 const MangaReader = lazy(() => import('./components/MangaReader'));
 const SeasideBackground = lazy(() => import('./components/SeasideBackground'));
 const SeasideReader = lazy(() => import('./components/SeasideReader'));
+const PixelBackground = lazy(() => import('./components/PixelBackground'));
+const SpiritedBackground = lazy(() => import('./components/SpiritedBackground'));
+const NightcityBackground = lazy(() => import('./components/NightcityBackground'));
+const RdrBackground = lazy(() => import('./components/RdrBackground'));
+const PotterBackground = lazy(() => import('./components/PotterBackground'));
+const PixelReader = lazy(() => import('./components/PixelReader'));
+const SpiritedReader = lazy(() => import('./components/SpiritedReader'));
+const NightcityReader = lazy(() => import('./components/NightcityReader'));
+const RdrReader = lazy(() => import('./components/RdrReader'));
+const PotterReader = lazy(() => import('./components/PotterReader'));
 
-const VALID_THEMES = ['forest', 'cyber', 'constellation', 'anime', 'mondrian', 'memphis', 'animepop', 'bauhaus', 'darkroom', 'album', 'seaside'];
+const VALID_THEMES = ['forest', 'cyber', 'constellation', 'anime', 'mondrian', 'memphis', 'animepop', 'bauhaus', 'darkroom', 'album', 'seaside', 'pixel', 'spirited', 'nightcity', 'rdr', 'potter'];
 
 export default function App() {
   const [theme, setTheme] = useState(() => {
@@ -78,6 +93,11 @@ export default function App() {
   const isDarkroom = theme === 'darkroom';
   const isAlbum = theme === 'album';
   const isSeaside = theme === 'seaside';
+  const isPixel = theme === 'pixel';
+  const isSpirited = theme === 'spirited';
+  const isNightcity = theme === 'nightcity';
+  const isRdr = theme === 'rdr';
+  const isPotter = theme === 'potter';
 
   // 星座主题：30s 自动切换星座
   useEffect(() => {
@@ -100,7 +120,7 @@ export default function App() {
   }
 
   const themeTitle = getTheme(theme).title;
-  const showFolderName = isForest || isConstellation || isAnime || isMondrian || isMemphis || isAnimePop || isBauhaus || isDarkroom || isAlbum || isSeaside;
+  const showFolderName = isForest || isConstellation || isAnime || isMondrian || isMemphis || isAnimePop || isBauhaus || isDarkroom || isAlbum || isSeaside || isPixel || isSpirited || isNightcity || isRdr || isPotter;
 
   const loadingText = isForest
     ? '正在读取照片...'
@@ -114,6 +134,16 @@ export default function App() {
     ? '正在装订书页...'
     : isSeaside
     ? '正在等潮汐...'
+    : isPixel
+    ? '正在生成区块...'
+    : isSpirited
+    ? '正在点亮灯笼...'
+    : isNightcity
+    ? '正在接入神经...'
+    : isRdr
+    ? '正在冲洗老照片...'
+    : isPotter
+    ? '正在施魔法...'
     : '正在渲染场景...';
 
   return (
@@ -136,6 +166,11 @@ export default function App() {
         {isDarkroom && <DarkroomBackground />}
         {isAlbum && <AlbumBackground />}
         {isSeaside && <SeasideBackground />}
+        {isPixel && <PixelBackground />}
+        {isSpirited && <SpiritedBackground />}
+        {isNightcity && <NightcityBackground />}
+        {isRdr && <RdrBackground />}
+        {isPotter && <PotterBackground />}
       </Suspense>
 
       {/* 导航栏 */}
@@ -175,6 +210,26 @@ export default function App() {
         ) : isSeaside ? (
           <Suspense fallback={null}>
             <SeasideReader images={images} theme={theme} />
+          </Suspense>
+        ) : isPixel ? (
+          <Suspense fallback={null}>
+            <PixelReader images={images} theme={theme} />
+          </Suspense>
+        ) : isSpirited ? (
+          <Suspense fallback={null}>
+            <SpiritedReader images={images} theme={theme} folderName={folderName} />
+          </Suspense>
+        ) : isNightcity ? (
+          <Suspense fallback={null}>
+            <NightcityReader images={images} theme={theme} folderName={folderName} />
+          </Suspense>
+        ) : isRdr ? (
+          <Suspense fallback={null}>
+            <RdrReader images={images} theme={theme} />
+          </Suspense>
+        ) : isPotter ? (
+          <Suspense fallback={null}>
+            <PotterReader images={images} theme={theme} />
           </Suspense>
         ) : (
           <ExhibitionHall

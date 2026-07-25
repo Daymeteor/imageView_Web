@@ -7,7 +7,7 @@
 
 ## 项目概述
 
-基于 React + Vite 的本地照片展览 Web 应用。用户选择本地文件夹（照片不上传），以主题化的方式阅读照片。当前共 **10 个主题**，分属 **3 种交互范式**（见下），全部共享同一套设计 Token 架构。
+基于 React + Vite 的本地照片展览 Web 应用。用户选择本地文件夹（照片不上传），以主题化的方式阅读照片。当前共 **16 个主题**、**8 种阅读范式**（见下），全部共享同一套设计 Token 架构与比例感知布局引擎。
 
 - 技术栈：React 19 · Vite · Tailwind CSS v4 · GSAP (ScrollTrigger) · framer-motion · Radix Dialog · exifreader
 - 入口：`src/App.jsx`（主题路由：URL `?theme=<id>`，`?demo=1` 加载示例图）
@@ -48,6 +48,8 @@ Google Fonts 按需加载（`index.html`）。分工原则：**拉丁字用风�
 | 几何无衬线 | Jost（Futura 血统） | 包豪斯 |
 | 窄体海报 | Oswald | 暗房（标题） |
 | 日文极黑 Gothic | M PLUS 1p (900) | 漫波普（标题/拟声词） |
+| 圆润动漫 Gothic | Zen Maru Gothic | 拾光海岸 / 汤屋幻境 |
+| 像素体 | Press Start 2P | 像素世界 |
 
 ---
 
@@ -60,7 +62,13 @@ Google Fonts 按需加载（`index.html`）。分工原则：**拉丁字用风�
 | **画廊流** | `ExhibitionHall` | 滚动纵览缩略图墙 → 作品详情（EXIF）→ 点图弹大图 | 森林 / 赛博 / 星座 / 动漫 / 蒙德里安 / 孟菲斯 / 包豪斯 / 暗房 |
 | **翻书流** | `BookReader` | 合上的书 → 点击翻开 → 左右点击/←/→ 3D 翻页 → 末页合上 | 纪念册 |
 | **漫画流** | `MangaReader` | 封面 → 分镜页逐格登场 → 左右点击/←/→ 斜切翻页 → つづく | 漫波普 |
-| **通用弹层** | `PhotoModal` | 大图查看，方向键/按钮切换、旋转 | 全部（挂 `theme-<id>` 继承主题样式） |
+| **漂流瓶流** | `SeasideReader` | 瓶子乘浪上岸 → 拔塞 → 照片展开（第一人称视角，蓝调时刻背景） | 拾光海岸 |
+| **物品栏流** | `PixelReader` | MC 背包物品格 → hover tooltip → 附魔台查看 | 像素世界 |
+| **绘马纸门流** | `SpiritedReader` | 绘马木牌挂架 → 点击 → 障子纸门左右滑开 | 汤屋幻境 |
+| **超梦终端流** | `NightcityReader` | CRT 启动 → 终端 + 芯片网格 → 解密 glitch → 超梦回放 | 夜之城 |
+| **悬赏令流** | `RdrReader` | WANTED 悬赏令钉板 → 撕下细读（vignette）→ 钉回 | 荒野镖客 |
+| **肖像墙流** | `PotterReader` | 沉睡肖像滚动苏醒 → 点击坠入冥想盆 | 魔法世界 |
+| **通用弹层** | `PhotoModal` | 大图查看，方向键/按钮切换、旋转 | 画廊流各主题 + 纪念册/漫波普 |
 
 ### 主题卡片
 
@@ -76,6 +84,12 @@ Google Fonts 按需加载（`index.html`）。分工原则：**拉丁字用风�
 | 08 | 漫波普 | `animepop` | **Persona 5 血统**：墨黑 + P5 红 + 白字斜切，拟声词即图形 | 漫画流：版式库编排、抽帧 slam、慢放拟声词、斜切扫过翻页 |
 | 09 | 暗房 | `darkroom` | 红色安全灯下的胶片暗房，Oswald + Courier | **显影**：照片从红色负片显影为彩色（每次入视口重新触发）；胶片齿孔 + 帧编号 |
 | 10 | 纪念册 | `album` | 暖棕桌面 + 高明度封面 + 道林纸内页 | 翻书流：镂空封面（6 色可选）+ 拍立得内页 + 级联合上 |
+| 11 | 拾光海岸 | `seaside` | 蓝调时刻海滩：太阳从页面顶端斜落沉海，三分构图，电影感柔光 | 漂流瓶流：乘浪上岸 → 拔塞 → 第一人称阅片 |
+| 12 | 像素世界 | `pixel` | Minecraft 方块大陆：像素太阳/云/树/羊，照片像素化渲染 | 物品栏流：背包格 + tooltip + 附魔台查看 |
+| 13 | 汤屋幻境 | `spirited` | 千与千寻：朱红大桥 + 灯笼呼吸 + 海上列车 + 花火 | 绘马纸门流：绘马挂架 → 障子门滑开 |
+| 14 | 夜之城 | `nightcity` | CP2077 街头：霓虹雨夜 + 全息 glitch + 车灯拖尾（与赛博博物馆独立） | 超梦终端流：CRT 启动 → 芯片解密回放 |
+| 15 | 荒野镖客 | `rdr` | 西部黄昏：台地剪影 + 风滚草 + 秃鹫，老照片 sepia | 悬赏令流：WANTED 钉板 → 撕下细读 |
+| 16 | 魔法世界 | `potter` | 霍格沃茨：城堡剪影暖窗 + 漂浮蜡烛 + 禁林雾 + 猫头鹰 | 肖像墙流：肖像苏醒 → 冥想盆 |
 
 ---
 
@@ -142,6 +156,37 @@ Google Fonts 按需加载（`index.html`）。分工原则：**拉丁字用风�
 
 **张力技巧**（漫波普验证有效）：抽帧 slam = 关键帧先 hold（如 scale 1.55 保持 32% 时长）再急砸到位；慢放蓄力 = `circOut` 快速冲出后缓停；每格落定配 0.3s 白闪。
 
+### 拾光海岸（第 11 主题）
+
+定位：蓝调时刻沙滩上的第一人称阅片（漂流瓶交互）。
+
+- **场景**：三分构图（天空 58% / 海洋 58–76% / 沙滩 76–100%）；太阳从页面顶端斜落沉海 → 余晖 → 蓝调时刻（主情绪）→ 月亮再从上方出来缓沉，星星点亮；海鸥只下在落日段；rAF 60fps 驱动，电影感柔光（大气透光 + 海面光路 + 全场景色温联动）
+- **漂流瓶流**：瓶子乘浪上岸（躺着漂来 → 靠岸扶正）→ 点瓶拔塞（软木塞飞旋）→ 照片展开为 3D 倾斜卡（指针驱动 rotateX/Y，方案 D 的 3D 基础）→ 读完的瓶子留在沙滩可重读
+- **第一人称视角**：阅片卡锚定画面下方，海平线始终留在画面上方
+- 字体：Zen Maru Gothic（圆润动漫体）
+
+### 第 12–16 主题 × 五套阅读器
+
+| 主题 | 阅读器 | 签名交互 |
+|------|--------|----------|
+| 像素世界 | `PixelReader` | MC 背包物品格（照片像素化）+ 区块逐列加载入场 + hover tooltip + 附魔台查看（符文粒子） |
+| 汤屋幻境 | `SpiritedReader` | 灯笼逐一点亮入场 → 屋根形绘马木牌挂架（微摇）→ 点击纸门左右滑开 |
+| 夜之城 | `NightcityReader` | CRT 开屏 + 启动日志 → 终端面板（hover 同步打印）+ 芯片网格 → 解密 glitch → 超梦回放（扫描线 + HUD + 计时码） |
+| 荒野镖客 | `RdrReader` | WANTED 悬赏令钉板（撕边牛皮纸 + REWARD $N×100 + 铁钉）→ 撕下细读（原位留痕 + heavy vignette） |
+| 魔法世界 | `PotterReader` | 金色雕花相框肖像墙，滚动经过苏醒（烛光点亮 + 呼吸）→ 魔杖轨迹 → 冥想盆雾漩浮现 |
+
+### 比例感知布局引擎（`src/utils/layoutEngine.js`）
+
+从漫波普版式库提炼的共享范式：**容器适应照片，而不是裁照片适应容器**。所有阅读器排布以 `imgRatio` 驱动：
+
+- `imgRatio(img)` — 照片真实宽高比
+- `fitContain(cw, ch, r)` — 容器内完整放图（零裁切）
+- `fitRowPx(ratios, containerW, rowH, gap)` — 单行比例排布，整行超宽等比缩放
+- `packRows(ratios, A, maxPerRow)` — 贪心 justified 分行
+- `fitRowPercent(ratios, A, gap)` — 百分比坐标系单行排布（漫波普版式库专用）
+
+应用：像素（方槽 contain）、绘马（牌宽随片比）、夜之城（justified 芯片墙）、悬赏令（令宽随片比）、波特（相框 aspectRatio = 片比）。
+
 ---
 
 ## 页面结构与组件地图
@@ -165,13 +210,22 @@ src/
 │   ├── ExhibitionHall.jsx       # 画廊流（8 主题，GSAP 编排）
 │   ├── BookReader.jsx           # 翻书流（纪念册）
 │   ├── MangaReader.jsx          # 漫画流（漫波普）
+│   ├── SeasideReader.jsx        # 漂流瓶流（拾光海岸）
+│   ├── PixelReader.jsx          # 物品栏流（像素世界）
+│   ├── SpiritedReader.jsx       # 绘马纸门流（汤屋幻境）
+│   ├── NightcityReader.jsx      # 超梦终端流（夜之城）
+│   ├── RdrReader.jsx            # 悬赏令流（荒野镖客）
+│   ├── PotterReader.jsx         # 肖像墙流（魔法世界）
 │   ├── ImageCard.jsx            # 缩略图（hover 揭示 + 暗房显影/赛博 RELIC 共用 .frame-no）
 │   ├── PhotoDetail.jsx          # 详情 + EXIF（暗房显影/赛博墙签）
 │   ├── PhotoModal.jsx           # 大图弹窗（挂 theme-<id>）
 │   ├── ConstellationWelcome.jsx # 星座星图欢迎页
 │   ├── FABGroup.jsx             # 回顶/返回 FAB
-│   ├── <Theme>Background.jsx    # 10 个主题背景（懒加载）
+│   ├── <Theme>Background.jsx    # 16 个主题背景（懒加载）
 │   └── ui/dialog.jsx            # Radix Dialog 原语
+├── utils/
+│   ├── imageHelpers.js          # 文件名转标题等
+│   └── layoutEngine.js          # 比例感知布局引擎（imgRatio/fitContain/fitRowPx/packRows）
 └── hooks/
     ├── useFolderReader.js       # File System Access API 读文件夹
     ├── useImagePreloader.js     # 分块预载
@@ -198,10 +252,14 @@ src/
 - **% 宽 % 高单位不等价**（容器非正方形时比例失真）→ 布局坐标系先固定容器 aspect-ratio，再按 `w% = h% × r / A` 换算（漫波普版式库）。
 - **截图验证的坑**：`networkidle` 可能耗时过长错过瞬时动画 → `waitForSelector` + 短延时抓拍；点页面验证翻页要避开照片热区（照片点击 = 弹大图）。
 - **非 CSS layer 的普通主题 CSS 优先级高于 Tailwind layer** → 主题覆写与 utility 冲突时主题 CSS 胜（`.mg-sfx` vs `static` 的教训：覆盖定位用 inline style）。
+- **全局 `img { height: auto }` 会覆盖 Tailwind 的 `h-full`**（unlayered > layered）→ 比例容器内图片必须显式在主题 CSS 里补 `height: 100%; object-fit: cover`（波特相框只显示上半截的教训）。
+- **"识别图片尺寸再排布"** → 一切新阅读器排布必须用 `layoutEngine` 以片比驱动，禁止固定格子 + cover 硬裁。
 
 ---
 
 ## 未来素材与想法参考
+
+> **25 个文艺作品题材方案已存档于 `plan.md`**（方案 1–5 已上线、方案 16 由拾光海岸覆盖、方案 6–15 与 17–25 共 18 个在实施队列中）。以下为更早期的备选构想，与 plan.md 方案各自独立评估。
 
 ### 候选主题（按优先级/讨论热度）
 

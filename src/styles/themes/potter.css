@@ -1,0 +1,303 @@
+/* ============================================
+   魔法世界 — Harry Potter 主题
+   概念：藏蓝夜空下的霍格沃茨，漂浮蜡烛与金色魔法光
+   签名交互：悬停照片泛起金色涟漪光
+   ============================================ */
+
+.theme-potter,
+[data-theme='potter'] {
+  /* --- 基底色系 — 藏蓝黑夜 --- */
+  --color-bg-deep: #0d0a1a;
+  --color-bg-primary: #131026;
+  --color-bg-surface: #1a1633;
+  --color-bg-elevated: #241e42;
+
+  /* --- 魔法金 — 主 accent --- */
+  --color-gold: #ffd700;
+  --color-gold-light: #ffe34d;
+  --color-gold-pale: #fff3b0;
+  --color-gold-dim: #c9a800;
+  --color-gold-subtle: #8a7200;
+
+  /* --- 禁林墨绿 — 辅助色 --- */
+  --color-moss: #2e5d43;
+  --color-moss-light: #4a8264;
+  --color-moss-pale: #9dc4ae;
+  --color-leaf: #1b3a2a;
+  --color-mist: #5e6a86;
+  --color-mist-light: #8590ab;
+  --color-twilight: #2a2447;
+
+  /* --- 语义化 accent 覆盖 --- */
+  --color-accent: var(--color-gold);
+  --color-accent-light: var(--color-gold-light);
+  --color-accent-pale: var(--color-gold-pale);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-subtle: var(--color-gold-subtle);
+  --color-accent-glass-border: rgba(255, 215, 0, 0.18);
+  --color-accent-glass-bg: rgba(19, 16, 38, 0.62);
+  --color-accent-card-border: rgba(255, 215, 0, 0.14);
+  --color-accent-card-border-hover: rgba(255, 215, 0, 0.5);
+  --color-accent-shadow: rgba(255, 215, 0, 0.1);
+  --color-accent-shadow-hover: rgba(255, 215, 0, 0.28);
+
+  /* --- 文字层级 — 羊皮纸褐 --- */
+  --color-text-primary: #e8d5b5;
+  --color-text-secondary: rgba(232, 213, 181, 0.62);
+  --color-text-muted: rgba(232, 213, 181, 0.38);
+
+  /* --- 玻璃拟态 — 藏蓝雾化玻璃 --- */
+  --glass-bg: rgba(19, 16, 38, 0.6);
+  --glass-border: rgba(255, 215, 0, 0.16);
+  --glass-blur: 12px;
+  --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.55);
+
+  /* --- 卡片 — 微圆角 + 金色微光 --- */
+  --card-radius: 3px;
+  --card-border: 1px solid var(--color-accent-card-border);
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.6),
+                 0 0 28px var(--color-accent-shadow);
+  --card-shadow-hover: 0 8px 40px rgba(0, 0, 0, 0.75),
+                       0 0 56px var(--color-accent-shadow-hover);
+
+  /* --- 字体 — 古典衬线（魔法典籍）+ 人文无衬线正文 --- */
+  --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'PingFang SC', serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+}
+
+/* --- 环境光 — 烛光自头顶洒下，禁林幽绿在脚下 --- */
+.theme-potter .body-accent::before,
+[data-theme='potter'] .body-accent::before {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255, 215, 0, 0.06) 0%, transparent 45%),
+    radial-gradient(ellipse at 12% 88%, rgba(27, 58, 42, 0.25) 0%, transparent 45%),
+    radial-gradient(ellipse at 88% 82%, rgba(139, 0, 0, 0.1) 0%, transparent 40%);
+}
+
+.theme-potter .body-accent::after,
+[data-theme='potter'] .body-accent::after {
+  opacity: 0.05;
+}
+
+/* ============================================
+   金色涟漪 — 悬停照片时魔法光晕 + 径向脉冲
+   ============================================ */
+.theme-potter .thumb .group {
+  transition: box-shadow 0.5s ease;
+}
+
+.theme-potter .thumb .group:hover {
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.35),
+              0 0 70px rgba(255, 215, 0, 0.16);
+}
+
+.theme-potter .thumb .group::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.28) 0%, transparent 62%);
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+.theme-potter .thumb .group:hover::after {
+  animation: pot-pulse 1.3s ease-out infinite;
+}
+
+@keyframes pot-pulse {
+  0% { opacity: 0.65; transform: scale(0.65); }
+  100% { opacity: 0; transform: scale(1.18); }
+}
+
+/* ============================================
+   背景动画 — keyframes（pot- 前缀防冲突）
+   ============================================ */
+
+/* --- 星星闪烁 --- */
+@keyframes pot-twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.95; }
+}
+
+/* --- 城堡暖窗 — 烛火明灭 --- */
+@keyframes pot-window {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+/* --- 蜡烛缓慢上下漂浮 --- */
+@keyframes pot-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+/* --- 火苗闪烁 --- */
+@keyframes pot-flicker {
+  0%, 100% { transform: scaleY(1) scaleX(1); opacity: 0.9; }
+  25% { transform: scaleY(1.18) scaleX(0.92); opacity: 1; }
+  60% { transform: scaleY(0.88) scaleX(1.06); opacity: 0.75; }
+}
+
+/* --- 禁林雾气漂移 --- */
+@keyframes pot-mist {
+  from { transform: translateX(-6%); }
+  to { transform: translateX(6%); }
+}
+
+/* --- 猫头鹰掠过夜空 --- */
+@keyframes pot-owl {
+  0% { transform: translate(-12vw, 24vh) scale(0.9); }
+  55% { transform: translate(112vw, 16vh) scale(0.9); }
+  100% { transform: translate(112vw, 16vh) scale(0.9); }
+}
+
+/* --- 猫头鹰振翅（抽帧，剪影感） --- */
+@keyframes pot-flap {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.55); }
+}
+
+/* --- 蜡烛火苗造型（PotterBackground 使用） --- */
+.pot-flame {
+  width: 7px;
+  height: 12px;
+  margin: 0 auto;
+  border-radius: 50% 50% 50% 50% / 62% 62% 38% 38%;
+  background: radial-gradient(circle at 50% 70%, #fff3b0 0%, #ffd700 45%, rgba(255, 140, 0, 0.85) 100%);
+  box-shadow: 0 0 10px 3px rgba(255, 215, 0, 0.55),
+              0 0 26px 8px rgba(255, 180, 60, 0.22);
+  transform-origin: 50% 100%;
+  animation: pot-flicker 1.6s ease-in-out infinite;
+}
+
+.pot-wick {
+  width: 1.5px;
+  height: 3px;
+  margin: 0 auto;
+  background: #3a2a1a;
+}
+
+.pot-candle-body {
+  width: 9px;
+  margin: 0 auto;
+  border-radius: 2px 2px 3px 3px;
+  background: linear-gradient(180deg, #f2e4c4 0%, #d9c49a 60%, #b8a075 100%);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* ============================================
+   PotterReader — 苏醒肖像墙
+   ============================================ */
+
+/* --- 城堡石墙 — 藏蓝黑 + 隐约石纹 --- */
+.theme-potter .pot-wall {
+  background:
+    radial-gradient(ellipse at 50% -10%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.016) 0 2px, transparent 2px 64px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.014) 0 2px, transparent 2px 96px),
+    radial-gradient(ellipse at 20% 40%, rgba(36, 30, 66, 0.55) 0%, transparent 60%),
+    radial-gradient(ellipse at 85% 75%, rgba(27, 58, 42, 0.3) 0%, transparent 55%),
+    linear-gradient(180deg, #0d0a1a 0%, #131026 50%, #0d0a1a 100%);
+}
+
+/* --- 金色雕花相框 --- */
+.theme-potter .pot-frame {
+  transition: transform 0.4s ease;
+}
+
+.theme-potter .pot-frame-inner {
+  padding: 7px;
+  border: 2px solid var(--color-gold-dim);
+  outline: 1px solid rgba(255, 215, 0, 0.28);
+  outline-offset: 3px;
+  background: linear-gradient(135deg, #c9a800 0%, #8a7200 30%, #ffd700 50%, #8a7200 70%, #c9a800 100%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65),
+              inset 0 0 0 1px rgba(0, 0, 0, 0.5);
+}
+
+/* --- 四角装饰 — 菱形点缀 --- */
+.theme-potter .pot-corner {
+  z-index: 2;
+  width: 9px;
+  height: 9px;
+  transform: rotate(45deg);
+  background: radial-gradient(circle at 35% 35%, var(--color-gold-pale) 0%, var(--color-gold) 55%, var(--color-gold-subtle) 100%);
+  box-shadow: 0 0 6px rgba(255, 215, 0, 0.6);
+}
+
+/* --- 肖像沉睡/苏醒 --- */
+.theme-potter .pot-portrait {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  filter: brightness(0.4) saturate(0.5);
+  transition: filter 1.1s ease;
+}
+
+.theme-potter .pot-frame.awake .pot-portrait {
+  filter: brightness(1) saturate(1);
+}
+
+/* --- 烛光晕 — 苏醒时亮起 --- */
+.theme-potter .pot-glow {
+  background: radial-gradient(circle at 50% 45%, rgba(255, 215, 0, 0.32) 0%, rgba(255, 180, 60, 0.12) 45%, transparent 70%);
+  opacity: 0;
+  transition: opacity 1.1s ease;
+}
+
+.theme-potter .pot-frame.awake .pot-glow {
+  opacity: 1;
+  animation: pot-glow-breathe 3.4s ease-in-out infinite;
+}
+
+/* --- 苏醒相框微微呼吸 --- */
+.theme-potter .pot-frame.awake .pot-frame-inner {
+  animation: pot-breathe 3.4s ease-in-out infinite;
+}
+
+.theme-potter .pot-frame.awake:hover .pot-frame-inner {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65),
+              inset 0 0 0 1px rgba(0, 0, 0, 0.5),
+              0 0 36px rgba(255, 215, 0, 0.35);
+}
+
+/* --- 框下铭牌 --- */
+.theme-potter .pot-plate {
+  color: var(--color-gold-pale);
+  background: linear-gradient(180deg, rgba(36, 30, 66, 0.9) 0%, rgba(19, 16, 38, 0.9) 100%);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* --- 冥想盆 — 银色雾漩 --- */
+.theme-potter .pot-swirl {
+  background: conic-gradient(from 0deg,
+    transparent 0deg,
+    rgba(200, 212, 230, 0.32) 40deg,
+    transparent 90deg,
+    rgba(160, 178, 205, 0.22) 150deg,
+    transparent 210deg,
+    rgba(222, 231, 244, 0.3) 270deg,
+    transparent 330deg);
+  filter: blur(18px);
+  mask-image: radial-gradient(circle, #000 0%, transparent 68%);
+  -webkit-mask-image: radial-gradient(circle, #000 0%, transparent 68%);
+  animation: pot-swirl 8s linear infinite;
+}
+
+/* --- keyframes --- */
+@keyframes pot-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.015); }
+}
+
+@keyframes pot-glow-breathe {
+  0%, 100% { opacity: 0.75; }
+  50% { opacity: 1; }
+}
+
+@keyframes pot-swirl {
+  to { transform: rotate(360deg); }
+}

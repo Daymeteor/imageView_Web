@@ -1,0 +1,202 @@
+/* ============================================
+   荒野大镖客 — Red Dead 西部老照片主题
+   概念：黄昏峡谷，落日压得很低，照片都泛黄
+   签名交互：缩略图自带一层 sepia，悬停加深
+   ============================================ */
+
+.theme-rdr,
+[data-theme='rdr'] {
+  /* --- 基底色系 — 烟草棕黑 --- */
+  --color-bg-deep: #1a0f0a;
+  --color-bg-primary: #241510;
+  --color-bg-surface: #2e1c13;
+  --color-bg-elevated: #3a2418;
+
+  /* --- 落日橙 — 主 accent --- */
+  --color-gold: #e67e22;
+  --color-gold-light: #f39c4a;
+  --color-gold-pale: #f8c795;
+  --color-gold-dim: #b8621a;
+  --color-gold-subtle: #7d4212;
+
+  /* --- 沙黄 — 辅助色（牛仔蓝做冷调点缀） --- */
+  --color-moss: #d4a373;
+  --color-moss-light: #e2bb92;
+  --color-moss-pale: #f0d9bd;
+  --color-leaf: #4a6fa5;
+  --color-mist: #a08468;
+  --color-mist-light: #bfa488;
+  --color-twilight: #4a2f20;
+
+  /* --- 语义化 accent 覆盖 --- */
+  --color-accent: var(--color-gold);
+  --color-accent-light: var(--color-gold-light);
+  --color-accent-pale: var(--color-gold-pale);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-subtle: var(--color-gold-subtle);
+  --color-accent-glass-border: rgba(230, 126, 34, 0.22);
+  --color-accent-glass-bg: rgba(36, 21, 16, 0.66);
+  --color-accent-card-border: rgba(212, 163, 115, 0.2);
+  --color-accent-card-border-hover: rgba(230, 126, 34, 0.55);
+  --color-accent-shadow: rgba(230, 126, 34, 0.1);
+  --color-accent-shadow-hover: rgba(230, 126, 34, 0.28);
+
+  /* --- 文字层级 — 泛黄相纸 --- */
+  --color-text-primary: #eddfc8;
+  --color-text-secondary: rgba(237, 223, 200, 0.62);
+  --color-text-muted: rgba(237, 223, 200, 0.4);
+
+  /* --- 玻璃拟态 — 烟熏棕玻璃 --- */
+  --glass-bg: rgba(36, 21, 16, 0.62);
+  --glass-border: rgba(212, 163, 115, 0.18);
+  --glass-blur: 12px;
+  --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.55);
+
+  /* --- 卡片 — 老照片直角微圆 + 暖光 --- */
+  --card-radius: 4px;
+  --card-border: 1px solid var(--color-accent-card-border);
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.6),
+                 0 0 28px var(--color-accent-shadow);
+  --card-shadow-hover: 0 10px 40px rgba(0, 0, 0, 0.75),
+                       0 0 56px var(--color-accent-shadow-hover);
+
+  /* --- 字体 — 西部海报窄体标题 + 中性正文 --- */
+  --font-display: 'Oswald', 'Noto Serif SC', 'PingFang SC', sans-serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+}
+
+/* --- 黄昏环境光 — 落日余晖从地平线漫上来 --- */
+.theme-rdr .body-accent::before,
+[data-theme='rdr'] .body-accent::before {
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(230, 126, 34, 0.1) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 0%, rgba(74, 47, 32, 0.25) 0%, transparent 50%);
+}
+
+.theme-rdr .body-accent::after,
+[data-theme='rdr'] .body-accent::after {
+  opacity: 0.06; /* 老相纸颗粒感 */
+}
+
+/* ============================================
+   西部老照片 — 牛皮纸相框 + sepia 泛黄
+   ============================================ */
+.theme-rdr .thumb .group {
+  background: #efe0c2; /* 老相纸乳白 */
+  padding: 7px 7px 12px; /* 底边更厚，快照相纸感 */
+  border-radius: 4px;
+}
+
+.theme-rdr .thumb .thumb-img {
+  filter: sepia(0.25);
+  transition: opacity 0.5s, transform 0.5s, filter 0.4s;
+}
+
+.theme-rdr .thumb .group:hover .thumb-img {
+  filter: sepia(0.45);
+}
+
+/* --- 悬停信息条避开相纸底边 --- */
+.theme-rdr .thumb .hover-caption {
+  bottom: 12px;
+}
+
+/* ============================================
+   背景动画 — keyframes 加 rdr- 前缀防冲突
+   ============================================ */
+
+/* 风滚草 — 横向滚过画面底部 */
+@keyframes rdr-tumbleweed-x {
+  from { transform: translateX(-12vw); }
+  to { transform: translateX(112vw); }
+}
+
+@keyframes rdr-tumbleweed-roll {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(720deg); }
+}
+
+/* 秃鹫 — 高空盘旋（外圈公转 + 自身反向抵消） */
+@keyframes rdr-vulture-orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes rdr-vulture-orbit-rev {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+/* 落日 — 柔光呼吸 */
+@keyframes rdr-sun-breathe {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+
+/* ============================================
+   RdrReader — 悬赏令木板（软木纹理 / 撕边 / 尘点）
+   ============================================ */
+
+/* 软木板底 — 渐变 + 噪点斑纹 */
+.theme-rdr .theme-rdr-cork,
+[data-theme='rdr'] .theme-rdr-cork {
+  background:
+    radial-gradient(circle at 18% 24%, rgba(0, 0, 0, 0.1) 0 2px, transparent 3px),
+    radial-gradient(circle at 64% 12%, rgba(0, 0, 0, 0.08) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 82% 58%, rgba(0, 0, 0, 0.09) 0 2px, transparent 3px),
+    radial-gradient(circle at 34% 72%, rgba(255, 235, 200, 0.07) 0 2px, transparent 3px),
+    radial-gradient(circle at 52% 42%, rgba(0, 0, 0, 0.07) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 8% 86%, rgba(0, 0, 0, 0.08) 0 2px, transparent 3px),
+    radial-gradient(circle at 92% 88%, rgba(255, 235, 200, 0.06) 0 1.5px, transparent 2.5px),
+    linear-gradient(160deg, #a4784a 0%, #8a6238 52%, #7a5330 100%);
+  background-size:
+    140px 140px, 110px 110px, 170px 170px, 150px 150px,
+    90px 90px, 130px 130px, 100px 100px, cover;
+  box-shadow:
+    inset 0 2px 10px rgba(0, 0, 0, 0.45),
+    inset 0 -2px 8px rgba(0, 0, 0, 0.3),
+    inset 0 0 60px rgba(0, 0, 0, 0.22);
+}
+
+/* 悬赏令撕边 — 三种不规则 clip-path */
+.theme-rdr .theme-rdr-clip-1,
+[data-theme='rdr'] .theme-rdr-clip-1 {
+  clip-path: polygon(
+    1.5% 2%, 12% 0%, 26% 1.5%, 39% 0%, 54% 1%, 69% 0%, 84% 1.5%, 98% 0.5%,
+    100% 13%, 98.5% 29%, 100% 47%, 98% 63%, 99.5% 81%, 97% 99%,
+    82% 98%, 66% 100%, 49% 98.5%, 33% 100%, 17% 98%, 1% 99.5%,
+    2.5% 83%, 0.5% 66%, 2% 49%, 0% 31%, 1.5% 15%
+  );
+}
+
+.theme-rdr .theme-rdr-clip-2,
+[data-theme='rdr'] .theme-rdr-clip-2 {
+  clip-path: polygon(
+    2% 0.5%, 15% 2%, 30% 0%, 45% 1.5%, 60% 0%, 74% 2%, 88% 0.5%, 99% 2%,
+    98% 16%, 100% 33%, 98.5% 51%, 100% 68%, 98% 85%, 99.5% 100%,
+    84% 98.5%, 68% 100%, 52% 98%, 36% 99.5%, 20% 98%, 4% 100%, 0% 98.5%,
+    1.5% 82%, 0% 64%, 1.5% 46%, 0.5% 28%, 0% 12%
+  );
+}
+
+.theme-rdr .theme-rdr-clip-3,
+[data-theme='rdr'] .theme-rdr-clip-3 {
+  clip-path: polygon(
+    0.5% 1%, 14% 0%, 28% 2%, 42% 0.5%, 57% 0%, 72% 1.5%, 86% 0%, 99.5% 1.5%,
+    98% 15%, 100% 32%, 98.5% 50%, 100% 67%, 98.5% 84%, 100% 98%, 97.5% 100%,
+    80% 99%, 64% 98%, 48% 100%, 31% 98.5%, 15% 100%, 0.5% 98%,
+    2% 84%, 0.5% 66%, 0% 48%, 2% 30%, 0.5% 14%
+  );
+}
+
+/* 钉子尘点 — 钉上板时一小圈尘土炸开 */
+.theme-rdr .theme-rdr-dust,
+[data-theme='rdr'] .theme-rdr-dust {
+  opacity: 0;
+  animation: rdr-dust-puff 0.5s ease-out forwards;
+}
+
+@keyframes rdr-dust-puff {
+  0% { transform: scale(0.3); opacity: 0.75; }
+  100% { transform: scale(2.6); opacity: 0; }
+}

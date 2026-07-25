@@ -1,0 +1,151 @@
+/* ============================================
+   像素世界 — Pixel World 主题（Minecraft）
+   概念：方块构成的白日世界，照片也被像素化。
+   签名：硬边方块 + 硬投影 + image-rendering: pixelated。
+   ============================================ */
+
+.theme-pixel,
+[data-theme='pixel'] {
+  /* --- 基底色系 — 晴空下的浅色草地 --- */
+  --color-bg-deep: #cfe3ee;
+  --color-bg-primary: #e4efe2;
+  --color-bg-surface: #f3f8ec;
+  --color-bg-elevated: #ffffff;
+
+  /* --- 草绿 — 主 accent --- */
+  --color-gold: #7cb342;
+  --color-gold-light: #9ccc65;
+  --color-gold-pale: #c5e1a5;
+  --color-gold-dim: #558b2f;
+  --color-gold-subtle: #33691e;
+
+  /* --- 天空蓝 — 辅助色（moss 家族） --- */
+  --color-moss: #5c9bd6;
+  --color-moss-light: #84b4e0;
+  --color-moss-pale: #c2d9ee;
+  --color-leaf: #4e342e;
+  --color-mist: #8d6e63;
+  --color-mist-light: #b09a90;
+  --color-twilight: #5d4037;
+
+  /* --- 语义化 accent 覆盖 --- */
+  --color-accent: var(--color-gold);
+  --color-accent-light: var(--color-gold-light);
+  --color-accent-pale: var(--color-gold-pale);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-subtle: var(--color-gold-subtle);
+  --color-accent-glass-border: rgba(124, 179, 66, 0.35);
+  --color-accent-glass-bg: rgba(243, 248, 236, 0.8);
+  --color-accent-card-border: rgba(78, 52, 46, 0.22);
+  --color-accent-card-border-hover: rgba(124, 179, 66, 0.6);
+  --color-accent-shadow: rgba(85, 139, 47, 0.16);
+  --color-accent-shadow-hover: rgba(85, 139, 47, 0.32);
+
+  /* --- 文字层级 — 深泥土棕黑 --- */
+  --color-text-primary: #2f2a22;
+  --color-text-secondary: rgba(47, 42, 34, 0.62);
+  --color-text-muted: rgba(47, 42, 34, 0.4);
+
+  /* --- 玻璃拟态 — 磨砂浅色 --- */
+  --glass-bg: rgba(243, 248, 236, 0.78);
+  --glass-border: rgba(78, 52, 46, 0.16);
+  --glass-blur: 10px;
+  --glass-shadow: 4px 4px 0 rgba(78, 52, 46, 0.12);
+
+  /* --- 卡片 — 方块直角 + 像素硬投影 --- */
+  --card-radius: 2px;
+  --card-border: 3px solid rgba(78, 52, 46, 0.85);
+  --card-shadow: 4px 4px 0 rgba(78, 52, 46, 0.55);
+  --card-shadow-hover: 6px 6px 0 rgba(78, 52, 46, 0.65),
+                       0 0 32px var(--color-accent-shadow-hover);
+
+  /* --- 字体 — 像素拉丁标题 + 中文衬线回落 --- */
+  --font-display: 'Press Start 2P', 'Noto Serif SC', 'PingFang SC', monospace;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+}
+
+.theme-pixel .body-accent::before,
+[data-theme='pixel'] .body-accent::before {
+  background: none; /* 场景插画自带天空，关掉全局光晕 */
+}
+
+.theme-pixel .body-accent::after,
+[data-theme='pixel'] .body-accent::after {
+  opacity: 0.04; /* 保留一点纸纹噪点 */
+}
+
+/* ============================================
+   缩略图签名 — 3px 深棕描边 + 4px 硬投影，
+   照片像素化渲染（Minecraft 灵魂）
+   ============================================ */
+.theme-pixel .thumb .group {
+  border: 3px solid #4e342e;
+  border-radius: 2px;
+  box-shadow: 4px 4px 0 rgba(62, 39, 35, 0.55);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.theme-pixel .thumb .group:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgba(62, 39, 35, 0.65),
+              0 0 28px var(--color-accent-shadow-hover);
+}
+
+.theme-pixel .thumb .thumb-img {
+  image-rendering: pixelated;
+}
+
+/* ============================================
+   背景动画 keyframes（px- 前缀防冲突）
+   ============================================ */
+
+/* --- 像素云缓飘（往返，避免断带） --- */
+@keyframes px-cloud-a {
+  from { transform: translateX(-50px); }
+  to { transform: translateX(90px); }
+}
+
+@keyframes px-cloud-b {
+  from { transform: translateX(70px); }
+  to { transform: translateX(-80px); }
+}
+
+/* --- 方块羊吃草式轻颠 --- */
+@keyframes px-sheep-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+/* --- 天空像素闪光块 --- */
+@keyframes px-sparkle {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.7; }
+}
+
+/* --- 展头标题：天空蓝背景上改用深泥土棕 --- */
+.theme-pixel .hall-header h2 {
+  color: #4e342e !important;
+  text-shadow: 0 2px 0 rgba(255, 255, 255, 0.35);
+}
+
+.theme-pixel .hall-header p {
+  color: rgba(62, 45, 36, 0.6) !important;
+}
+
+/* ============================================
+   PixelReader — 附魔台查看浮层：符文粒子上浮
+   ============================================ */
+@keyframes px-rune-rise {
+  0% { transform: translateY(12vh) scale(0.6); opacity: 0; }
+  15% { opacity: 0.9; }
+  85% { opacity: 0.7; }
+  100% { transform: translateY(-85vh) scale(1.1); opacity: 0; }
+}
+
+.theme-pixel .px-rune {
+  position: absolute;
+  bottom: -4vh;
+  pointer-events: none;
+  animation: px-rune-rise linear infinite;
+  text-shadow: 0 0 8px rgba(167, 139, 250, 0.8);
+}

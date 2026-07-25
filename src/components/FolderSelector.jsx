@@ -18,6 +18,11 @@ export default function FolderSelector({ onSelect, loading, error, theme = 'fore
   const isDarkroom = theme === 'darkroom';
   const isAlbum = theme === 'album';
   const isSeaside = theme === 'seaside';
+  const isPixel = theme === 'pixel';
+  const isSpirited = theme === 'spirited';
+  const isNightcity = theme === 'nightcity';
+  const isRdr = theme === 'rdr';
+  const isPotter = theme === 'potter';
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[var(--color-bg-deep)]">
@@ -45,6 +50,11 @@ export default function FolderSelector({ onSelect, loading, error, theme = 'fore
               : isDarkroom ? <DarkroomIcon />
               : isAlbum ? <AlbumIcon />
               : isSeaside ? <SeasideIcon />
+              : isPixel ? <PixelIcon />
+              : isSpirited ? <SpiritedIcon />
+              : isNightcity ? <NightcityIcon />
+              : isRdr ? <RdrIcon />
+              : isPotter ? <PotterIcon />
               : <ForestIcon />}
           </div>
         </div>
@@ -328,6 +338,83 @@ function SeasideIcon() {
       {/* 海浪 */}
       <path d="M10 44Q16 40 22 44T34 44T46 44T58 44" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.7" />
       <path d="M14 51Q20 47 26 51T38 51T50 51" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.45" />
+    </svg>
+  );
+}
+
+function PixelIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 草地方块 */}
+      <rect x="10" y="26" width="44" height="28" fill="currentColor" opacity="0.85" />
+      <rect x="10" y="26" width="44" height="10" fill="currentColor" opacity="0.5" />
+      <rect x="18" y="40" width="8" height="8" fill="currentColor" opacity="0.4" />
+      <rect x="38" y="44" width="8" height="8" fill="currentColor" opacity="0.4" />
+      {/* 像素云 */}
+      <rect x="16" y="10" width="12" height="6" fill="currentColor" opacity="0.45" />
+      <rect x="26" y="14" width="14" height="6" fill="currentColor" opacity="0.45" />
+    </svg>
+  );
+}
+
+function SpiritedIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 灯笼 */}
+      <line x1="32" y1="6" x2="32" y2="14" stroke="currentColor" strokeWidth="1.5" />
+      <ellipse cx="32" cy="30" rx="14" ry="16" fill="currentColor" opacity="0.85" />
+      <line x1="22" y1="22" x2="42" y2="22" stroke="currentColor" strokeWidth="1" opacity="0.5" />
+      <line x1="20" y1="30" x2="44" y2="30" stroke="currentColor" strokeWidth="1" opacity="0.5" />
+      <line x1="22" y1="38" x2="42" y2="38" stroke="currentColor" strokeWidth="1" opacity="0.5" />
+      <rect x="28" y="12" width="8" height="4" fill="currentColor" />
+      <line x1="32" y1="46" x2="32" y2="56" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="32" cy="58" r="2" fill="currentColor" opacity="0.7" />
+    </svg>
+  );
+}
+
+function NightcityIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 记忆芯片 */}
+      <rect x="16" y="16" width="32" height="32" rx="4" stroke="currentColor" strokeWidth="1.5" fill="none" />
+      <rect x="26" y="26" width="12" height="12" fill="currentColor" opacity="0.8" />
+      <line x1="22" y1="16" x2="22" y2="8" stroke="currentColor" strokeWidth="1.5" />
+      <line x1="32" y1="16" x2="32" y2="8" stroke="currentColor" strokeWidth="1.5" />
+      <line x1="42" y1="16" x2="42" y2="8" stroke="currentColor" strokeWidth="1.5" />
+      <line x1="22" y1="48" x2="22" y2="56" stroke="currentColor" strokeWidth="1.5" />
+      <line x1="32" y1="48" x2="32" y2="56" stroke="currentColor" strokeWidth="1.5" />
+      <line x1="42" y1="48" x2="42" y2="56" stroke="currentColor" strokeWidth="1.5" />
+      <line x1="16" y1="26" x2="8" y2="26" stroke="currentColor" strokeWidth="1.5" />
+      <line x1="16" y1="38" x2="8" y2="38" stroke="currentColor" strokeWidth="1.5" />
+      <line x1="48" y1="26" x2="56" y2="26" stroke="currentColor" strokeWidth="1.5" />
+      <line x1="48" y1="38" x2="56" y2="38" stroke="currentColor" strokeWidth="1.5" />
+    </svg>
+  );
+}
+
+function RdrIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 牛仔帽 */}
+      <ellipse cx="32" cy="42" rx="24" ry="7" fill="currentColor" opacity="0.85" />
+      <path d="M18 40C18 28 24 20 32 20C40 20 46 28 46 40" fill="currentColor" opacity="0.85" />
+      <path d="M18 36Q32 42 46 36" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.6" />
+      {/* 落日 */}
+      <circle cx="48" cy="14" r="5" fill="currentColor" opacity="0.5" />
+    </svg>
+  );
+}
+
+function PotterIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 魔杖与火花 */}
+      <line x1="14" y1="50" x2="42" y2="22" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+      <path d="M44 14L46 19L51 20L46 22L44 27L42 22L37 20L42 19Z" fill="currentColor" opacity="0.9" />
+      <path d="M52 30L53.5 33.5L57 34L53.5 35.5L52 39L50.5 35.5L47 34L50.5 33.5Z" fill="currentColor" opacity="0.6" />
+      <circle cx="20" cy="16" r="2" fill="currentColor" opacity="0.5" />
+      <circle cx="30" cy="8" r="1.5" fill="currentColor" opacity="0.4" />
     </svg>
   );
 }
