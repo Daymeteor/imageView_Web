@@ -1,81 +1,73 @@
 /* ============================================
-   漫波普 — Anime Pop Art Theme
-   高对比度漫画/波普艺术风格
-   颜色：动漫红 #FF1A1A、钴蓝 #0055FF、白、黑
+   漫波普 — Anime Pop（Persona 5 血统）
+   概念：照片被连载成一部波普漫画。
+   墨黑底 + P5 红 + 白字斜切，拟声词即图形。
    ============================================ */
 
 .theme-animepop,
 [data-theme='animepop'] {
-  /* --- 基底色系 — 纯白画布 --- */
-  --color-bg-deep: #ffffff;
-  --color-bg-primary: #f8f8f8;
-  --color-bg-surface: #ffffff;
-  --color-bg-elevated: #f0f0f0;
+  /* --- 基底色系 — 墨黑 --- */
+  --color-bg-deep: #0a0a0c;
+  --color-bg-primary: #101014;
+  --color-bg-surface: #16161c;
+  --color-bg-elevated: #1e1e26;
 
-  /* --- 波普红系 — 主强调色 --- */
-  --color-gold: #FF1A1A;
-  --color-gold-light: #ff4d4d;
-  --color-gold-pale: #ff9999;
-  --color-gold-dim: #cc1414;
-  --color-gold-subtle: #991010;
+  /* --- P5 红 — 主 accent --- */
+  --color-gold: #E60012;
+  --color-gold-light: #ff3b47;
+  --color-gold-pale: #ff8a92;
+  --color-gold-dim: #b3000e;
+  --color-gold-subtle: #7a0009;
 
-  /* --- 钴蓝系 — 辅助色 --- */
-  --color-moss: #0055FF;
-  --color-moss-light: #3377ff;
-  --color-moss-pale: #99bbff;
-  --color-leaf: #0033cc;
-  --color-mist: #1a1a1a;
-  --color-mist-light: #333333;
-  --color-twilight: #e0e0e0;
+  /* --- 明黄 — 爆闪点缀（波普三原色逻辑） --- */
+  --color-moss: #FFD90C;
+  --color-moss-light: #ffe455;
+  --color-moss-pale: #fff3b0;
+  --color-leaf: #8a7200;
+  --color-mist: #8a8a92;
+  --color-mist-light: #ababb5;
+  --color-twilight: #2a2a32;
 
-  /* --- 语义化 accent 覆盖（波普红） --- */
+  /* --- 语义化 accent 覆盖 --- */
   --color-accent: var(--color-gold);
   --color-accent-light: var(--color-gold-light);
   --color-accent-pale: var(--color-gold-pale);
   --color-accent-dim: var(--color-gold-dim);
   --color-accent-subtle: var(--color-gold-subtle);
-  --color-accent-glass-border: color-mix(in oklab, var(--color-gold) 18%, transparent);
-  --color-accent-glass-bg: rgba(255, 255, 255, 0.85);
-  --color-accent-card-border: color-mix(in oklab, var(--color-gold) 14%, transparent);
-  --color-accent-card-border-hover: color-mix(in oklab, var(--color-gold) 45%, transparent);
-  --color-accent-shadow: rgba(255, 26, 26, 0.1);
-  --color-accent-shadow-hover: rgba(255, 26, 26, 0.25);
+  --color-accent-glass-border: rgba(230, 0, 18, 0.28);
+  --color-accent-glass-bg: rgba(10, 10, 12, 0.72);
+  --color-accent-card-border: rgba(255, 255, 255, 0.16);
+  --color-accent-card-border-hover: rgba(230, 0, 18, 0.65);
+  --color-accent-shadow: rgba(230, 0, 18, 0.14);
+  --color-accent-shadow-hover: rgba(230, 0, 18, 0.32);
 
-  /* --- 文字层级 — 高对比度 --- */
-  --color-text-primary: #1a1a1a;
-  --color-text-secondary: rgba(26, 26, 26, 0.65);
-  --color-text-muted: rgba(26, 26, 26, 0.4);
+  /* --- 文字层级 — 白 --- */
+  --color-text-primary: #f5f5f7;
+  --color-text-secondary: rgba(245, 245, 247, 0.62);
+  --color-text-muted: rgba(245, 245, 247, 0.4);
 
-  /* --- 玻璃拟态 — 漫画网点风 --- */
-  --glass-bg: rgba(255, 255, 255, 0.88);
-  --glass-border: color-mix(in oklab, var(--color-gold) 18%, transparent);
+  /* --- 玻璃拟态 — 黑玻璃红边 --- */
+  --glass-bg: rgba(10, 10, 12, 0.7);
+  --glass-border: rgba(230, 0, 18, 0.25);
   --glass-blur: 14px;
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.15),
-                  0 0 24px rgba(255, 26, 26, 0.08);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
 
-  /* --- 卡片 --- */
-  --card-radius: 4px;
-  --card-border: 2px solid var(--color-accent-card-border);
-  --card-shadow: 0 4px 0 var(--color-gold-dim),
-                 0 8px 24px rgba(0, 0, 0, 0.15);
-  --card-shadow-hover: 0 6px 0 var(--color-gold-dim),
-                       0 12px 40px rgba(0, 0, 0, 0.2);
+  /* --- 卡片 — 白框红影，漫画格 --- */
+  --card-radius: 0px;
+  --card-border: 3px solid #f5f5f7;
+  --card-shadow: 7px 7px 0 var(--color-accent);
+  --card-shadow-hover: 10px 10px 0 var(--color-accent-light);
 
-  /* --- 字体 — 漫画感粗体/无衬线 --- */
-  --font-display: 'Archivo Black', 'Noto Serif SC', 'PingFang SC', sans-serif;
+  /* --- 字体 — 日文极黑 Gothic 负责冲击 --- */
+  --font-display: 'M PLUS 1p', 'Noto Serif SC', 'PingFang SC', sans-serif;
   --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
 }
 
-/* --- 漫波普背景层 --- */
 .theme-animepop .body-accent::before,
 [data-theme='animepop'] .body-accent::before {
   background:
-    /* 对角红块 */
-    linear-gradient(135deg, rgba(255, 26, 26, 0.08) 0%, transparent 40%),
-    /* 对角蓝块 */
-    linear-gradient(315deg, rgba(0, 85, 255, 0.06) 0%, transparent 40%),
-    /* 中心白光 */
-    radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.9) 0%, transparent 70%);
+    radial-gradient(ellipse at 85% 10%, rgba(230, 0, 18, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 10% 90%, rgba(230, 0, 18, 0.05) 0%, transparent 45%);
 }
 
 .theme-animepop .body-accent::after,
@@ -83,50 +75,150 @@
   opacity: 0.04;
 }
 
-/* --- 漫波普专用工具类 --- */
-.theme-animepop .animepop-glow-red {
-  box-shadow: 0 0 40px rgba(255, 26, 26, 0.2);
+/* ============================================
+   网点 / 速度线底纹
+   ============================================ */
+.mg-halftone {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1.2px, transparent 1.7px);
+  background-size: 14px 14px;
 }
 
-.theme-animepop .animepop-glow-blue {
-  box-shadow: 0 0 40px rgba(0, 85, 255, 0.15);
+.mg-halftone-red {
+  background-image: radial-gradient(rgba(230, 0, 18, 0.3) 1.6px, transparent 2.1px);
+  background-size: 16px 16px;
 }
 
-.theme-animepop .animepop-comic-border {
-  border: 3px solid #1a1a1a;
-  box-shadow: 4px 4px 0 #1a1a1a;
+/* ============================================
+   拟声词 — 白字黑边红影，本身就是爆炸图形
+   ============================================ */
+.mg-sfx {
+  position: absolute;
+  z-index: 20;
+  pointer-events: none;
+  font-family: 'M PLUS 1p', 'Noto Serif SC', sans-serif;
+  font-weight: 900;
+  font-size: clamp(56px, 9vw, 118px);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: #fff;
+  -webkit-text-stroke: 2px #0a0a0c;
+  text-shadow:
+    6px 6px 0 var(--color-accent),
+    14px 14px 0 rgba(230, 0, 18, 0.3);
+  transform: rotate(-7deg) skewX(-6deg);
+  white-space: nowrap;
 }
 
-.theme-animepop .animepop-starburst {
+/* ============================================
+   分镜格 — 斜切演出格 + 矩形信息格
+   ============================================ */
+.mg-cut {
   position: relative;
+  width: 100%;
+  height: 100%;
 }
 
-.theme-animepop .animepop-starburst::before {
+.mg-cut::before {
   content: '';
   position: absolute;
-  inset: -20px;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg 10deg,
-    rgba(255, 26, 26, 0.1) 10deg 20deg,
-    transparent 20deg 30deg,
-    rgba(0, 85, 255, 0.08) 30deg 40deg,
-    transparent 40deg 50deg,
-    rgba(255, 26, 26, 0.1) 50deg 60deg,
-    transparent 60deg 70deg,
-    rgba(0, 85, 255, 0.08) 70deg 80deg,
-    transparent 80deg 90deg,
-    rgba(255, 26, 26, 0.1) 90deg 100deg,
-    transparent 100deg 110deg,
-    rgba(0, 85, 255, 0.08) 110deg 120deg,
-    transparent 120deg 360deg
-  );
-  border-radius: 50%;
-  z-index: -1;
-  animation: animepop-spin 20s linear infinite;
+  inset: 0;
+  background: var(--color-accent);
+  transform: translate(8px, 8px);
 }
 
-@keyframes animepop-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.mg-cut-border {
+  position: absolute;
+  inset: 0;
+  background: #f5f5f7;
+  padding: 3px;
+  cursor: zoom-in;
+}
+
+.mg-cut-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.mg-cut-a::before,
+.mg-cut-a .mg-cut-border,
+.mg-cut-a .mg-cut-img {
+  clip-path: polygon(0 8%, 97% 0, 100% 92%, 3% 100%);
+}
+
+.mg-cut-b::before,
+.mg-cut-b .mg-cut-border,
+.mg-cut-b .mg-cut-img {
+  clip-path: polygon(4% 0, 100% 6%, 96% 100%, 0 94%);
+}
+
+.mg-rect {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--color-bg-deep);
+  border: 3px solid #f5f5f7;
+  box-shadow: 7px 7px 0 var(--color-accent);
+  overflow: hidden;
+  cursor: zoom-in;
+}
+
+.mg-rect img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* --- 格角标签 — P5 式黑色斜签 --- */
+.mg-tag {
+  position: absolute;
+  left: 10px;
+  bottom: 8px;
+  z-index: 3;
+  max-width: 80%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: rgba(10, 10, 12, 0.88);
+  color: #f5f5f7;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  padding: 3px 10px 3px 8px;
+  border-left: 3px solid var(--color-accent);
+  transform: skewX(-10deg);
+  pointer-events: none;
+}
+
+/* --- 页码 / 封面标签 --- */
+.mg-label {
+  display: inline-block;
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  padding: 4px 12px;
+  transform: skewX(-10deg);
+}
+
+/* ============================================
+   背景动画
+   ============================================ */
+@keyframes mg-drift {
+  0% { transform: translateX(-35%) rotate(-14deg); opacity: 0; }
+  12% { opacity: 0.5; }
+  88% { opacity: 0.5; }
+  100% { transform: translateX(135%) rotate(-14deg); opacity: 0; }
+}
+
+@keyframes mg-sway {
+  0%, 100% { transform: rotate(-8deg) scale(1); }
+  50% { transform: rotate(-5deg) scale(1.04); }
+}
+
+@keyframes mg-flash-pulse {
+  0%, 100% { opacity: 0.05; }
+  50% { opacity: 0.12; }
 }

@@ -36,6 +36,7 @@ const BauhausBackground = lazy(() => import('./components/BauhausBackground'));
 const DarkroomBackground = lazy(() => import('./components/DarkroomBackground'));
 const AlbumBackground = lazy(() => import('./components/AlbumBackground'));
 const BookReader = lazy(() => import('./components/BookReader'));
+const MangaReader = lazy(() => import('./components/MangaReader'));
 
 const VALID_THEMES = ['forest', 'cyber', 'constellation', 'anime', 'mondrian', 'memphis', 'animepop', 'bauhaus', 'darkroom', 'album'];
 
@@ -154,11 +155,15 @@ export default function App() {
         </div>
       )}
 
-      {/* 展览大厅 / 纪念册翻书 */}
+      {/* 展览大厅 / 纪念册翻书 / 连载漫画 */}
       {hasImages && (
         isAlbum ? (
           <Suspense fallback={null}>
             <BookReader images={images} theme={theme} folderName={folderName} />
+          </Suspense>
+        ) : isAnimePop ? (
+          <Suspense fallback={null}>
+            <MangaReader images={images} theme={theme} folderName={folderName} />
           </Suspense>
         ) : (
           <ExhibitionHall
