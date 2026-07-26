@@ -85,6 +85,21 @@ const CthulhuBackground = lazy(() => import('./components/CthulhuBackground'));
 const VaporwaveBackground = lazy(() => import('./components/VaporwaveBackground'));
 const GotBackground = lazy(() => import('./components/GotBackground'));
 const AkiraBackground = lazy(() => import('./components/AkiraBackground'));
+const InterstellarReader = lazy(() => import('./components/InterstellarReader'));
+const GrandbudapestReader = lazy(() => import('./components/GrandbudapestReader'));
+const MonumentReader = lazy(() => import('./components/MonumentReader'));
+const BladerunnerReader = lazy(() => import('./components/BladerunnerReader'));
+const ShanhaijingReader = lazy(() => import('./components/ShanhaijingReader'));
+const EvaReader = lazy(() => import('./components/EvaReader'));
+const KurosawaReader = lazy(() => import('./components/KurosawaReader'));
+const LittleprinceReader = lazy(() => import('./components/LittleprinceReader'));
+const LdrReader = lazy(() => import('./components/LdrReader'));
+const JourneyReader = lazy(() => import('./components/JourneyReader'));
+const Nineteen84Reader = lazy(() => import('./components/Nineteen84Reader'));
+const CthulhuReader = lazy(() => import('./components/CthulhuReader'));
+const VaporwaveReader = lazy(() => import('./components/VaporwaveReader'));
+const GotReader = lazy(() => import('./components/GotReader'));
+const AkiraReader = lazy(() => import('./components/AkiraReader'));
 
 const VALID_THEMES = ['forest', 'cyber', 'constellation', 'anime', 'mondrian', 'memphis', 'animepop', 'bauhaus', 'darkroom', 'album', 'seaside', 'pixel', 'spirited', 'nightcity', 'rdr', 'potter', 'interstellar', 'grandbudapest', 'monument', 'bladerunner', 'shanhaijing', 'eva', 'kurosawa', 'littleprince', 'ldr', 'journey', 'nineteen84', 'cthulhu', 'vaporwave', 'got', 'akira'];
 
@@ -320,6 +335,66 @@ export default function App() {
         ) : isPotter ? (
           <Suspense fallback={null}>
             <PotterReader images={images} theme={theme} />
+          </Suspense>
+        ) : isInterstellar ? (
+          <Suspense fallback={null}>
+            <InterstellarReader images={images} theme={theme} />
+          </Suspense>
+        ) : isGrandbudapest ? (
+          <Suspense fallback={null}>
+            <GrandbudapestReader images={images} theme={theme} />
+          </Suspense>
+        ) : isMonument ? (
+          <Suspense fallback={null}>
+            <MonumentReader images={images} theme={theme} />
+          </Suspense>
+        ) : isBladerunner ? (
+          <Suspense fallback={null}>
+            <BladerunnerReader images={images} theme={theme} />
+          </Suspense>
+        ) : isShanhaijing ? (
+          <Suspense fallback={null}>
+            <ShanhaijingReader images={images} theme={theme} folderName={folderName} />
+          </Suspense>
+        ) : isEva ? (
+          <Suspense fallback={null}>
+            <EvaReader images={images} theme={theme} />
+          </Suspense>
+        ) : isKurosawa ? (
+          <Suspense fallback={null}>
+            <KurosawaReader images={images} theme={theme} />
+          </Suspense>
+        ) : isLittleprince ? (
+          <Suspense fallback={null}>
+            <LittleprinceReader images={images} theme={theme} />
+          </Suspense>
+        ) : isLdr ? (
+          <Suspense fallback={null}>
+            <LdrReader images={images} theme={theme} folderName={folderName} />
+          </Suspense>
+        ) : isJourney ? (
+          <Suspense fallback={null}>
+            <JourneyReader images={images} theme={theme} />
+          </Suspense>
+        ) : isNineteen84 ? (
+          <Suspense fallback={null}>
+            <Nineteen84Reader images={images} theme={theme} />
+          </Suspense>
+        ) : isCthulhu ? (
+          <Suspense fallback={null}>
+            <CthulhuReader images={images} theme={theme} />
+          </Suspense>
+        ) : isVaporwave ? (
+          <Suspense fallback={null}>
+            <VaporwaveReader images={images} theme={theme} />
+          </Suspense>
+        ) : isGot ? (
+          <Suspense fallback={null}>
+            <GotReader images={images} theme={theme} />
+          </Suspense>
+        ) : isAkira ? (
+          <Suspense fallback={null}>
+            <AkiraReader images={images} theme={theme} />
           </Suspense>
         ) : (
           <ExhibitionHall

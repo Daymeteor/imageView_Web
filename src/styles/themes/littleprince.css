@@ -95,3 +95,18 @@
   0%, 100% { opacity: 0.3; }
   50% { opacity: 0.95; }
 }
+
+/* --- LittleprinceReader：星球公转 / 浮动 / 玻璃罩呼吸 --- */
+@keyframes lp-orbit-rev {
+  to { transform: rotate(-360deg); }
+}
+
+@keyframes lp-planet-bob {
+  0%, 100% { transform: translateY(-4px); }
+  50% { transform: translateY(5px); }
+}
+
+@keyframes lp-dome-breathe {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.95; }
+}

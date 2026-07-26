@@ -90,3 +90,51 @@
   0%, 100% { transform: rotate(-4deg); }
   50% { transform: rotate(4deg); }
 }
+
+/* ============================================
+   VaporwaveReader：Win95 CRT 窗口阅读器
+   ============================================ */
+
+/* CRT 扫描线覆层（桌面窗口体 / 全屏画面共用） */
+.theme-vaporwave .vw-crt,
+[data-theme='vaporwave'] .vw-crt {
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-vaporwave .vw-crt::after,
+[data-theme='vaporwave'] .vw-crt::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0 2px,
+    rgba(0, 0, 0, 0.22) 2px 4px
+  );
+  mix-blend-mode: multiply;
+}
+
+/* LED 冒号闪烁 */
+.theme-vaporwave .vw-led-colon,
+[data-theme='vaporwave'] .vw-led-colon {
+  animation: vw-led-blink 1s steps(1) infinite;
+}
+
+@keyframes vw-led-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0.15; }
+}
+
+/* CRT 轻微频闪 */
+.theme-vaporwave .vw-flicker,
+[data-theme='vaporwave'] .vw-flicker {
+  animation: vw-flicker 4.2s steps(2) infinite;
+}
+
+@keyframes vw-flicker {
+  0%, 92%, 100% { opacity: 1; }
+  94% { opacity: 0.86; }
+  96% { opacity: 0.97; }
+}

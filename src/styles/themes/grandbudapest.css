@@ -91,3 +91,27 @@
   color: #6e1515 !important;
   text-shadow: 0 1px 0 rgba(253, 241, 246, 0.7);
 }
+
+/* ============================================
+   明信片架阅读器（GrandbudapestReader）
+   ============================================ */
+
+/* 奶油纸明信片卡 */
+.theme-grandbudapest .gb-postcard {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-accent-card-border);
+  box-shadow:
+    0 16px 36px rgba(110, 74, 90, 0.18),
+    0 2px 8px rgba(110, 74, 90, 0.12);
+}
+
+/* 照片细红框内衬 */
+.theme-grandbudapest .gb-postcard-frame {
+  border: 1px solid rgba(198, 40, 40, 0.3);
+  background: var(--color-bg-surface);
+}
+
+/* 卡面题字分隔线 */
+.theme-grandbudapest .gb-postcard-caption {
+  border-top: 1px solid var(--color-accent-card-border);
+}

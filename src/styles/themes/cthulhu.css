@@ -90,3 +90,28 @@
   0% { transform: translateX(-4%); }
   100% { transform: translateX(4%); }
 }
+
+/* --- CthulhuReader：深潜典籍 --- */
+
+/* 下潜容器隐藏滚动条（由右侧深度计承担导航） */
+.theme-cthulhu .cth-descent,
+[data-theme='cthulhu'] .cth-descent {
+  scrollbar-width: none;
+}
+.theme-cthulhu .cth-descent::-webkit-scrollbar,
+[data-theme='cthulhu'] .cth-descent::-webkit-scrollbar {
+  display: none;
+}
+
+/* 理智值下降：低频明灭（磷光呼吸） */
+@keyframes cth-flicker {
+  0%, 100% { opacity: 1; filter: brightness(1); }
+  42% { opacity: 0.92; filter: brightness(0.88) hue-rotate(8deg); }
+  55% { opacity: 0.97; filter: brightness(0.95); }
+  70% { opacity: 0.88; filter: brightness(0.82) hue-rotate(-6deg); }
+}
+
+.theme-cthulhu .cth-flicker,
+[data-theme='cthulhu'] .cth-flicker {
+  animation: cth-flicker 3.8s ease-in-out infinite;
+}

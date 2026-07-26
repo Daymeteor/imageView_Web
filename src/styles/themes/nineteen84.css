@@ -98,3 +98,39 @@
   0% { transform: translateY(0); }
   100% { transform: translateY(-50%); }
 }
+
+/* --- Nineteen84Reader 电幕检视 --- */
+
+/* 红色扫描线周期扫过（复用 n84-scan 位移轨迹） */
+.theme-nineteen84 .n84-scanline,
+[data-theme='nineteen84'] .n84-scanline {
+  animation: n84-scan 2.8s linear infinite;
+}
+
+/* CRT 闪烁层 */
+.theme-nineteen84 .n84-flicker,
+[data-theme='nineteen84'] .n84-flicker {
+  animation: n84-flicker 3.6s steps(1) infinite;
+}
+
+/* 电幕整体轻微 CRT 呼吸 */
+.theme-nineteen84 .n84-crt,
+[data-theme='nineteen84'] .n84-crt {
+  animation: n84-crt-glow 5s ease-in-out infinite;
+}
+
+@keyframes n84-crt-glow {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.05); }
+}
+
+/* 底部口号滚动条 */
+.theme-nineteen84 .n84-marquee,
+[data-theme='nineteen84'] .n84-marquee {
+  animation: n84-marquee 22s linear infinite;
+}
+
+@keyframes n84-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}

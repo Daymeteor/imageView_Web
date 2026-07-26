@@ -101,3 +101,41 @@
   0%, 100% { transform: scaleY(1); }
   50% { transform: scaleY(0.62); }
 }
+
+/* ============================================
+   GotReader — 维斯特洛地图册：羊皮纸 + 蜡封
+   ============================================ */
+
+/* 羊皮纸：斑驳底纹 + 烧焦卷边暗角 */
+.theme-got .got-parchment,
+[data-theme='got'] .got-parchment {
+  background-color: #c9ab78;
+  background-image:
+    radial-gradient(ellipse at 22% 16%, rgba(255, 240, 200, 0.35), transparent 55%),
+    radial-gradient(ellipse at 80% 84%, rgba(120, 84, 40, 0.3), transparent 60%),
+    radial-gradient(ellipse at 58% 38%, rgba(150, 110, 60, 0.16), transparent 52%);
+  box-shadow:
+    inset 0 0 80px rgba(74, 48, 18, 0.5),
+    0 30px 90px rgba(0, 0, 0, 0.65);
+}
+
+/* 蜡封：深红圆印，高光 + 内凹 */
+.theme-got .got-wax,
+[data-theme='got'] .got-wax {
+  background: radial-gradient(circle at 35% 30%, #a8352b 0%, #6e1712 66%, #4d0e0b 100%);
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.55),
+    inset 0 2px 4px rgba(255, 255, 255, 0.22),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.42);
+}
+
+/* 龙焰余烬：明灭闪烁 */
+@keyframes got-ember {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.theme-got .got-ember,
+[data-theme='got'] .got-ember {
+  animation: got-ember 0.22s ease-in-out infinite;
+}

@@ -93,3 +93,25 @@
   0%, 100% { transform: translateY(0) rotate(0deg); }
   50% { transform: translateY(-10px) rotate(3deg); }
 }
+
+/* --- JourneyReader：石门光束呼吸 --- */
+@keyframes jrn-beam {
+  0%, 100% { opacity: 0.82; }
+  50% { opacity: 1; }
+}
+
+.theme-journey .jrn-gate-beam,
+[data-theme='journey'] .jrn-gate-beam {
+  animation: jrn-beam 3.2s ease-in-out infinite;
+}
+
+/* --- JourneyReader：碑顶刻符微光脉冲 --- */
+@keyframes jrn-rune {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 1; }
+}
+
+.theme-journey .jrn-rune,
+[data-theme='journey'] .jrn-rune {
+  animation: jrn-rune 4s ease-in-out infinite;
+}

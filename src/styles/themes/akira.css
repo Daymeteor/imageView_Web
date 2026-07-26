@@ -102,3 +102,64 @@
   0%, 100% { opacity: 0.5; }
   50% { opacity: 1; }
 }
+
+/* --- AkiraReader：胶囊陈列柜（仅阅读器使用） --- */
+.theme-akira .akr-capsule {
+  position: relative;
+  display: block;
+  border-radius: 999px;
+  overflow: hidden;
+  padding: 0;
+  cursor: pointer;
+  background: rgba(19, 19, 19, 0.6);
+  border: 2px solid var(--color-accent-card-border);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55), 0 0 22px var(--color-accent-shadow);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  animation: akr-capsule-float 5s ease-in-out infinite;
+}
+.theme-akira .akr-capsule:hover,
+.theme-akira .akr-capsule.akr-active {
+  transform: translateY(-6px);
+  border-color: var(--color-accent-card-border-hover);
+  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.7), 0 0 44px var(--color-accent-shadow-hover);
+}
+/* 玻璃高光 */
+.theme-akira .akr-capsule::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.05) 18%, transparent 32%);
+  pointer-events: none;
+  z-index: 3;
+}
+/* 上半：红色实壳 */
+.theme-akira .akr-capsule-cap {
+  position: absolute;
+  inset: 0 0 50% 0;
+  z-index: 2;
+  background: linear-gradient(180deg, var(--color-gold-light) 0%, var(--color-gold) 55%, var(--color-gold-dim) 100%);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+}
+/* 下半：半透明壳窗，照片缩影完整可见 */
+.theme-akira .akr-capsule-window {
+  position: absolute;
+  inset: 50% 0 0 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9%;
+  background: linear-gradient(180deg, rgba(211, 47, 47, 0.24) 0%, rgba(13, 13, 13, 0.55) 100%);
+}
+.theme-akira .akr-capsule-window img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: saturate(0.9) contrast(1.06);
+  opacity: 0.92;
+}
+@keyframes akr-capsule-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -5px; }
+}
