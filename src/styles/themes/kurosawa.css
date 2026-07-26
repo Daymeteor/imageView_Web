@@ -1,0 +1,98 @@
+/* ============================================
+   黑泽明 — Kurosawa 主题：时代剧水墨 + 刀光 + 云海
+   ============================================ */
+
+.theme-kurosawa,
+[data-theme='kurosawa'] {
+  --color-bg-deep: #141210;
+  --color-bg-primary: #1a1715;
+  --color-bg-surface: #221e1a;
+  --color-bg-elevated: #2a2622;
+
+  --color-gold: #B71C1C;
+  --color-gold-light: #d43a3a;
+  --color-gold-pale: #ee9a9a;
+  --color-gold-dim: #8f1414;
+  --color-gold-subtle: #610e0e;
+
+  --color-moss: #F9A825;
+  --color-moss-light: #ffbf4d;
+  --color-moss-pale: #ffdfa3;
+  --color-leaf: #8a6200;
+  --color-mist: #9a9288;
+  --color-mist-light: #bab2a8;
+  --color-twilight: #4a443c;
+
+  --color-accent: var(--color-gold);
+  --color-accent-light: var(--color-gold-light);
+  --color-accent-pale: var(--color-gold-pale);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-subtle: var(--color-gold-subtle);
+  --color-accent-glass-border: rgba(183, 28, 28, 0.26);
+  --color-accent-glass-bg: rgba(26, 23, 21, 0.68);
+  --color-accent-card-border: rgba(245, 230, 211, 0.14);
+  --color-accent-card-border-hover: rgba(183, 28, 28, 0.55);
+  --color-accent-shadow: rgba(183, 28, 28, 0.1);
+  --color-accent-shadow-hover: rgba(183, 28, 28, 0.26);
+
+  --color-text-primary: #F5E6D3;
+  --color-text-secondary: rgba(245, 230, 211, 0.6);
+  --color-text-muted: rgba(245, 230, 211, 0.38);
+
+  --glass-bg: rgba(26, 23, 21, 0.64);
+  --glass-border: rgba(245, 230, 211, 0.12);
+  --glass-blur: 12px;
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+
+  --card-radius: 2px;
+  --card-border: 1px solid var(--color-accent-card-border);
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.55);
+  --card-shadow-hover: 0 10px 44px rgba(0, 0, 0, 0.7), 0 0 50px var(--color-accent-shadow-hover);
+
+  --font-display: 'Noto Serif SC', 'Cormorant Garamond', 'Songti SC', serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+}
+
+.theme-kurosawa .body-accent::before,
+[data-theme='kurosawa'] .body-accent::before {
+  background:
+    radial-gradient(ellipse at 80% 10%, rgba(183, 28, 28, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 90%, rgba(249, 168, 37, 0.04) 0%, transparent 45%);
+}
+
+.theme-kurosawa .body-accent::after,
+[data-theme='kurosawa'] .body-accent::after {
+  opacity: 0.05;
+}
+
+/* --- 刀光：hover 一道白线划过 --- */
+.theme-kurosawa .thumb .group::after {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: -30%;
+  width: 40%;
+  height: 130%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.75), transparent);
+  transform: translateX(-120%) skewX(-18deg);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.theme-kurosawa .thumb .group:hover::after {
+  transform: translateX(380%) skewX(-18deg);
+  transition: transform 0.5s cubic-bezier(0.22, 0.1, 0.13, 1);
+}
+
+/* --- 背景动画 --- */
+@keyframes krs-cloud {
+  0% { transform: translateX(-10%); }
+  100% { transform: translateX(110%); }
+}
+
+@keyframes krs-fall {
+  0% { transform: translate(0, -4vh) rotate(0deg); opacity: 0; }
+  12% { opacity: 0.8; }
+  88% { opacity: 0.8; }
+  100% { transform: translate(6vw, 104vh) rotate(300deg); opacity: 0; }
+}

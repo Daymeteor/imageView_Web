@@ -1,0 +1,93 @@
+/* ============================================
+   布达佩斯大饭店 — Grand Budapest 主题
+   韦斯·安德森：粉紫调 + 严格对称 + 老欧洲衬线
+   ============================================ */
+
+.theme-grandbudapest,
+[data-theme='grandbudapest'] {
+  --color-bg-deep: #f3dce8;
+  --color-bg-primary: #f8e8f0;
+  --color-bg-surface: #fdf1f6;
+  --color-bg-elevated: #ffffff;
+
+  --color-gold: #C62828;
+  --color-gold-light: #e04a4a;
+  --color-gold-pale: #f2a0a0;
+  --color-gold-dim: #9e1f1f;
+  --color-gold-subtle: #6e1515;
+
+  --color-moss: #D4A373;
+  --color-moss-light: #e2bd92;
+  --color-moss-pale: #f2dfc4;
+  --color-leaf: #8a6a45;
+  --color-mist: #b08a9a;
+  --color-mist-light: #c8aab8;
+  --color-twilight: #6e4a5a;
+
+  --color-accent: var(--color-gold);
+  --color-accent-light: var(--color-gold-light);
+  --color-accent-pale: var(--color-gold-pale);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-subtle: var(--color-gold-subtle);
+  --color-accent-glass-border: rgba(198, 40, 40, 0.22);
+  --color-accent-glass-bg: rgba(253, 241, 246, 0.78);
+  --color-accent-card-border: rgba(110, 74, 90, 0.2);
+  --color-accent-card-border-hover: rgba(198, 40, 40, 0.5);
+  --color-accent-shadow: rgba(198, 40, 40, 0.1);
+  --color-accent-shadow-hover: rgba(198, 40, 40, 0.24);
+
+  --color-text-primary: #4a2c3c;
+  --color-text-secondary: rgba(74, 44, 60, 0.62);
+  --color-text-muted: rgba(74, 44, 60, 0.4);
+
+  --glass-bg: rgba(253, 241, 246, 0.75);
+  --glass-border: rgba(110, 74, 90, 0.16);
+  --glass-blur: 12px;
+  --glass-shadow: 0 4px 24px rgba(110, 74, 90, 0.16);
+
+  --card-radius: 2px;
+  --card-border: 1px solid var(--color-accent-card-border);
+  --card-shadow: 0 4px 20px rgba(110, 74, 90, 0.16);
+  --card-shadow-hover: 0 10px 36px rgba(110, 74, 90, 0.24), 0 0 40px var(--color-accent-shadow-hover);
+
+  --font-display: 'Playfair Display', 'Noto Serif SC', 'Songti SC', serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+}
+
+.theme-grandbudapest .body-accent::before,
+[data-theme='grandbudapest'] .body-accent::before {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(206, 147, 216, 0.14) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 100%, rgba(212, 163, 115, 0.12) 0%, transparent 55%);
+}
+
+.theme-grandbudapest .body-accent::after,
+[data-theme='grandbudapest'] .body-accent::after {
+  opacity: 0.03;
+}
+
+/* --- 翻画册：hover 画面轻平移 --- */
+.theme-grandbudapest .thumb .group .thumb-img {
+  transition: opacity 0.5s, transform 0.45s ease, filter 0.5s;
+}
+
+.theme-grandbudapest .thumb .group:hover .thumb-img {
+  transform: translateX(3px) scale(1.02);
+}
+
+/* --- 背景动画 --- */
+@keyframes gb-window {
+  0%, 100% { opacity: 0.9; }
+  50% { opacity: 0.35; }
+}
+
+@keyframes gb-moon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* --- 展头标题压过粉色立面：深红 + 纸色描影 --- */
+.theme-grandbudapest .hall-header h2 {
+  color: #6e1515 !important;
+  text-shadow: 0 1px 0 rgba(253, 241, 246, 0.7);
+}

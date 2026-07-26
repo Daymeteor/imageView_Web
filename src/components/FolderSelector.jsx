@@ -23,6 +23,21 @@ export default function FolderSelector({ onSelect, loading, error, theme = 'fore
   const isNightcity = theme === 'nightcity';
   const isRdr = theme === 'rdr';
   const isPotter = theme === 'potter';
+  const isInterstellar = theme === 'interstellar';
+  const isGrandbudapest = theme === 'grandbudapest';
+  const isMonument = theme === 'monument';
+  const isBladerunner = theme === 'bladerunner';
+  const isShanhaijing = theme === 'shanhaijing';
+  const isEva = theme === 'eva';
+  const isKurosawa = theme === 'kurosawa';
+  const isLittleprince = theme === 'littleprince';
+  const isLdr = theme === 'ldr';
+  const isJourney = theme === 'journey';
+  const isNineteen84 = theme === 'nineteen84';
+  const isCthulhu = theme === 'cthulhu';
+  const isVaporwave = theme === 'vaporwave';
+  const isGot = theme === 'got';
+  const isAkira = theme === 'akira';
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[var(--color-bg-deep)]">
@@ -55,6 +70,21 @@ export default function FolderSelector({ onSelect, loading, error, theme = 'fore
               : isNightcity ? <NightcityIcon />
               : isRdr ? <RdrIcon />
               : isPotter ? <PotterIcon />
+              : isInterstellar ? <InterstellarIcon />
+              : isGrandbudapest ? <GrandbudapestIcon />
+              : isMonument ? <MonumentIcon />
+              : isBladerunner ? <BladerunnerIcon />
+              : isShanhaijing ? <ShanhaijingIcon />
+              : isEva ? <EvaIcon />
+              : isKurosawa ? <KurosawaIcon />
+              : isLittleprince ? <LittleprinceIcon />
+              : isLdr ? <LdrIcon />
+              : isJourney ? <JourneyIcon />
+              : isNineteen84 ? <Nineteen84Icon />
+              : isCthulhu ? <CthulhuIcon />
+              : isVaporwave ? <VaporwaveIcon />
+              : isGot ? <GotIcon />
+              : isAkira ? <AkiraIcon />
               : <ForestIcon />}
           </div>
         </div>
@@ -415,6 +445,204 @@ function PotterIcon() {
       <path d="M52 30L53.5 33.5L57 34L53.5 35.5L52 39L50.5 35.5L47 34L50.5 33.5Z" fill="currentColor" opacity="0.6" />
       <circle cx="20" cy="16" r="2" fill="currentColor" opacity="0.5" />
       <circle cx="30" cy="8" r="1.5" fill="currentColor" opacity="0.4" />
+    </svg>
+  );
+}
+
+function InterstellarIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 黑洞 + 吸积盘 */}
+      <circle cx="32" cy="32" r="10" fill="currentColor" opacity="0.9" />
+      <ellipse cx="32" cy="32" rx="24" ry="7" stroke="currentColor" strokeWidth="2" fill="none" transform="rotate(-18 32 32)" />
+      <ellipse cx="32" cy="32" rx="18" ry="5" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.5" transform="rotate(-18 32 32)" />
+      <circle cx="52" cy="12" r="1.5" fill="currentColor" opacity="0.6" />
+      <circle cx="12" cy="50" r="1.5" fill="currentColor" opacity="0.5" />
+    </svg>
+  );
+}
+
+function GrandbudapestIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 酒店立面（对称） */}
+      <rect x="12" y="16" width="40" height="38" stroke="currentColor" strokeWidth="1.5" fill="none" />
+      <rect x="12" y="16" width="40" height="6" fill="currentColor" opacity="0.5" />
+      <rect x="15.5" y="26" width="5" height="5" fill="currentColor" opacity="0.7" />
+      <rect x="24.5" y="26" width="5" height="5" fill="currentColor" opacity="0.7" />
+      <rect x="34.5" y="26" width="5" height="5" fill="currentColor" opacity="0.7" />
+      <rect x="43.5" y="26" width="5" height="5" fill="currentColor" opacity="0.7" />
+      <rect x="15.5" y="36" width="5" height="5" fill="currentColor" opacity="0.7" />
+      <rect x="24.5" y="36" width="5" height="5" fill="currentColor" opacity="0.7" />
+      <rect x="34.5" y="36" width="5" height="5" fill="currentColor" opacity="0.7" />
+      <rect x="43.5" y="36" width="5" height="5" fill="currentColor" opacity="0.7" />
+      <rect x="28" y="44" width="8" height="10" fill="currentColor" opacity="0.85" />
+      <circle cx="32" cy="10" r="3" fill="currentColor" opacity="0.6" />
+    </svg>
+  );
+}
+
+function MonumentIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 不可能三角（潘洛斯） */}
+      <path d="M32 10L54 48H10Z" stroke="currentColor" strokeWidth="3" fill="none" strokeLinejoin="round" />
+      <path d="M32 22L44 42H20Z" stroke="currentColor" strokeWidth="2" fill="none" opacity="0.6" strokeLinejoin="round" />
+      <circle cx="32" cy="38" r="3" fill="currentColor" opacity="0.8" />
+    </svg>
+  );
+}
+
+function BladerunnerIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 折纸独角兽 */}
+      <path d="M14 46L26 30L24 18L36 26L46 24L42 34L48 46L36 42L26 50Z" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
+      <path d="M24 18L36 26L46 24" stroke="currentColor" strokeWidth="1" opacity="0.5" fill="none" />
+      <circle cx="36" cy="30" r="1.5" fill="currentColor" />
+    </svg>
+  );
+}
+
+function ShanhaijingIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 青绿山水 + 朱砂印章 */}
+      <path d="M6 44L20 24L30 38L40 20L58 44" stroke="currentColor" strokeWidth="2" fill="none" strokeLinejoin="round" opacity="0.8" />
+      <path d="M10 50Q20 46 30 50T50 50" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.45" />
+      <circle cx="46" cy="14" r="6" fill="currentColor" opacity="0.4" />
+      <rect x="46" y="48" width="10" height="10" fill="currentColor" opacity="0.9" />
+      <line x1="48.5" y1="51" x2="53.5" y2="51" stroke="#F5F0E1" strokeWidth="1.2" />
+      <line x1="48.5" y1="54" x2="53.5" y2="54" stroke="#F5F0E1" strokeWidth="1.2" />
+    </svg>
+  );
+}
+
+function EvaIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* NERV 无花果叶徽 */}
+      <path d="M32 8L50 50H14Z" stroke="currentColor" strokeWidth="2" fill="none" strokeLinejoin="round" />
+      <path d="M32 20L42 42H22Z" fill="currentColor" opacity="0.4" />
+      <line x1="32" y1="8" x2="32" y2="50" stroke="currentColor" strokeWidth="1" opacity="0.5" />
+      <circle cx="32" cy="56" r="2.5" fill="currentColor" opacity="0.8" />
+    </svg>
+  );
+}
+
+function KurosawaIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 刀 + 墨点 */}
+      <line x1="12" y1="52" x2="46" y2="14" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+      <line x1="40" y1="20" x2="48" y2="12" stroke="currentColor" strokeWidth="4" strokeLinecap="round" opacity="0.7" />
+      <circle cx="50" cy="44" r="4" fill="currentColor" opacity="0.5" />
+      <circle cx="56" cy="36" r="2" fill="currentColor" opacity="0.35" />
+      <path d="M10 30Q18 24 26 30" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.5" />
+    </svg>
+  );
+}
+
+function LittleprinceIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 小星球 + 玫瑰 */}
+      <circle cx="32" cy="38" r="18" fill="currentColor" opacity="0.35" />
+      <circle cx="32" cy="38" r="18" stroke="currentColor" strokeWidth="1.5" fill="none" />
+      <path d="M32 30C28 24 32 18 32 18C32 18 36 24 32 30Z" fill="currentColor" opacity="0.85" />
+      <circle cx="32" cy="26" r="4" fill="currentColor" opacity="0.9" />
+      <line x1="32" y1="30" x2="32" y2="38" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="12" cy="12" r="1.5" fill="currentColor" opacity="0.6" />
+      <circle cx="52" cy="16" r="2" fill="currentColor" opacity="0.5" />
+    </svg>
+  );
+}
+
+function LdrIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 三格画风屏幕 */}
+      <rect x="6" y="14" width="52" height="30" rx="3" stroke="currentColor" strokeWidth="1.5" fill="none" />
+      <rect x="10" y="18" width="14" height="22" fill="currentColor" opacity="0.8" />
+      <rect x="26" y="18" width="14" height="22" fill="currentColor" opacity="0.45" />
+      <rect x="42" y="18" width="12" height="22" fill="currentColor" opacity="0.2" />
+      <line x1="22" y1="50" x2="42" y2="50" stroke="currentColor" strokeWidth="2" />
+    </svg>
+  );
+}
+
+function JourneyIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 沙丘 + 长袍旅人 */}
+      <path d="M4 48Q20 36 34 46T60 44" stroke="currentColor" strokeWidth="2" fill="none" />
+      <path d="M4 56Q24 46 42 54T62 52" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.5" />
+      <path d="M30 26L34 20L38 26L37 38H31Z" fill="currentColor" opacity="0.85" />
+      <path d="M34 20L40 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.7" />
+      <circle cx="50" cy="14" r="4" fill="currentColor" opacity="0.45" />
+    </svg>
+  );
+}
+
+function Nineteen84Icon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 电幕眼睛 */}
+      <rect x="8" y="14" width="48" height="30" rx="2" stroke="currentColor" strokeWidth="1.5" fill="none" />
+      <circle cx="32" cy="29" r="9" stroke="currentColor" strokeWidth="1.5" fill="none" />
+      <circle cx="32" cy="29" r="3.5" fill="currentColor" />
+      <line x1="22" y1="50" x2="42" y2="50" stroke="currentColor" strokeWidth="2" />
+      <rect x="12" y="56" width="40" height="3" fill="currentColor" opacity="0.6" />
+    </svg>
+  );
+}
+
+function CthulhuIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 触手 */}
+      <path d="M20 54Q14 40 22 32Q30 24 26 12" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" />
+      <path d="M36 56Q32 44 40 36Q48 28 44 16" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" opacity="0.7" />
+      <path d="M50 52Q50 44 54 38" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round" opacity="0.5" />
+      <circle cx="20" cy="14" r="2.5" fill="currentColor" />
+      <circle cx="46" cy="12" r="2" fill="currentColor" opacity="0.7" />
+    </svg>
+  );
+}
+
+function VaporwaveIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 希腊雕塑头像 + 网格 */}
+      <circle cx="32" cy="22" r="10" stroke="currentColor" strokeWidth="1.5" fill="none" />
+      <path d="M26 20Q32 14 38 20M28 26Q32 28 36 26" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.7" />
+      <path d="M24 34Q32 40 40 34L42 46H22Z" stroke="currentColor" strokeWidth="1.5" fill="none" />
+      <line x1="6" y1="52" x2="58" y2="52" stroke="currentColor" strokeWidth="1" opacity="0.5" />
+      <line x1="10" y1="58" x2="54" y2="58" stroke="currentColor" strokeWidth="1" opacity="0.3" />
+    </svg>
+  );
+}
+
+function GotIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 龙 */}
+      <path d="M12 44Q20 30 34 34Q48 38 52 26L56 30Q52 44 38 46Q24 48 12 44Z" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
+      <path d="M34 34L28 22L38 30M44 32L48 20L52 28" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinejoin="round" opacity="0.7" />
+      <circle cx="50" cy="24" r="1.5" fill="currentColor" />
+      <circle cx="14" cy="16" r="5" fill="currentColor" opacity="0.4" />
+    </svg>
+  );
+}
+
+function AkiraIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 胶囊 */}
+      <rect x="12" y="24" width="40" height="16" rx="8" stroke="currentColor" strokeWidth="1.5" fill="none" />
+      <line x1="32" y1="24" x2="32" y2="40" stroke="currentColor" strokeWidth="1.5" />
+      <rect x="12" y="24" width="20" height="16" rx="8" fill="currentColor" opacity="0.4" />
+      <line x1="8" y1="48" x2="56" y2="48" stroke="currentColor" strokeWidth="2" opacity="0.5" />
     </svg>
   );
 }

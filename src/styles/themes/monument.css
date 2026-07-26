@@ -1,0 +1,86 @@
+/* ============================================
+   纪念碑谷 — Monument Valley 主题
+   视错觉几何 + 等轴测漂浮岛 + 不可能三角
+   ============================================ */
+
+.theme-monument,
+[data-theme='monument'] {
+  --color-bg-deep: #F5E6D3;
+  --color-bg-primary: #faf0e2;
+  --color-bg-surface: #fff8ee;
+  --color-bg-elevated: #ffffff;
+
+  --color-gold: #4A90D9;
+  --color-gold-light: #6fabe8;
+  --color-gold-pale: #b0d2f2;
+  --color-gold-dim: #3570b0;
+  --color-gold-subtle: #24507e;
+
+  --color-moss: #FF6B9D;
+  --color-moss-light: #ff8fb4;
+  --color-moss-pale: #ffc4d8;
+  --color-leaf: #c44a78;
+  --color-mist: #B8A9C9;
+  --color-mist-light: #d0c4dc;
+  --color-twilight: #6a5a8a;
+
+  --color-accent: var(--color-gold);
+  --color-accent-light: var(--color-gold-light);
+  --color-accent-pale: var(--color-gold-pale);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-subtle: var(--color-gold-subtle);
+  --color-accent-glass-border: rgba(74, 144, 217, 0.24);
+  --color-accent-glass-bg: rgba(255, 248, 238, 0.78);
+  --color-accent-card-border: rgba(106, 90, 138, 0.16);
+  --color-accent-card-border-hover: rgba(74, 144, 217, 0.5);
+  --color-accent-shadow: rgba(74, 144, 217, 0.12);
+  --color-accent-shadow-hover: rgba(74, 144, 217, 0.28);
+
+  --color-text-primary: #4a4260;
+  --color-text-secondary: rgba(74, 66, 96, 0.62);
+  --color-text-muted: rgba(74, 66, 96, 0.4);
+
+  --glass-bg: rgba(255, 248, 238, 0.75);
+  --glass-border: rgba(106, 90, 138, 0.14);
+  --glass-blur: 12px;
+  --glass-shadow: 0 6px 28px rgba(106, 90, 138, 0.18);
+
+  --card-radius: 6px;
+  --card-border: 1px solid var(--color-accent-card-border);
+  --card-shadow: 0 8px 0 rgba(106, 90, 138, 0.1), 0 16px 36px rgba(106, 90, 138, 0.16);
+  --card-shadow-hover: 0 12px 0 rgba(74, 144, 217, 0.14), 0 24px 48px rgba(106, 90, 138, 0.22);
+
+  --font-display: 'Jost', 'Noto Serif SC', 'PingFang SC', sans-serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+}
+
+.theme-monument .body-accent::before,
+[data-theme='monument'] .body-accent::before {
+  background:
+    radial-gradient(ellipse at 15% 85%, rgba(255, 107, 157, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 15%, rgba(74, 144, 217, 0.1) 0%, transparent 50%);
+}
+
+.theme-monument .body-accent::after,
+[data-theme='monument'] .body-accent::after {
+  opacity: 0.03;
+}
+
+/* --- 解锁新关卡：hover 旋转悬浮 --- */
+.theme-monument .thumb .group {
+  transition: transform 0.45s cubic-bezier(0.22, 0.1, 0.13, 1), box-shadow 0.45s, border-color 0.3s;
+}
+
+.theme-monument .thumb .group:hover {
+  transform: rotate(2deg) scale(1.02);
+}
+
+/* --- 背景动画 --- */
+@keyframes mv-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-18px); }
+}
+
+@keyframes mv-spin {
+  to { transform: rotate(360deg); }
+}

@@ -1,0 +1,97 @@
+/* ============================================
+   星际穿越 — Interstellar 主题
+   黑洞吸积盘 + 引力透镜 + 沙尘漂流
+   ============================================ */
+
+.theme-interstellar,
+[data-theme='interstellar'] {
+  --color-bg-deep: #0A0A0A;
+  --color-bg-primary: #101014;
+  --color-bg-surface: #16161c;
+  --color-bg-elevated: #1e1e26;
+
+  --color-gold: #F57C00;
+  --color-gold-light: #ff9d3c;
+  --color-gold-pale: #ffc98a;
+  --color-gold-dim: #c2610a;
+  --color-gold-subtle: #8a4506;
+
+  --color-moss: #7a4fc0;
+  --color-moss-light: #9a7ad4;
+  --color-moss-pale: #c4aee8;
+  --color-leaf: #4A148C;
+  --color-mist: #5a7a8a;
+  --color-mist-light: #7d9aab;
+  --color-twilight: #37474F;
+
+  --color-accent: var(--color-gold);
+  --color-accent-light: var(--color-gold-light);
+  --color-accent-pale: var(--color-gold-pale);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-subtle: var(--color-gold-subtle);
+  --color-accent-glass-border: rgba(245, 124, 0, 0.22);
+  --color-accent-glass-bg: rgba(16, 16, 20, 0.68);
+  --color-accent-card-border: rgba(245, 124, 0, 0.16);
+  --color-accent-card-border-hover: rgba(245, 124, 0, 0.5);
+  --color-accent-shadow: rgba(245, 124, 0, 0.1);
+  --color-accent-shadow-hover: rgba(245, 124, 0, 0.26);
+
+  --color-text-primary: #e8e4dc;
+  --color-text-secondary: rgba(232, 228, 220, 0.6);
+  --color-text-muted: rgba(232, 228, 220, 0.38);
+
+  --glass-bg: rgba(16, 16, 20, 0.62);
+  --glass-border: rgba(245, 124, 0, 0.16);
+  --glass-blur: 12px;
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+
+  --card-radius: 2px;
+  --card-border: 1px solid var(--color-accent-card-border);
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.6), 0 0 26px var(--color-accent-shadow);
+  --card-shadow-hover: 0 10px 44px rgba(0, 0, 0, 0.75), 0 0 56px var(--color-accent-shadow-hover);
+
+  --font-display: 'Courier Prime', 'Noto Serif SC', 'PingFang SC', monospace;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+}
+
+.theme-interstellar .body-accent::before,
+[data-theme='interstellar'] .body-accent::before {
+  background:
+    radial-gradient(ellipse at 68% 40%, rgba(245, 124, 0, 0.06) 0%, transparent 45%),
+    radial-gradient(ellipse at 20% 80%, rgba(74, 20, 140, 0.1) 0%, transparent 50%);
+}
+
+.theme-interstellar .body-accent::after,
+[data-theme='interstellar'] .body-accent::after {
+  opacity: 0.04;
+}
+
+/* --- 虫洞观察：hover 画面扭曲提亮 --- */
+.theme-interstellar .thumb .group .thumb-img {
+  transition: opacity 0.5s, transform 0.5s ease, filter 0.45s ease;
+}
+
+.theme-interstellar .thumb .group:hover .thumb-img {
+  filter: blur(1.5px) brightness(1.12);
+  transform: scale(1.04);
+}
+
+/* --- 背景动画 --- */
+@keyframes is-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes is-spin-rev {
+  to { transform: rotate(-360deg); }
+}
+
+@keyframes is-dust {
+  0% { transform: translate(0, 0); opacity: 0.15; }
+  50% { opacity: 0.55; }
+  100% { transform: translate(-46vw, 6vh); opacity: 0.15; }
+}
+
+@keyframes is-twinkle {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.85; }
+}

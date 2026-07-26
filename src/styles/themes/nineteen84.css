@@ -1,0 +1,100 @@
+/* ============================================
+   一九八四 — Nineteen Eighty-Four 主题：粗野极权 + 电幕
+   ============================================ */
+
+.theme-nineteen84,
+[data-theme='nineteen84'] {
+  --color-bg-deep: #1A1A1A;
+  --color-bg-primary: #212121;
+  --color-bg-surface: #2a2a2a;
+  --color-bg-elevated: #333333;
+
+  --color-gold: #B71C1C;
+  --color-gold-light: #d43a3a;
+  --color-gold-pale: #ee9a9a;
+  --color-gold-dim: #8f1414;
+  --color-gold-subtle: #610e0e;
+
+  --color-moss: #90A4AE;
+  --color-moss-light: #b0bec5;
+  --color-moss-pale: #ECEFF1;
+  --color-leaf: #455A64;
+  --color-mist: #7a8a92;
+  --color-mist-light: #9aa8ae;
+  --color-twilight: #37474F;
+
+  --color-accent: var(--color-gold);
+  --color-accent-light: var(--color-gold-light);
+  --color-accent-pale: var(--color-gold-pale);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-subtle: var(--color-gold-subtle);
+  --color-accent-glass-border: rgba(183, 28, 28, 0.3);
+  --color-accent-glass-bg: rgba(26, 26, 26, 0.72);
+  --color-accent-card-border: rgba(236, 239, 241, 0.14);
+  --color-accent-card-border-hover: rgba(183, 28, 28, 0.6);
+  --color-accent-shadow: rgba(183, 28, 28, 0.1);
+  --color-accent-shadow-hover: rgba(183, 28, 28, 0.28);
+
+  --color-text-primary: #ECEFF1;
+  --color-text-secondary: rgba(236, 239, 241, 0.6);
+  --color-text-muted: rgba(236, 239, 241, 0.38);
+
+  --glass-bg: rgba(33, 33, 33, 0.68);
+  --glass-border: rgba(236, 239, 241, 0.12);
+  --glass-blur: 10px;
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+
+  --card-radius: 0px;
+  --card-border: 2px solid var(--color-accent-card-border);
+  --card-shadow: 0 4px 0 rgba(0, 0, 0, 0.5);
+  --card-shadow-hover: 0 8px 0 rgba(0, 0, 0, 0.6), 0 0 40px var(--color-accent-shadow-hover);
+
+  --font-display: 'Courier Prime', 'Noto Serif SC', 'PingFang SC', monospace;
+  --font-body: 'Courier Prime', 'Manrope', 'PingFang SC', monospace;
+}
+
+.theme-nineteen84 .body-accent::before,
+[data-theme='nineteen84'] .body-accent::before {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(183, 28, 28, 0.07) 0%, transparent 50%);
+}
+
+.theme-nineteen84 .body-accent::after,
+[data-theme='nineteen84'] .body-accent::after {
+  opacity: 0.05;
+}
+
+/* --- 电幕扫描：hover 红色扫描线滑过 --- */
+.theme-nineteen84 .thumb .group::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -6%;
+  height: 8%;
+  background: linear-gradient(180deg, transparent, rgba(183, 28, 28, 0.55), transparent);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+}
+
+.theme-nineteen84 .thumb .group:hover::after {
+  opacity: 1;
+  animation: n84-scan 0.7s linear infinite;
+}
+
+@keyframes n84-scan {
+  0% { top: -6%; }
+  100% { top: 102%; }
+}
+
+/* --- 背景动画 --- */
+@keyframes n84-flicker {
+  0%, 86%, 92%, 100% { opacity: 1; }
+  88%, 90% { opacity: 0.3; }
+}
+
+@keyframes n84-roll {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}

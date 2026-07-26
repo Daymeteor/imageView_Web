@@ -543,8 +543,16 @@ http://localhost:5173/?demo=1&theme=constellation
 | 24 | 沙丘 | 沙漠科幻 | 沙金/橙褐/深蓝夜 | ⭐⭐⭐⭐ |
 | 25 | 黑镜 | 科技惊悚 | 纯黑/科技蓝/警示红/白 | ⭐⭐ |
 
-## 实施进度备注（2026-07-25 更新）
+## 实施进度备注（2026-07-25 更新 · 阿基拉完成后阶段性收工）
 
 - ✅ 方案一~五已上线（含独立阅读器 + 比例适配）
 - ✅ 方案十六（黄昏蓝调）与「拾光海岸 seaside」同构，视为已覆盖
-- 🚧 方案六~十五、十七~二十五（共 18 个）进入实施队列：每主题独立主题（token css + 背景组件 + 图标 + 路由），交互按各自概念设计
+- ✅ 方案六~十五、十七~二十二（B1+B2+B3 共 15 个主题）已全部上线：
+  - B1：星际穿越 interstellar / 布达佩斯 grandbudapest / 纪念碑谷 monument / 银翼杀手 bladerunner / 山海经 shanhaijing
+  - B2：EVA eva / 黑泽明 kurosawa / 小王子 littleprince / 爱死机 ldr / 风之旅人 journey
+  - B3：奥威尔 nineteen84 / 克苏鲁 cthulhu / 蒸汽波 vaporwave / 冰与火 got / 阿基拉 akira
+  - 每主题：独立 token css + 背景组件（氛围动画）+ 悬停签名效果 + 选择器图标 + 路由，逐主题截图目检通过，`npm run build` 通过
+- ⏸️ B4 待排期（用户决定阶段性收工）：吉卜力 ghibli / 侘寂 wabisabi / 沙丘 dune / 黑镜 blackmirror
+  - 注意：themeConfig 中暂未写入这 4 个条目（曾预写后回退，吉卜力 accent 字段有笔误 `accent: #4CAF50' || '#4CAF50'`，实施时需写为 `'#4CAF50'`）
+  - 恢复时按既有批次流程：themeConfig 条目 → App.jsx/FolderSelector 接线 → 主题 css + 背景组件 → build + 截图目检
+- 应用现有主题总数：31（16 旧 + 15 新）

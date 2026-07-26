@@ -25,6 +25,21 @@ import './styles/themes/spirited.css';
 import './styles/themes/nightcity.css';
 import './styles/themes/rdr.css';
 import './styles/themes/potter.css';
+import './styles/themes/interstellar.css';
+import './styles/themes/grandbudapest.css';
+import './styles/themes/monument.css';
+import './styles/themes/bladerunner.css';
+import './styles/themes/shanhaijing.css';
+import './styles/themes/eva.css';
+import './styles/themes/kurosawa.css';
+import './styles/themes/littleprince.css';
+import './styles/themes/ldr.css';
+import './styles/themes/journey.css';
+import './styles/themes/nineteen84.css';
+import './styles/themes/cthulhu.css';
+import './styles/themes/vaporwave.css';
+import './styles/themes/got.css';
+import './styles/themes/akira.css';
 
 // GSAP 插件注册（全局一次性）
 gsap.registerPlugin(ScrollTrigger);
@@ -55,8 +70,23 @@ const SpiritedReader = lazy(() => import('./components/SpiritedReader'));
 const NightcityReader = lazy(() => import('./components/NightcityReader'));
 const RdrReader = lazy(() => import('./components/RdrReader'));
 const PotterReader = lazy(() => import('./components/PotterReader'));
+const InterstellarBackground = lazy(() => import('./components/InterstellarBackground'));
+const GrandbudapestBackground = lazy(() => import('./components/GrandbudapestBackground'));
+const MonumentBackground = lazy(() => import('./components/MonumentBackground'));
+const BladerunnerBackground = lazy(() => import('./components/BladerunnerBackground'));
+const ShanhaijingBackground = lazy(() => import('./components/ShanhaijingBackground'));
+const EvaBackground = lazy(() => import('./components/EvaBackground'));
+const KurosawaBackground = lazy(() => import('./components/KurosawaBackground'));
+const LittleprinceBackground = lazy(() => import('./components/LittleprinceBackground'));
+const LdrBackground = lazy(() => import('./components/LdrBackground'));
+const JourneyBackground = lazy(() => import('./components/JourneyBackground'));
+const Nineteen84Background = lazy(() => import('./components/Nineteen84Background'));
+const CthulhuBackground = lazy(() => import('./components/CthulhuBackground'));
+const VaporwaveBackground = lazy(() => import('./components/VaporwaveBackground'));
+const GotBackground = lazy(() => import('./components/GotBackground'));
+const AkiraBackground = lazy(() => import('./components/AkiraBackground'));
 
-const VALID_THEMES = ['forest', 'cyber', 'constellation', 'anime', 'mondrian', 'memphis', 'animepop', 'bauhaus', 'darkroom', 'album', 'seaside', 'pixel', 'spirited', 'nightcity', 'rdr', 'potter'];
+const VALID_THEMES = ['forest', 'cyber', 'constellation', 'anime', 'mondrian', 'memphis', 'animepop', 'bauhaus', 'darkroom', 'album', 'seaside', 'pixel', 'spirited', 'nightcity', 'rdr', 'potter', 'interstellar', 'grandbudapest', 'monument', 'bladerunner', 'shanhaijing', 'eva', 'kurosawa', 'littleprince', 'ldr', 'journey', 'nineteen84', 'cthulhu', 'vaporwave', 'got', 'akira'];
 
 export default function App() {
   const [theme, setTheme] = useState(() => {
@@ -98,6 +128,21 @@ export default function App() {
   const isNightcity = theme === 'nightcity';
   const isRdr = theme === 'rdr';
   const isPotter = theme === 'potter';
+  const isInterstellar = theme === 'interstellar';
+  const isGrandbudapest = theme === 'grandbudapest';
+  const isMonument = theme === 'monument';
+  const isBladerunner = theme === 'bladerunner';
+  const isShanhaijing = theme === 'shanhaijing';
+  const isEva = theme === 'eva';
+  const isKurosawa = theme === 'kurosawa';
+  const isLittleprince = theme === 'littleprince';
+  const isLdr = theme === 'ldr';
+  const isJourney = theme === 'journey';
+  const isNineteen84 = theme === 'nineteen84';
+  const isCthulhu = theme === 'cthulhu';
+  const isVaporwave = theme === 'vaporwave';
+  const isGot = theme === 'got';
+  const isAkira = theme === 'akira';
 
   // 星座主题：30s 自动切换星座
   useEffect(() => {
@@ -120,7 +165,7 @@ export default function App() {
   }
 
   const themeTitle = getTheme(theme).title;
-  const showFolderName = isForest || isConstellation || isAnime || isMondrian || isMemphis || isAnimePop || isBauhaus || isDarkroom || isAlbum || isSeaside || isPixel || isSpirited || isNightcity || isRdr || isPotter;
+  const showFolderName = isForest || isConstellation || isAnime || isMondrian || isMemphis || isAnimePop || isBauhaus || isDarkroom || isAlbum || isSeaside || isPixel || isSpirited || isNightcity || isRdr || isPotter || isInterstellar || isGrandbudapest || isMonument || isBladerunner || isShanhaijing || isEva || isKurosawa || isLittleprince || isLdr || isJourney || isNineteen84 || isCthulhu || isVaporwave || isGot || isAkira;
 
   const loadingText = isForest
     ? '正在读取照片...'
@@ -144,6 +189,36 @@ export default function App() {
     ? '正在冲洗老照片...'
     : isPotter
     ? '正在施魔法...'
+    : isInterstellar
+    ? '正在校准曲率...'
+    : isGrandbudapest
+    ? '正在登记入住...'
+    : isMonument
+    ? '正在重构几何...'
+    : isBladerunner
+    ? '正在扫描视网膜...'
+    : isShanhaijing
+    ? '正在展开手卷...'
+    : isEva
+    ? '正在同步A.T.力场...'
+    : isKurosawa
+    ? '正在研墨...'
+    : isLittleprince
+    ? '正在浇灌玫瑰...'
+    : isLdr
+    ? '正在装载选集...'
+    : isJourney
+    ? '正在等待风起...'
+    : isNineteen84
+    ? '正在校验思想...'
+    : isCthulhu
+    ? '正在聆听低语...'
+    : isVaporwave
+    ? '正在倒带...'
+    : isGot
+    ? '正在集结守夜人...'
+    : isAkira
+    ? '正在预热引擎...'
     : '正在渲染场景...';
 
   return (
@@ -171,6 +246,21 @@ export default function App() {
         {isNightcity && <NightcityBackground />}
         {isRdr && <RdrBackground />}
         {isPotter && <PotterBackground />}
+        {isInterstellar && <InterstellarBackground />}
+        {isGrandbudapest && <GrandbudapestBackground />}
+        {isMonument && <MonumentBackground />}
+        {isBladerunner && <BladerunnerBackground />}
+        {isShanhaijing && <ShanhaijingBackground />}
+        {isEva && <EvaBackground />}
+        {isKurosawa && <KurosawaBackground />}
+        {isLittleprince && <LittleprinceBackground />}
+        {isLdr && <LdrBackground />}
+        {isJourney && <JourneyBackground />}
+        {isNineteen84 && <Nineteen84Background />}
+        {isCthulhu && <CthulhuBackground />}
+        {isVaporwave && <VaporwaveBackground />}
+        {isGot && <GotBackground />}
+        {isAkira && <AkiraBackground />}
       </Suspense>
 
       {/* 导航栏 */}

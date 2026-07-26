@@ -1,0 +1,87 @@
+/* ============================================
+   爱死机 — Love Death + Robots 主题：跨画风选集
+   ============================================ */
+
+.theme-ldr,
+[data-theme='ldr'] {
+  --color-bg-deep: #0d0d14;
+  --color-bg-primary: #12121a;
+  --color-bg-surface: #181822;
+  --color-bg-elevated: #20202c;
+
+  --color-gold: #D32F2F;
+  --color-gold-light: #ef5350;
+  --color-gold-pale: #ff9a97;
+  --color-gold-dim: #a82323;
+  --color-gold-subtle: #701717;
+
+  --color-moss: #4a90d9;
+  --color-moss-light: #6fabe8;
+  --color-moss-pale: #b0d2f2;
+  --color-leaf: #0D47A1;
+  --color-mist: #8a8a9a;
+  --color-mist-light: #ababb8;
+  --color-twilight: #2a2a38;
+
+  --color-accent: var(--color-gold);
+  --color-accent-light: var(--color-gold-light);
+  --color-accent-pale: var(--color-gold-pale);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-subtle: var(--color-gold-subtle);
+  --color-accent-glass-border: rgba(211, 47, 47, 0.24);
+  --color-accent-glass-bg: rgba(13, 13, 20, 0.7);
+  --color-accent-card-border: rgba(255, 255, 255, 0.12);
+  --color-accent-card-border-hover: rgba(211, 47, 47, 0.55);
+  --color-accent-shadow: rgba(211, 47, 47, 0.1);
+  --color-accent-shadow-hover: rgba(211, 47, 47, 0.26);
+
+  --color-text-primary: #ececf2;
+  --color-text-secondary: rgba(236, 236, 242, 0.6);
+  --color-text-muted: rgba(236, 236, 242, 0.38);
+
+  --glass-bg: rgba(18, 18, 26, 0.66);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-blur: 14px;
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+
+  --card-radius: 3px;
+  --card-border: 1px solid var(--color-accent-card-border);
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.55);
+  --card-shadow-hover: 0 10px 44px rgba(0, 0, 0, 0.7), 0 0 50px var(--color-accent-shadow-hover);
+
+  --font-display: 'Archivo Black', 'Noto Serif SC', 'PingFang SC', sans-serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+}
+
+.theme-ldr .body-accent::before,
+[data-theme='ldr'] .body-accent::before {
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(211, 47, 47, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 90%, rgba(13, 71, 161, 0.07) 0%, transparent 50%);
+}
+
+.theme-ldr .body-accent::after,
+[data-theme='ldr'] .body-accent::after {
+  opacity: 0.04;
+}
+
+/* --- 切剧集：hover 卡片翻转微旋 + 红蓝光差 --- */
+.theme-ldr .thumb .group .thumb-img {
+  transition: opacity 0.5s, transform 0.4s ease, filter 0.4s;
+}
+
+.theme-ldr .thumb .group:hover .thumb-img {
+  transform: rotateY(6deg) scale(1.03);
+  filter: drop-shadow(3px 0 0 rgba(211, 47, 47, 0.4)) drop-shadow(-3px 0 0 rgba(74, 144, 217, 0.4));
+}
+
+/* --- 背景动画 --- */
+@keyframes ldr-flicker {
+  0%, 88%, 96%, 100% { opacity: 1; }
+  90%, 94% { opacity: 0.4; }
+}
+
+@keyframes ldr-scan {
+  0% { top: -4%; }
+  100% { top: 104%; }
+}

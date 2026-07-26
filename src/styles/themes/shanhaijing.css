@@ -1,0 +1,107 @@
+/* ============================================
+   山海经 — Classic of Mountains 主题
+   青绿山水手卷 + 祥云 + 仙鹤
+   ============================================ */
+
+.theme-shanhaijing,
+[data-theme='shanhaijing'] {
+  --color-bg-deep: #F5F0E1;
+  --color-bg-primary: #faf6ea;
+  --color-bg-surface: #fffdf4;
+  --color-bg-elevated: #ffffff;
+
+  --color-gold: #C62828;
+  --color-gold-light: #e04a4a;
+  --color-gold-pale: #f2a8a8;
+  --color-gold-dim: #9e1f1f;
+  --color-gold-subtle: #6e1515;
+
+  --color-moss: #2E7D32;
+  --color-moss-light: #4c9a52;
+  --color-moss-pale: #a8d0ab;
+  --color-leaf: #1a4a1e;
+  --color-mist: #8a9a8a;
+  --color-mist-light: #abb8ab;
+  --color-twilight: #4a5a4a;
+
+  --color-accent: var(--color-gold);
+  --color-accent-light: var(--color-gold-light);
+  --color-accent-pale: var(--color-gold-pale);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-subtle: var(--color-gold-subtle);
+  --color-accent-glass-border: rgba(198, 40, 40, 0.22);
+  --color-accent-glass-bg: rgba(250, 246, 234, 0.8);
+  --color-accent-card-border: rgba(26, 26, 26, 0.14);
+  --color-accent-card-border-hover: rgba(198, 40, 40, 0.5);
+  --color-accent-shadow: rgba(46, 125, 50, 0.1);
+  --color-accent-shadow-hover: rgba(198, 40, 40, 0.2);
+
+  --color-text-primary: #1A1A1A;
+  --color-text-secondary: rgba(26, 26, 26, 0.62);
+  --color-text-muted: rgba(26, 26, 26, 0.4);
+
+  --glass-bg: rgba(250, 246, 234, 0.78);
+  --glass-border: rgba(26, 26, 26, 0.12);
+  --glass-blur: 12px;
+  --glass-shadow: 0 4px 24px rgba(26, 26, 26, 0.12);
+
+  --card-radius: 2px;
+  --card-border: 1px solid var(--color-accent-card-border);
+  --card-shadow: 0 4px 20px rgba(26, 26, 26, 0.12);
+  --card-shadow-hover: 0 10px 36px rgba(26, 26, 26, 0.2), 0 0 36px var(--color-accent-shadow-hover);
+
+  --font-display: 'Noto Serif SC', 'Cormorant Garamond', 'Songti SC', serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+}
+
+.theme-shanhaijing .body-accent::before,
+[data-theme='shanhaijing'] .body-accent::before {
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(46, 125, 50, 0.08) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 10%, rgba(249, 168, 37, 0.08) 0%, transparent 45%);
+}
+
+.theme-shanhaijing .body-accent::after,
+[data-theme='shanhaijing'] .body-accent::after {
+  opacity: 0.05;
+}
+
+/* --- 神兽吐息：hover 墨晕扩散 --- */
+.theme-shanhaijing .thumb .group::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background: radial-gradient(circle, rgba(26, 26, 26, 0.28) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: transform 0.55s cubic-bezier(0.22, 0.1, 0.13, 1), opacity 0.55s;
+}
+
+.theme-shanhaijing .thumb .group:hover::after {
+  transform: translate(-50%, -50%) scale(26);
+  opacity: 1;
+}
+
+/* --- 背景动画 --- */
+@keyframes shj-cloud {
+  0% { transform: translateX(-12%); }
+  100% { transform: translateX(112%); }
+}
+
+@keyframes shj-crane {
+  0% { transform: translate(-8%, 0) rotate(-2deg); opacity: 0; }
+  10% { opacity: 0.85; }
+  88% { opacity: 0.85; }
+  100% { transform: translate(108%, -6vh) rotate(2deg); opacity: 0; }
+}
+
+@keyframes shj-flap {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.6); }
+}

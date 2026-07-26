@@ -1,0 +1,92 @@
+/* ============================================
+   克苏鲁 — Cthulhu 主题：深海拉莱耶 + 触手 + 磷光
+   ============================================ */
+
+.theme-cthulhu,
+[data-theme='cthulhu'] {
+  --color-bg-deep: #050d18;
+  --color-bg-primary: #0A1628;
+  --color-bg-surface: #0e1c32;
+  --color-bg-elevated: #14243e;
+
+  --color-gold: #00E676;
+  --color-gold-light: #4dff9d;
+  --color-gold-pale: #a3ffc8;
+  --color-gold-dim: #00b85c;
+  --color-gold-subtle: #008040;
+
+  --color-moss: #1B3A2A;
+  --color-moss-light: #2a5240;
+  --color-moss-pale: #4a7a62;
+  --color-leaf: #0e2418;
+  --color-mist: #4a6a6e;
+  --color-mist-light: #6a8a8e;
+  --color-twilight: #16303a;
+
+  --color-accent: var(--color-gold);
+  --color-accent-light: var(--color-gold-light);
+  --color-accent-pale: var(--color-gold-pale);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-subtle: var(--color-gold-subtle);
+  --color-accent-glass-border: rgba(0, 230, 118, 0.2);
+  --color-accent-glass-bg: rgba(10, 22, 40, 0.7);
+  --color-accent-card-border: rgba(0, 230, 118, 0.12);
+  --color-accent-card-border-hover: rgba(0, 230, 118, 0.45);
+  --color-accent-shadow: rgba(0, 230, 118, 0.08);
+  --color-accent-shadow-hover: rgba(0, 230, 118, 0.22);
+
+  --color-text-primary: #cfe0d8;
+  --color-text-secondary: rgba(207, 224, 216, 0.6);
+  --color-text-muted: rgba(207, 224, 216, 0.38);
+
+  --glass-bg: rgba(10, 22, 40, 0.66);
+  --glass-border: rgba(0, 230, 118, 0.14);
+  --glass-blur: 14px;
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+
+  --card-radius: 2px;
+  --card-border: 1px solid var(--color-accent-card-border);
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.6), 0 0 24px var(--color-accent-shadow);
+  --card-shadow-hover: 0 10px 44px rgba(0, 0, 0, 0.75), 0 0 52px var(--color-accent-shadow-hover);
+
+  --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'Songti SC', serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+}
+
+.theme-cthulhu .body-accent::before,
+[data-theme='cthulhu'] .body-accent::before {
+  background:
+    radial-gradient(ellipse at 50% 110%, rgba(0, 230, 118, 0.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 10% 0%, rgba(10, 22, 40, 0.6) 0%, transparent 60%);
+}
+
+.theme-cthulhu .body-accent::after,
+[data-theme='cthulhu'] .body-accent::after {
+  opacity: 0.06;
+}
+
+/* --- 理智值下降：hover 边缘扭曲 + 触手光晕 --- */
+.theme-cthulhu .thumb .group .thumb-img {
+  transition: opacity 0.5s, transform 0.5s ease, filter 0.5s ease;
+}
+
+.theme-cthulhu .thumb .group:hover .thumb-img {
+  filter: blur(1px) brightness(0.85) hue-rotate(15deg);
+  transform: scale(1.03) rotate(0.6deg);
+}
+
+/* --- 背景动画 --- */
+@keyframes cth-sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(4deg); }
+}
+
+@keyframes cth-eye {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.95; }
+}
+
+@keyframes cth-drift {
+  0% { transform: translateX(-4%); }
+  100% { transform: translateX(4%); }
+}

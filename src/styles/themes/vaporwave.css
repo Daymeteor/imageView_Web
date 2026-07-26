@@ -1,0 +1,92 @@
+/* ============================================
+   蒸汽波 — Vaporwave 主题：网格地板 + 希腊雕塑 + VHS
+   ============================================ */
+
+.theme-vaporwave,
+[data-theme='vaporwave'] {
+  --color-bg-deep: #1a0a2e;
+  --color-bg-primary: #221038;
+  --color-bg-surface: #2a1644;
+  --color-bg-elevated: #341c50;
+
+  --color-gold: #FF6B9D;
+  --color-gold-light: #ff8fb4;
+  --color-gold-pale: #ffc4d8;
+  --color-gold-dim: #d84a7e;
+  --color-gold-subtle: #a03060;
+
+  --color-moss: #00D4FF;
+  --color-moss-light: #4de0ff;
+  --color-moss-pale: #a8efff;
+  --color-leaf: #0099cc;
+  --color-mist: #9B59B6;
+  --color-mist-light: #b47ec8;
+  --color-twilight: #4a2a6a;
+
+  --color-accent: var(--color-gold);
+  --color-accent-light: var(--color-gold-light);
+  --color-accent-pale: var(--color-gold-pale);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-subtle: var(--color-gold-subtle);
+  --color-accent-glass-border: rgba(255, 107, 157, 0.24);
+  --color-accent-glass-bg: rgba(34, 16, 56, 0.68);
+  --color-accent-card-border: rgba(255, 107, 157, 0.18);
+  --color-accent-card-border-hover: rgba(0, 212, 255, 0.55);
+  --color-accent-shadow: rgba(255, 107, 157, 0.12);
+  --color-accent-shadow-hover: rgba(0, 212, 255, 0.3);
+
+  --color-text-primary: #f2e8fa;
+  --color-text-secondary: rgba(242, 232, 250, 0.62);
+  --color-text-muted: rgba(242, 232, 250, 0.4);
+
+  --glass-bg: rgba(34, 16, 56, 0.64);
+  --glass-border: rgba(255, 107, 157, 0.16);
+  --glass-blur: 14px;
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+
+  --card-radius: 10px;
+  --card-border: 1px solid var(--color-accent-card-border);
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.45), 0 0 26px var(--color-accent-shadow);
+  --card-shadow-hover: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 50px var(--color-accent-shadow-hover);
+
+  --font-display: 'Archivo Black', 'Noto Serif SC', 'PingFang SC', sans-serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+}
+
+.theme-vaporwave .body-accent::before,
+[data-theme='vaporwave'] .body-accent::before {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(255, 107, 157, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(0, 212, 255, 0.06) 0%, transparent 50%);
+}
+
+.theme-vaporwave .body-accent::after,
+[data-theme='vaporwave'] .body-accent::after {
+  opacity: 0.06;
+}
+
+/* --- VHS 暂停：hover 扭曲 + 色差 + 扫描线 --- */
+.theme-vaporwave .thumb .group .thumb-img {
+  transition: opacity 0.5s, transform 0.35s ease, filter 0.35s ease;
+}
+
+.theme-vaporwave .thumb .group:hover .thumb-img {
+  transform: translateX(2px) scaleY(0.98);
+  filter: drop-shadow(3px 0 0 rgba(255, 107, 157, 0.6)) drop-shadow(-3px 0 0 rgba(0, 212, 255, 0.6)) saturate(1.3);
+}
+
+/* --- 背景动画 --- */
+@keyframes vw-grid {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 56px; }
+}
+
+@keyframes vw-float {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-16px) rotate(2deg); }
+}
+
+@keyframes vw-palm {
+  0%, 100% { transform: rotate(-4deg); }
+  50% { transform: rotate(4deg); }
+}

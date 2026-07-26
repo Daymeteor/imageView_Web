@@ -1,0 +1,104 @@
+/* ============================================
+   EVA — Neon Genesis 主题：紫绿配 + 使徒 + NERV
+   ============================================ */
+
+.theme-eva,
+[data-theme='eva'] {
+  --color-bg-deep: #0D0D0D;
+  --color-bg-primary: #141414;
+  --color-bg-surface: #1a1a1f;
+  --color-bg-elevated: #222228;
+
+  --color-gold: #00E676;
+  --color-gold-light: #4dff9d;
+  --color-gold-pale: #a3ffc8;
+  --color-gold-dim: #00b85c;
+  --color-gold-subtle: #008040;
+
+  --color-moss: #7B1FA2;
+  --color-moss-light: #9c3cc4;
+  --color-moss-pale: #c48ae0;
+  --color-leaf: #4a0e66;
+  --color-mist: #8a8a92;
+  --color-mist-light: #ababb5;
+  --color-twilight: #2a2a32;
+
+  --color-accent: var(--color-gold);
+  --color-accent-light: var(--color-gold-light);
+  --color-accent-pale: var(--color-gold-pale);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-subtle: var(--color-gold-subtle);
+  --color-accent-glass-border: rgba(0, 230, 118, 0.24);
+  --color-accent-glass-bg: rgba(13, 13, 13, 0.7);
+  --color-accent-card-border: rgba(123, 31, 162, 0.3);
+  --color-accent-card-border-hover: rgba(0, 230, 118, 0.6);
+  --color-accent-shadow: rgba(123, 31, 162, 0.16);
+  --color-accent-shadow-hover: rgba(0, 230, 118, 0.28);
+
+  --color-text-primary: #e8e8ec;
+  --color-text-secondary: rgba(232, 232, 236, 0.6);
+  --color-text-muted: rgba(232, 232, 236, 0.38);
+
+  --glass-bg: rgba(20, 20, 20, 0.66);
+  --glass-border: rgba(0, 230, 118, 0.18);
+  --glass-blur: 12px;
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+
+  --card-radius: 0px;
+  --card-border: 1px solid var(--color-accent-card-border);
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.6), 0 0 26px var(--color-accent-shadow);
+  --card-shadow-hover: 0 10px 44px rgba(0, 0, 0, 0.75), 0 0 56px var(--color-accent-shadow-hover);
+
+  --font-display: 'Archivo Black', 'Noto Serif SC', 'PingFang SC', sans-serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+}
+
+.theme-eva .body-accent::before,
+[data-theme='eva'] .body-accent::before {
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(244, 67, 54, 0.07) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 0%, rgba(123, 31, 162, 0.1) 0%, transparent 50%);
+}
+
+.theme-eva .body-accent::after,
+[data-theme='eva'] .body-accent::after {
+  opacity: 0.04;
+}
+
+/* --- A.T.力场：hover 六边形光盾 --- */
+.theme-eva .thumb .group::after {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 2px solid rgba(0, 230, 118, 0.7);
+  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transform: scale(1.15);
+  transition: opacity 0.35s, transform 0.35s cubic-bezier(0.22, 0.1, 0.13, 1);
+}
+
+.theme-eva .thumb .group:hover::after {
+  opacity: 1;
+  transform: scale(1);
+  box-shadow: 0 0 24px rgba(0, 230, 118, 0.4), inset 0 0 24px rgba(0, 230, 118, 0.15);
+}
+
+/* --- 背景动画 --- */
+@keyframes eva-heart {
+  0%, 100% { opacity: 0.4; }
+  12% { opacity: 1; }
+  24% { opacity: 0.4; }
+}
+
+@keyframes eva-rise {
+  0% { transform: translateY(20px); opacity: 0; }
+  20%, 80% { opacity: 0.7; }
+  100% { transform: translateY(-70vh); opacity: 0; }
+}
+
+@keyframes eva-sea {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-3%); }
+}
