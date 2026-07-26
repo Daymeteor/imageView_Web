@@ -122,7 +122,7 @@ export default function LittleprinceReader({ images, theme = 'littleprince' }) {
         {ORBITS.map((o, oi) => (
           <div
             key={`orbit-${oi}`}
-            className="absolute inset-0"
+            className="pointer-events-none absolute inset-0"
             style={{
               animation: `lp-orbit ${o.dur}s linear infinite`,
               animationDirection: o.rev ? 'reverse' : 'normal',
@@ -158,7 +158,7 @@ export default function LittleprinceReader({ images, theme = 'littleprince' }) {
                           setCur(p.i);
                           setTravel(true);
                         }}
-                        className="relative block cursor-pointer rounded-full"
+                        className="pointer-events-auto relative block cursor-pointer rounded-full"
                         style={{
                           width: `clamp(52px, ${7.5 * p.size}vmin, 150px)`,
                           aspectRatio: '1 / 1',
