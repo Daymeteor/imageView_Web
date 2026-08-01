@@ -38,6 +38,15 @@ export default function FolderSelector({ onSelect, loading, error, theme = 'fore
   const isVaporwave = theme === 'vaporwave';
   const isGot = theme === 'got';
   const isAkira = theme === 'akira';
+  const isGhibli = theme === 'ghibli';
+  const isWabisabi = theme === 'wabisabi';
+  const isDune = theme === 'dune';
+  const isBlackmirror = theme === 'blackmirror';
+  const isWitcher = theme === 'witcher';
+  const isDragonraja = theme === 'dragonraja';
+  const isThreebody = theme === 'threebody';
+  const isDeanting = theme === 'deanting';
+  const isHaizi = theme === 'haizi';
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[var(--color-bg-deep)]">
@@ -85,6 +94,15 @@ export default function FolderSelector({ onSelect, loading, error, theme = 'fore
               : isVaporwave ? <VaporwaveIcon />
               : isGot ? <GotIcon />
               : isAkira ? <AkiraIcon />
+              : isGhibli ? <GhibliIcon />
+              : isWabisabi ? <WabisabiIcon />
+              : isDune ? <DuneIcon />
+              : isBlackmirror ? <BlackmirrorIcon />
+              : isWitcher ? <WitcherIcon />
+              : isDragonraja ? <DragonrajaIcon />
+              : isThreebody ? <ThreebodyIcon />
+              : isDeanting ? <DeantingIcon />
+              : isHaizi ? <HaiziIcon />
               : <ForestIcon />}
           </div>
         </div>
@@ -643,6 +661,121 @@ function AkiraIcon() {
       <line x1="32" y1="24" x2="32" y2="40" stroke="currentColor" strokeWidth="1.5" />
       <rect x="12" y="24" width="20" height="16" rx="8" fill="currentColor" opacity="0.4" />
       <line x1="8" y1="48" x2="56" y2="48" stroke="currentColor" strokeWidth="2" opacity="0.5" />
+    </svg>
+  );
+}
+
+function GhibliIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 大树冠 */}
+      <ellipse cx="32" cy="26" rx="18" ry="12" fill="currentColor" opacity="0.8" />
+      <ellipse cx="22" cy="32" rx="12" ry="9" fill="currentColor" opacity="0.6" />
+      <ellipse cx="42" cy="32" rx="12" ry="9" fill="currentColor" opacity="0.6" />
+      <rect x="29" y="34" width="6" height="18" fill="currentColor" opacity="0.7" />
+      <path d="M8 54Q20 48 32 52T56 50" stroke="currentColor" strokeWidth="2" fill="none" opacity="0.5" />
+    </svg>
+  );
+}
+
+function WabisabiIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 枯山水波纹 + 石 */}
+      <ellipse cx="30" cy="34" rx="10" ry="7" fill="currentColor" opacity="0.7" />
+      <ellipse cx="30" cy="34" rx="18" ry="13" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.5" />
+      <ellipse cx="30" cy="34" rx="26" ry="19" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.3" />
+      <line x1="8" y1="52" x2="56" y2="52" stroke="currentColor" strokeWidth="1.2" opacity="0.5" />
+    </svg>
+  );
+}
+
+function DuneIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 沙丘 + 沙虫脊 */}
+      <path d="M6 44Q20 34 34 42T58 40" stroke="currentColor" strokeWidth="2" fill="none" />
+      <path d="M14 52Q28 46 42 50" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.5" />
+      <path d="M20 22Q26 14 34 18T46 14" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round" opacity="0.8" />
+      <circle cx="48" cy="12" r="2.5" fill="currentColor" opacity="0.7" />
+    </svg>
+  );
+}
+
+function BlackmirrorIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 手机屏幕 + 评分星 */}
+      <rect x="18" y="8" width="28" height="48" rx="4" stroke="currentColor" strokeWidth="1.5" fill="none" />
+      <rect x="28" y="12" width="8" height="2" fill="currentColor" opacity="0.6" />
+      <path d="M32 24L34 28.5L39 29L35.5 32L37 37L32 34.5L27 37L28.5 32L25 29L30 28.5Z" fill="currentColor" opacity="0.85" />
+      <line x1="24" y1="46" x2="40" y2="46" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+    </svg>
+  );
+}
+
+function WitcherIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 狼头徽章 */}
+      <path d="M32 8L18 20L14 36L26 52L32 56L38 52L50 36L46 20Z" stroke="currentColor" strokeWidth="2" fill="none" strokeLinejoin="round" />
+      <circle cx="26" cy="30" r="2.5" fill="currentColor" />
+      <circle cx="38" cy="30" r="2.5" fill="currentColor" />
+      <path d="M28 40L32 44L36 40" stroke="currentColor" strokeWidth="2" fill="none" />
+    </svg>
+  );
+}
+
+function DragonrajaIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 龙首 */}
+      <path d="M14 44Q18 26 34 24Q50 22 52 34L46 36L50 44Q42 52 28 50Q16 48 14 44Z" stroke="currentColor" strokeWidth="2" fill="none" strokeLinejoin="round" />
+      <path d="M34 24L30 12L40 22M44 26L48 14L52 24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinejoin="round" />
+      <circle cx="38" cy="34" r="2" fill="currentColor" />
+    </svg>
+  );
+}
+
+function ThreebodyIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 红岸天线 */}
+      <path d="M20 46L32 20L44 46" stroke="currentColor" strokeWidth="2" fill="none" />
+      <ellipse cx="32" cy="24" rx="14" ry="8" stroke="currentColor" strokeWidth="1.5" fill="none" transform="rotate(-20 32 24)" />
+      <line x1="32" y1="46" x2="32" y2="56" stroke="currentColor" strokeWidth="2" />
+      <circle cx="48" cy="12" r="2" fill="currentColor" opacity="0.7" />
+      <circle cx="14" cy="14" r="1.5" fill="currentColor" opacity="0.5" />
+    </svg>
+  );
+}
+
+function DeantingIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 音符 + 磁带 */}
+      <rect x="10" y="20" width="44" height="28" rx="3" stroke="currentColor" strokeWidth="1.5" fill="none" />
+      <circle cx="24" cy="34" r="6" stroke="currentColor" strokeWidth="1.5" fill="none" />
+      <circle cx="40" cy="34" r="6" stroke="currentColor" strokeWidth="1.5" fill="none" />
+      <path d="M24 34L40 34" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M46 12L46 8L52 10L52 14" stroke="currentColor" strokeWidth="1.5" fill="none" />
+    </svg>
+  );
+}
+
+function HaiziIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* 麦穗 */}
+      <line x1="32" y1="24" x2="32" y2="56" stroke="currentColor" strokeWidth="2" />
+      {[0, 1, 2, 3].map((i) => (
+        <g key={i}>
+          <ellipse cx="26" cy={26 + i * 7} rx="5" ry="3" fill="currentColor" opacity="0.8" transform={`rotate(-30 26 ${26 + i * 7})`} />
+          <ellipse cx="38" cy={26 + i * 7} rx="5" ry="3" fill="currentColor" opacity="0.8" transform={`rotate(30 38 ${26 + i * 7})`} />
+        </g>
+      ))}
+      <ellipse cx="32" cy="18" rx="5" ry="7" fill="currentColor" opacity="0.9" />
+      <circle cx="48" cy="14" r="6" fill="currentColor" opacity="0.45" />
     </svg>
   );
 }

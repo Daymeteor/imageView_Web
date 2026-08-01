@@ -40,6 +40,15 @@ import './styles/themes/cthulhu.css';
 import './styles/themes/vaporwave.css';
 import './styles/themes/got.css';
 import './styles/themes/akira.css';
+import './styles/themes/ghibli.css';
+import './styles/themes/wabisabi.css';
+import './styles/themes/dune.css';
+import './styles/themes/blackmirror.css';
+import './styles/themes/witcher.css';
+import './styles/themes/dragonraja.css';
+import './styles/themes/threebody.css';
+import './styles/themes/deanting.css';
+import './styles/themes/haizi.css';
 
 // GSAP 插件注册（全局一次性）
 gsap.registerPlugin(ScrollTrigger);
@@ -100,8 +109,26 @@ const CthulhuReader = lazy(() => import('./components/CthulhuReader'));
 const VaporwaveReader = lazy(() => import('./components/VaporwaveReader'));
 const GotReader = lazy(() => import('./components/GotReader'));
 const AkiraReader = lazy(() => import('./components/AkiraReader'));
+const GhibliBackground = lazy(() => import('./components/GhibliBackground'));
+const WabisabiBackground = lazy(() => import('./components/WabisabiBackground'));
+const DuneBackground = lazy(() => import('./components/DuneBackground'));
+const BlackmirrorBackground = lazy(() => import('./components/BlackmirrorBackground'));
+const GhibliReader = lazy(() => import('./components/GhibliReader'));
+const WabisabiReader = lazy(() => import('./components/WabisabiReader'));
+const DuneReader = lazy(() => import('./components/DuneReader'));
+const BlackmirrorReader = lazy(() => import('./components/BlackmirrorReader'));
+const WitcherBackground = lazy(() => import('./components/WitcherBackground'));
+const DragonrajaBackground = lazy(() => import('./components/DragonrajaBackground'));
+const ThreebodyBackground = lazy(() => import('./components/ThreebodyBackground'));
+const DeantingBackground = lazy(() => import('./components/DeantingBackground'));
+const HaiziBackground = lazy(() => import('./components/HaiziBackground'));
+const WitcherReader = lazy(() => import('./components/WitcherReader'));
+const DragonrajaReader = lazy(() => import('./components/DragonrajaReader'));
+const ThreebodyReader = lazy(() => import('./components/ThreebodyReader'));
+const DeantingReader = lazy(() => import('./components/DeantingReader'));
+const HaiziReader = lazy(() => import('./components/HaiziReader'));
 
-const VALID_THEMES = ['forest', 'cyber', 'constellation', 'anime', 'mondrian', 'memphis', 'animepop', 'bauhaus', 'darkroom', 'album', 'seaside', 'pixel', 'spirited', 'nightcity', 'rdr', 'potter', 'interstellar', 'grandbudapest', 'monument', 'bladerunner', 'shanhaijing', 'eva', 'kurosawa', 'littleprince', 'ldr', 'journey', 'nineteen84', 'cthulhu', 'vaporwave', 'got', 'akira'];
+const VALID_THEMES = ['forest', 'cyber', 'constellation', 'anime', 'mondrian', 'memphis', 'animepop', 'bauhaus', 'darkroom', 'album', 'seaside', 'pixel', 'spirited', 'nightcity', 'rdr', 'potter', 'interstellar', 'grandbudapest', 'monument', 'bladerunner', 'shanhaijing', 'eva', 'kurosawa', 'littleprince', 'ldr', 'journey', 'nineteen84', 'cthulhu', 'vaporwave', 'got', 'akira', 'ghibli', 'wabisabi', 'dune', 'blackmirror', 'witcher', 'dragonraja', 'threebody', 'deanting', 'haizi'];
 
 export default function App() {
   const [theme, setTheme] = useState(() => {
@@ -158,6 +185,15 @@ export default function App() {
   const isVaporwave = theme === 'vaporwave';
   const isGot = theme === 'got';
   const isAkira = theme === 'akira';
+  const isGhibli = theme === 'ghibli';
+  const isWabisabi = theme === 'wabisabi';
+  const isDune = theme === 'dune';
+  const isBlackmirror = theme === 'blackmirror';
+  const isWitcher = theme === 'witcher';
+  const isDragonraja = theme === 'dragonraja';
+  const isThreebody = theme === 'threebody';
+  const isDeanting = theme === 'deanting';
+  const isHaizi = theme === 'haizi';
 
   // 星座主题：30s 自动切换星座
   useEffect(() => {
@@ -180,7 +216,7 @@ export default function App() {
   }
 
   const themeTitle = getTheme(theme).title;
-  const showFolderName = isForest || isConstellation || isAnime || isMondrian || isMemphis || isAnimePop || isBauhaus || isDarkroom || isAlbum || isSeaside || isPixel || isSpirited || isNightcity || isRdr || isPotter || isInterstellar || isGrandbudapest || isMonument || isBladerunner || isShanhaijing || isEva || isKurosawa || isLittleprince || isLdr || isJourney || isNineteen84 || isCthulhu || isVaporwave || isGot || isAkira;
+  const showFolderName = isForest || isConstellation || isAnime || isMondrian || isMemphis || isAnimePop || isBauhaus || isDarkroom || isAlbum || isSeaside || isPixel || isSpirited || isNightcity || isRdr || isPotter || isInterstellar || isGrandbudapest || isMonument || isBladerunner || isShanhaijing || isEva || isKurosawa || isLittleprince || isLdr || isJourney || isNineteen84 || isCthulhu || isVaporwave || isGot || isAkira || isGhibli || isWabisabi || isDune || isBlackmirror || isWitcher || isDragonraja || isThreebody || isDeanting || isHaizi;
 
   const loadingText = isForest
     ? '正在读取照片...'
@@ -234,6 +270,24 @@ export default function App() {
     ? '正在集结守夜人...'
     : isAkira
     ? '正在预热引擎...'
+    : isGhibli
+    ? '正在等风来...'
+    : isWabisabi
+    ? '正在扫枯山水...'
+    : isDune
+    ? '正在蒸馏香料...'
+    : isBlackmirror
+    ? '正在同步评分...'
+    : isWitcher
+    ? '正在磨刀...'
+    : isDragonraja
+    ? '正在唤醒龙血...'
+    : isThreebody
+    ? '正在监听宇宙...'
+    : isDeanting
+    ? '正在翻歌词本...'
+    : isHaizi
+    ? '正在等麦浪...'
     : '正在渲染场景...';
 
   return (
@@ -276,6 +330,15 @@ export default function App() {
         {isVaporwave && <VaporwaveBackground />}
         {isGot && <GotBackground />}
         {isAkira && <AkiraBackground />}
+        {isGhibli && <GhibliBackground />}
+        {isWabisabi && <WabisabiBackground />}
+        {isDune && <DuneBackground />}
+        {isBlackmirror && <BlackmirrorBackground />}
+        {isWitcher && <WitcherBackground />}
+        {isDragonraja && <DragonrajaBackground />}
+        {isThreebody && <ThreebodyBackground />}
+        {isDeanting && <DeantingBackground />}
+        {isHaizi && <HaiziBackground />}
       </Suspense>
 
       {/* 导航栏 */}
@@ -395,6 +458,42 @@ export default function App() {
         ) : isAkira ? (
           <Suspense fallback={null}>
             <AkiraReader images={images} theme={theme} />
+          </Suspense>
+        ) : isGhibli ? (
+          <Suspense fallback={null}>
+            <GhibliReader images={images} theme={theme} />
+          </Suspense>
+        ) : isWabisabi ? (
+          <Suspense fallback={null}>
+            <WabisabiReader images={images} theme={theme} />
+          </Suspense>
+        ) : isDune ? (
+          <Suspense fallback={null}>
+            <DuneReader images={images} theme={theme} />
+          </Suspense>
+        ) : isBlackmirror ? (
+          <Suspense fallback={null}>
+            <BlackmirrorReader images={images} theme={theme} />
+          </Suspense>
+        ) : isWitcher ? (
+          <Suspense fallback={null}>
+            <WitcherReader images={images} theme={theme} />
+          </Suspense>
+        ) : isDragonraja ? (
+          <Suspense fallback={null}>
+            <DragonrajaReader images={images} theme={theme} />
+          </Suspense>
+        ) : isThreebody ? (
+          <Suspense fallback={null}>
+            <ThreebodyReader images={images} theme={theme} />
+          </Suspense>
+        ) : isDeanting ? (
+          <Suspense fallback={null}>
+            <DeantingReader images={images} theme={theme} />
+          </Suspense>
+        ) : isHaizi ? (
+          <Suspense fallback={null}>
+            <HaiziReader images={images} theme={theme} />
           </Suspense>
         ) : (
           <ExhibitionHall

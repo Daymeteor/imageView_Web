@@ -1,0 +1,95 @@
+/* ============================================
+   吉卜力 — Ghibli 主题：青绿田园 + 云上之城
+   ============================================ */
+
+.theme-ghibli,
+[data-theme='ghibli'] {
+  --color-bg-deep: #eaf4e4;
+  --color-bg-primary: #f2f8ec;
+  --color-bg-surface: #f8fcf4;
+  --color-bg-elevated: #ffffff;
+
+  --color-gold: #4CAF50;
+  --color-gold-light: #6fc173;
+  --color-gold-pale: #b2ddb5;
+  --color-gold-dim: #3a8a3e;
+  --color-gold-subtle: #2a682d;
+
+  --color-moss: #64B5F6;
+  --color-moss-light: #90caf9;
+  --color-moss-pale: #d0e9fd;
+  --color-leaf: #2E7D32;
+  --color-mist: #FFD54F;
+  --color-mist-light: #ffe082;
+  --color-twilight: #4a6a4c;
+
+  --color-accent: var(--color-gold);
+  --color-accent-light: var(--color-gold-light);
+  --color-accent-pale: var(--color-gold-pale);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-subtle: var(--color-gold-subtle);
+  --color-accent-glass-border: rgba(76, 175, 80, 0.28);
+  --color-accent-glass-bg: rgba(248, 252, 244, 0.78);
+  --color-accent-card-border: rgba(46, 125, 50, 0.16);
+  --color-accent-card-border-hover: rgba(76, 175, 80, 0.5);
+  --color-accent-shadow: rgba(76, 175, 80, 0.14);
+  --color-accent-shadow-hover: rgba(76, 175, 80, 0.3);
+
+  --color-text-primary: #2e4a30;
+  --color-text-secondary: rgba(46, 74, 48, 0.62);
+  --color-text-muted: rgba(46, 74, 48, 0.4);
+
+  --glass-bg: rgba(248, 252, 244, 0.75);
+  --glass-border: rgba(46, 125, 50, 0.14);
+  --glass-blur: 12px;
+  --glass-shadow: 0 6px 26px rgba(46, 125, 50, 0.14);
+
+  --card-radius: 12px;
+  --card-border: 1px solid var(--color-accent-card-border);
+  --card-shadow: 0 6px 22px rgba(46, 125, 50, 0.14);
+  --card-shadow-hover: 0 14px 38px rgba(46, 125, 50, 0.22), 0 0 40px var(--color-accent-shadow-hover);
+
+  --font-display: 'Zen Maru Gothic', 'Noto Serif SC', 'PingFang SC', sans-serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+}
+
+.theme-ghibli .body-accent::before,
+[data-theme='ghibli'] .body-accent::before {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(100, 181, 246, 0.25) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 100%, rgba(76, 175, 80, 0.12) 0%, transparent 55%);
+}
+
+.theme-ghibli .body-accent::after,
+[data-theme='ghibli'] .body-accent::after {
+  opacity: 0.02;
+}
+
+/* --- 龙猫打伞式弹跳光晕 --- */
+.theme-ghibli .thumb .group::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 45%, rgba(255, 213, 79, 0.3) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.theme-ghibli .thumb .group:hover::after {
+  opacity: 1;
+}
+
+/* --- 背景动画 --- */
+@keyframes gh-cloud {
+  0% { transform: translateX(-14%); }
+  100% { transform: translateX(114%); }
+}
+
+@keyframes gh-fly {
+  0% { transform: translate(-10%, 0) rotate(-2deg); opacity: 0; }
+  10% { opacity: 0.9; }
+  88% { opacity: 0.9; }
+  100% { transform: translate(112%, -6vh) rotate(2deg); opacity: 0; }
+}

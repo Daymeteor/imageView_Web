@@ -1,0 +1,95 @@
+/* ============================================
+   丁世光 — Dean Ting 主题：专辑内页 Booklet
+   概念：奶油纸跨页，蓝红拼贴色块，和纸胶带贴照片，
+   手写歌词注，都市轻愁。
+   ============================================ */
+
+.theme-deanting,
+[data-theme='deanting'] {
+  /* --- 基底色系 — 奶油纸 --- */
+  --color-bg-deep: #e7dcc6;
+  --color-bg-primary: #f4ead8;
+  --color-bg-surface: #faf3e4;
+  --color-bg-elevated: #fffdf6;
+
+  /* --- 复古蓝 — 主 accent --- */
+  --color-gold: #3a5a8a;
+  --color-gold-light: #5a7aaa;
+  --color-gold-pale: #a8bcd8;
+  --color-gold-dim: #2b4468;
+  --color-gold-subtle: #1d3049;
+
+  /* --- 复古红 — 辅助色 --- */
+  --color-moss: #c03a3a;
+  --color-moss-light: #d46060;
+  --color-moss-pale: #e8a8a8;
+  --color-leaf: #8a2a2a;
+  --color-mist: #9a917e;
+  --color-mist-light: #b5ac99;
+  --color-twilight: #4a4438;
+
+  /* --- 语义化 accent 覆盖 --- */
+  --color-accent: var(--color-gold);
+  --color-accent-light: var(--color-gold-light);
+  --color-accent-pale: var(--color-gold-pale);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-subtle: var(--color-gold-subtle);
+  --color-accent-glass-border: rgba(58, 90, 138, 0.3);
+  --color-accent-glass-bg: rgba(250, 243, 228, 0.8);
+  --color-accent-card-border: rgba(43, 43, 43, 0.14);
+  --color-accent-card-border-hover: rgba(58, 90, 138, 0.5);
+  --color-accent-shadow: rgba(58, 90, 138, 0.12);
+  --color-accent-shadow-hover: rgba(58, 90, 138, 0.26);
+
+  /* --- 文字层级 — 墨 --- */
+  --color-text-primary: #2b2b2b;
+  --color-text-secondary: rgba(43, 43, 43, 0.62);
+  --color-text-muted: rgba(43, 43, 43, 0.4);
+
+  /* --- 玻璃拟态 — 奶油纸 --- */
+  --glass-bg: rgba(250, 243, 228, 0.78);
+  --glass-border: rgba(43, 43, 43, 0.12);
+  --glass-blur: 12px;
+  --glass-shadow: 0 4px 24px rgba(74, 68, 56, 0.16);
+
+  /* --- 卡片 --- */
+  --card-radius: 3px;
+  --card-border: 1px solid var(--color-accent-card-border);
+  --card-shadow: 0 4px 20px rgba(74, 68, 56, 0.16);
+  --card-shadow-hover: 0 10px 36px rgba(74, 68, 56, 0.24),
+                       0 0 40px var(--color-accent-shadow-hover);
+
+  /* --- 字体 — 圆润 Gothic 标题 + 衬线身体 --- */
+  --font-display: 'Zen Maru Gothic', 'Noto Serif SC', 'PingFang SC', sans-serif;
+  --font-body: 'Cormorant Garamond', 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+}
+
+.theme-deanting .body-accent::before,
+[data-theme='deanting'] .body-accent::before {
+  background:
+    radial-gradient(ellipse at 12% 18%, rgba(58, 90, 138, 0.06) 0%, transparent 52%),
+    radial-gradient(ellipse at 86% 82%, rgba(192, 58, 58, 0.05) 0%, transparent 50%);
+}
+
+.theme-deanting .body-accent::after,
+[data-theme='deanting'] .body-accent::after {
+  opacity: 0.06; /* 保留纸纹噪点 */
+}
+
+/* ============================================
+   背景拼贴色块 — 神经志式错位漂浮
+   ============================================ */
+@keyframes dt-drift-a {
+  0%, 100% { transform: translate(0, 0) rotate(-2deg); }
+  50% { transform: translate(14px, -10px) rotate(-1deg); }
+}
+
+@keyframes dt-drift-b {
+  0%, 100% { transform: translate(0, 0) rotate(1.6deg); }
+  50% { transform: translate(-12px, 9px) rotate(2.6deg); }
+}
+
+@keyframes dt-drift-c {
+  0%, 100% { transform: translate(0, 0) rotate(0.8deg); }
+  50% { transform: translate(8px, 12px) rotate(-0.6deg); }
+}

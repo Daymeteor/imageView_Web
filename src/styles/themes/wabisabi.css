@@ -1,0 +1,94 @@
+/* ============================================
+   侘寂 — Wabi-Sabi 主题：枯山水 + 阴翳礼赞
+   ============================================ */
+
+.theme-wabisabi,
+[data-theme='wabisabi'] {
+  --color-bg-deep: #F5F0E1;
+  --color-bg-primary: #f8f4e8;
+  --color-bg-surface: #fbf8ee;
+  --color-bg-elevated: #fffdf6;
+
+  --color-gold: #558B2F;
+  --color-gold-light: #77a558;
+  --color-gold-pale: #b8cfa4;
+  --color-gold-dim: #3f6a22;
+  --color-gold-subtle: #2c4c17;
+
+  --color-moss: #8a9a8a;
+  --color-moss-light: #a8b5a8;
+  --color-moss-pale: #d0d8cd;
+  --color-leaf: #37474F;
+  --color-mist: #b5aa90;
+  --color-mist-light: #d0c7ae;
+  --color-twilight: #5a5a4a;
+
+  --color-accent: var(--color-gold);
+  --color-accent-light: var(--color-gold-light);
+  --color-accent-pale: var(--color-gold-pale);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-subtle: var(--color-gold-subtle);
+  --color-accent-glass-border: rgba(85, 139, 47, 0.22);
+  --color-accent-glass-bg: rgba(251, 248, 238, 0.8);
+  --color-accent-card-border: rgba(55, 71, 79, 0.12);
+  --color-accent-card-border-hover: rgba(85, 139, 47, 0.4);
+  --color-accent-shadow: rgba(55, 71, 79, 0.1);
+  --color-accent-shadow-hover: rgba(85, 139, 47, 0.22);
+
+  --color-text-primary: #37474F;
+  --color-text-secondary: rgba(55, 71, 79, 0.58);
+  --color-text-muted: rgba(55, 71, 79, 0.36);
+
+  --glass-bg: rgba(251, 248, 238, 0.78);
+  --glass-border: rgba(55, 71, 79, 0.1);
+  --glass-blur: 12px;
+  --glass-shadow: 0 4px 22px rgba(55, 71, 79, 0.1);
+
+  --card-radius: 2px;
+  --card-border: 1px solid var(--color-accent-card-border);
+  --card-shadow: 0 3px 18px rgba(55, 71, 79, 0.1);
+  --card-shadow-hover: 0 8px 30px rgba(55, 71, 79, 0.16);
+
+  --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'Songti SC', serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+}
+
+.theme-wabisabi .body-accent::before,
+[data-theme='wabisabi'] .body-accent::before {
+  background:
+    radial-gradient(ellipse at 85% 15%, rgba(85, 139, 47, 0.05) 0%, transparent 50%);
+}
+
+.theme-wabisabi .body-accent::after,
+[data-theme='wabisabi'] .body-accent::after {
+  opacity: 0.04;
+}
+
+/* --- 竹影摇曳：hover 时影子在卡片上晃 --- */
+.theme-wabisabi .thumb .group::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 42%, rgba(55, 71, 79, 0.12) 46%, transparent 50%, transparent 62%, rgba(55, 71, 79, 0.1) 66%, transparent 70%);
+  background-size: 220% 100%;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.theme-wabisabi .thumb .group:hover::after {
+  opacity: 1;
+  animation: ws-shadow 3s ease-in-out infinite;
+}
+
+@keyframes ws-shadow {
+  0%, 100% { background-position: 0% 0; }
+  50% { background-position: 40% 0; }
+}
+
+/* --- 背景动画 --- */
+@keyframes ws-sway {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2.5deg); }
+}

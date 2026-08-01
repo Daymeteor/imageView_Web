@@ -1,0 +1,109 @@
+/* ============================================
+   龙族 — Dragon Raja 主题：卡塞尔档案馆
+   墨黑地宫 + 龙血金徽记 + 龙鳞暗纹
+   ============================================ */
+
+.theme-dragonraja,
+[data-theme='dragonraja'] {
+  --color-bg-deep: #0d0d12;
+  --color-bg-primary: #12121a;
+  --color-bg-surface: #181822;
+  --color-bg-elevated: #20202c;
+
+  --color-gold: #d4af37;
+  --color-gold-light: #e8cc6a;
+  --color-gold-pale: #f4e3a8;
+  --color-gold-dim: #a8871f;
+  --color-gold-subtle: #6b5712;
+
+  --color-moss: #8b0000;
+  --color-moss-light: #b03030;
+  --color-moss-pale: #d87a7a;
+  --color-leaf: #5e0000;
+  --color-mist: #8a8496;
+  --color-mist-light: #aaa4b6;
+  --color-twilight: #2a2a36;
+
+  --color-accent: var(--color-gold);
+  --color-accent-light: var(--color-gold-light);
+  --color-accent-pale: var(--color-gold-pale);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-subtle: var(--color-gold-subtle);
+  --color-accent-glass-border: rgba(212, 175, 55, 0.28);
+  --color-accent-glass-bg: rgba(13, 13, 18, 0.72);
+  --color-accent-card-border: rgba(212, 175, 55, 0.22);
+  --color-accent-card-border-hover: rgba(212, 175, 55, 0.62);
+  --color-accent-shadow: rgba(212, 175, 55, 0.12);
+  --color-accent-shadow-hover: rgba(212, 175, 55, 0.32);
+
+  --color-text-primary: #e8e0d0;
+  --color-text-secondary: rgba(232, 224, 208, 0.6);
+  --color-text-muted: rgba(232, 224, 208, 0.38);
+
+  --glass-bg: rgba(18, 18, 26, 0.68);
+  --glass-border: rgba(212, 175, 55, 0.2);
+  --glass-blur: 12px;
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.65);
+
+  --card-radius: 10px;
+  --card-border: 1px solid var(--color-accent-card-border);
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.6), 0 0 24px var(--color-accent-shadow);
+  --card-shadow-hover: 0 10px 44px rgba(0, 0, 0, 0.72), 0 0 52px var(--color-accent-shadow-hover);
+
+  --font-display: 'Oswald', 'Noto Serif SC', 'PingFang SC', sans-serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+}
+
+.theme-dragonraja .body-accent::before,
+[data-theme='dragonraja'] .body-accent::before {
+  background:
+    radial-gradient(ellipse at 50% 108%, rgba(139, 0, 0, 0.12) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 8%, rgba(212, 175, 55, 0.06) 0%, transparent 50%);
+}
+
+.theme-dragonraja .body-accent::after,
+[data-theme='dragonraja'] .body-accent::after {
+  opacity: 0.05;
+}
+
+/* --- 黑王呼吸：巨龙轮廓缓慢起伏 --- */
+@keyframes dgr-breathe {
+  0%, 100% { transform: translateY(0) scaleY(1); opacity: 0.5; }
+  50% { transform: translateY(-8px) scaleY(1.03); opacity: 0.72; }
+}
+
+/* --- 龙眼明灭 --- */
+@keyframes dgr-eye {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+
+/* --- 金尘漂浮 --- */
+@keyframes dgr-dust {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  12% { opacity: 0.85; }
+  85% { opacity: 0.5; }
+  100% { transform: translateY(-140px) translateX(18px); opacity: 0; }
+}
+
+/* --- 龙血觉醒：绯金脉冲从卡中心炸开 --- */
+@keyframes dgr-pulse {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+}
+
+/* --- 龙鳞纹在照片上短暂浮现 --- */
+@keyframes dgr-scale-reveal {
+  0% { opacity: 0; }
+  25% { opacity: 0.55; }
+  100% { opacity: 0; }
+}
+
+/* --- 大图龙鳞纹（卡背纹样，重复鳞片弧线） --- */
+.theme-dragonraja .dgr-scale-pattern {
+  background-image:
+    radial-gradient(circle at 50% 100%, transparent 62%, rgba(212, 175, 55, 0.16) 66%, transparent 72%),
+    radial-gradient(circle at 0% 50%, transparent 62%, rgba(212, 175, 55, 0.12) 66%, transparent 72%),
+    radial-gradient(circle at 100% 50%, transparent 62%, rgba(212, 175, 55, 0.12) 66%, transparent 72%);
+  background-size: 28px 28px;
+}

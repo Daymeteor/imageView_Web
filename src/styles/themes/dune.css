@@ -1,0 +1,101 @@
+/* ============================================
+   沙丘 — Dune 主题：厄拉科斯 + 沙虫 + 香料
+   ============================================ */
+
+.theme-dune,
+[data-theme='dune'] {
+  --color-bg-deep: #0D1B2A;
+  --color-bg-primary: #132231;
+  --color-bg-surface: #1a2a3a;
+  --color-bg-elevated: #22334a;
+
+  --color-gold: #E67E22;
+  --color-gold-light: #f09848;
+  --color-gold-pale: #ffc98f;
+  --color-gold-dim: #c2611a;
+  --color-gold-subtle: #8a4512;
+
+  --color-moss: #D4A373;
+  --color-moss-light: #e2bd92;
+  --color-moss-pale: #f2dfc4;
+  --color-leaf: #8D6E63;
+  --color-mist: #6a5a6a;
+  --color-mist-light: #8a7a8a;
+  --color-twilight: #2a3a4a;
+
+  --color-accent: var(--color-gold);
+  --color-accent-light: var(--color-gold-light);
+  --color-accent-pale: var(--color-gold-pale);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-subtle: var(--color-gold-subtle);
+  --color-accent-glass-border: rgba(230, 126, 34, 0.24);
+  --color-accent-glass-bg: rgba(19, 34, 49, 0.68);
+  --color-accent-card-border: rgba(212, 163, 115, 0.16);
+  --color-accent-card-border-hover: rgba(230, 126, 34, 0.5);
+  --color-accent-shadow: rgba(230, 126, 34, 0.1);
+  --color-accent-shadow-hover: rgba(230, 126, 34, 0.26);
+
+  --color-text-primary: #ede0cc;
+  --color-text-secondary: rgba(237, 224, 204, 0.62);
+  --color-text-muted: rgba(237, 224, 204, 0.38);
+
+  --glass-bg: rgba(26, 42, 58, 0.64);
+  --glass-border: rgba(212, 163, 115, 0.14);
+  --glass-blur: 12px;
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+
+  --card-radius: 4px;
+  --card-border: 1px solid var(--color-accent-card-border);
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.55), 0 0 26px var(--color-accent-shadow);
+  --card-shadow-hover: 0 10px 44px rgba(0, 0, 0, 0.7), 0 0 56px var(--color-accent-shadow-hover);
+
+  --font-display: 'Oswald', 'Noto Serif SC', 'PingFang SC', sans-serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+}
+
+.theme-dune .body-accent::before,
+[data-theme='dune'] .body-accent::before {
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(230, 126, 34, 0.08) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 0%, rgba(212, 163, 115, 0.05) 0%, transparent 50%);
+}
+
+.theme-dune .body-accent::after,
+[data-theme='dune'] .body-accent::after {
+  opacity: 0.05;
+}
+
+/* --- 沙虫感知：hover 沙粒振动 --- */
+.theme-dune .thumb .group::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 100%, rgba(230, 126, 34, 0.25) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+}
+
+.theme-dune .thumb .group:hover::after {
+  opacity: 1;
+  animation: dn-ripple 0.5s ease-out;
+}
+
+@keyframes dn-ripple {
+  0% { transform: scaleY(0.6); opacity: 0; }
+  100% { transform: scaleY(1); opacity: 1; }
+}
+
+/* --- 背景动画 --- */
+@keyframes dn-worm {
+  0% { transform: translateX(-20%) translateY(0); opacity: 0; }
+  12% { opacity: 0.7; }
+  50% { transform: translateX(50%) translateY(-8px); }
+  88% { opacity: 0.7; }
+  100% { transform: translateX(120%) translateY(0); opacity: 0; }
+}
+
+@keyframes dn-mist {
+  0% { transform: translateX(-8%); }
+  100% { transform: translateX(8%); }
+}

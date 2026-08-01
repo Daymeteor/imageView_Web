@@ -1,0 +1,146 @@
+/* ============================================
+   三体 — 红岸监听站主题
+   概念：深空黑底 + 红岸红警戒 + 智子蓝信号 + 监听绿终端字。
+   终端质感：等宽 Courier Prime + CRT 扫描线 + 打字机日志。
+   ============================================ */
+
+.theme-threebody,
+[data-theme='threebody'] {
+  /* --- 基底色系 — 深空黑 --- */
+  --color-bg-deep: #050810;
+  --color-bg-primary: #080d18;
+  --color-bg-surface: #0b1322;
+  --color-bg-elevated: #101a2c;
+
+  /* --- 红岸红 — 主 accent --- */
+  --color-gold: #d43030;
+  --color-gold-light: #ef5350;
+  --color-gold-pale: #ff9a8a;
+  --color-gold-dim: #a82323;
+  --color-gold-subtle: #5e1414;
+
+  /* --- 智子蓝 — 辅助色 --- */
+  --color-moss: #4a9fd8;
+  --color-moss-light: #7abce8;
+  --color-moss-pale: #b0d8f0;
+  --color-leaf: #2a6a9a;
+  --color-mist: #5a7a8e;
+  --color-mist-light: #8aa4b4;
+  --color-twilight: #16222e;
+
+  /* --- 语义化 accent 覆盖 --- */
+  --color-accent: var(--color-gold);
+  --color-accent-light: var(--color-gold-light);
+  --color-accent-pale: var(--color-gold-pale);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-subtle: var(--color-gold-subtle);
+  --color-accent-glass-border: rgba(212, 48, 48, 0.3);
+  --color-accent-glass-bg: rgba(5, 8, 16, 0.74);
+  --color-accent-card-border: rgba(74, 159, 216, 0.22);
+  --color-accent-card-border-hover: rgba(212, 48, 48, 0.62);
+  --color-accent-shadow: rgba(74, 159, 216, 0.12);
+  --color-accent-shadow-hover: rgba(212, 48, 48, 0.32);
+
+  /* --- 文字层级 — 监听绿辅助 --- */
+  --color-text-primary: #d8e6ea;
+  --color-text-secondary: rgba(74, 224, 160, 0.62);
+  --color-text-muted: rgba(216, 230, 234, 0.38);
+
+  /* --- 玻璃拟态 — 深空控制台 --- */
+  --glass-bg: rgba(8, 13, 24, 0.72);
+  --glass-border: rgba(74, 159, 216, 0.2);
+  --glass-blur: 12px;
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.65);
+
+  /* --- 卡片 --- */
+  --card-radius: 4px;
+  --card-border: 1px solid var(--color-accent-card-border);
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.6), 0 0 24px var(--color-accent-shadow);
+  --card-shadow-hover: 0 10px 40px rgba(0, 0, 0, 0.72), 0 0 48px var(--color-accent-shadow-hover);
+
+  /* --- 字体 — 终端等宽 --- */
+  --font-display: 'Courier Prime', 'Courier New', 'PingFang SC', monospace;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+}
+
+.theme-threebody .body-accent::before,
+[data-theme='threebody'] .body-accent::before {
+  background:
+    radial-gradient(ellipse at 50% 108%, rgba(212, 48, 48, 0.1) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 8%, rgba(74, 159, 216, 0.07) 0%, transparent 50%);
+}
+
+.theme-threebody .body-accent::after,
+[data-theme='threebody'] .body-accent::after {
+  opacity: 0.06;
+}
+
+/* --- 星点闪烁 --- */
+@keyframes tb-twinkle {
+  0%, 100% { opacity: 0.18; }
+  50% { opacity: 0.95; }
+}
+
+/* --- 天线波束明灭 --- */
+@keyframes tb-beam {
+  0%, 100% { opacity: 0.08; }
+  50% { opacity: 0.55; }
+}
+
+/* --- 红色警戒灯 --- */
+@keyframes tb-blink {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 1; }
+}
+
+/* --- 智子折线飞行（一粒蓝光点横跨天区） --- */
+@keyframes tb-sophon {
+  0%   { transform: translate(90px, 150px); opacity: 0; }
+  5%   { opacity: 1; }
+  17%  { transform: translate(400px, 80px); }
+  33%  { transform: translate(690px, 220px); }
+  49%  { transform: translate(960px, 100px); }
+  65%  { transform: translate(1180px, 270px); }
+  81%  { transform: translate(860px, 330px); }
+  93%  { opacity: 1; }
+  100% { transform: translate(1330px, 170px); opacity: 0; }
+}
+
+/* --- 终端光标 --- */
+@keyframes tb-caret {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* --- CRT 扫描线纹理（照片显影 / 终端叠加） --- */
+.theme-threebody .tb-scanlines {
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(74, 224, 160, 0.06) 0px,
+    rgba(74, 224, 160, 0.06) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+}
+
+.theme-threebody .tb-caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: -0.12em;
+  background: #4ae0a0;
+  animation: tb-caret 0.9s steps(1) infinite;
+}
+
+/* --- 终端滚动条 --- */
+.theme-threebody .tb-terminal::-webkit-scrollbar {
+  width: 6px;
+}
+.theme-threebody .tb-terminal::-webkit-scrollbar-thumb {
+  background: rgba(74, 159, 216, 0.3);
+  border-radius: 3px;
+}
+.theme-threebody .tb-terminal::-webkit-scrollbar-track {
+  background: rgba(5, 8, 16, 0.5);
+}
